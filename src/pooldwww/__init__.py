@@ -1,13 +1,12 @@
 import os
 
+from flask import Flask
+from pooldwww import auth, legal, marketing
+
 DIR = os.path.dirname(__file__)
 DIR = os.path.abspath(DIR)
 
-from flask import Flask
-
 app = Flask(__name__)
-
-
-@app.route('/')
-def index():
-    return 'Hello World!'
+app.register_blueprint(auth.plan)
+app.register_blueprint(marketing.plan)
+app.register_blueprint(legal.plan, url_prefix='/legal')
