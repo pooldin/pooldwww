@@ -1,28 +1,28 @@
-from flask import Blueprint
+from flask import Blueprint, render_template
 
 plan = Blueprint('marketing', __name__)
 
 
 @plan.route('/')
 def index():
-    return 'Hello World!'
+    return render_template('marketing/index.html')
 
 
 @plan.route('/about')
 def about():
-    return 'About'
+    return render_template('marketing/about.html')
 
 
 @plan.route('/how')
 def how():
-    return 'How it works'
+    return render_template('marketing/how.html')
 
 
 @plan.route('/fees')
 def fees():
-    return 'Fees'
+    return render_template('marketing/fees.html')
 
 
 @plan.route('/contact')
 def contact():
-    return 'Contact'
+    return render_template('marketing/contact.html')
