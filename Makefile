@@ -14,6 +14,9 @@ deps:
 run:
 	@foreman start -f dev/Procfile
 
+run-test:
+	@foreman start
+
 shell:
 	@foreman run python manage.py shell
 
