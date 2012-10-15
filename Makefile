@@ -1,8 +1,8 @@
 # Magical make incantations...
 .DEFAULT_GOAL := deps
 
-.PHONY: assets clean css css-debug deps js js-all js-debug js-lib \
-	    js-lib-debug run shell ipy bpy tests
+.PHONY: assets build clean css css-debug deps js js-all js-debug js-lib \
+	    js-lib-debug run shell ipy bpy tests upload
 
 
 RUN=foreman run
@@ -12,8 +12,12 @@ MANAGE=$(RUN) python manage.py
 assets:
 	@$(MANAGE) assets rebuild
 
+build:
+	@$(RUN) python setup.py build
+
 clean:
-	@find . -name "*.py[co]" -exec rm -rf {} \;
+	find . -name "*.py[co]" -exec rm -rf {} \;
+	rm -rf build dist
 
 css:
 	@$(MANAGE) assets rebuild -b pooldin-css -b pooldin-css-min
@@ -22,9 +26,7 @@ css-debug:
 	@$(MANAGE) assets rebuild -b pooldin-css
 
 deps:
-	@easy_install readline
 	@$(RUN) python setup.py dev
-	@pip install -r dev/requirements.txt
 
 js:
 	@$(MANAGE) assets rebuild -b pooldin-js -b pooldin-js-min
@@ -57,3 +59,6 @@ bpy:
 
 tests:
 	@python manage.py tests
+
+upload:
+	@$(RUN) python setup.py sdist upload -r pooldin
