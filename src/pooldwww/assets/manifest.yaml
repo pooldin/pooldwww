@@ -1,0 +1,71 @@
+lib-css:
+    output: ../static/style/bootstrap.css
+    filters: less
+    debug: False
+    contents:
+        - ../static/style/bootstrap-2.1.0.css
+        - ../static/style/bootstrap-responsive-2.1.0.css
+
+lib-css-min:
+    output: ../static/style/bootstrap.min.css
+    filters: yui_css
+    debug: False
+    contents:
+        - lib-css
+
+lib-js:
+    output: ../static/script/lib.js
+    contents:
+        - ../static/script/jquery-1.8.0.js
+        - ../static/script/moment-1.7.0.js
+        - ../static/script/knockout-2.1.0.js
+        - ../static/script/knockout.mapping-2.3.2.js
+        - ../static/script/bootstrap-2.1.0.js
+        - ../static/script/signals-0.8.1.js
+        - ../static/script/hasher-1.1.0.js
+        - ../static/script/crossroads-0.10.0.js
+        - ../static/script/accounting-0.3.2.js
+        - ../static/script/spin-1.2.6.js
+
+lib-js-min:
+    output: ../static/script/lib.min.js
+    filters: uglifyjs
+    debug: False
+    contents:
+        - lib-js
+
+pooldin-css:
+    output: ../static/style/pooldin.css
+    filters: less
+    debug: False
+    contents:
+        - ../static/style/bootstrap-2.1.0.css
+        - ../static/style/bootstrap-responsive-2.1.0.css
+        - filters: less
+          debug: false
+          contents:
+            - ../assets/style/index.less
+
+pooldin-css-min:
+    output: ../static/style/pooldin.min.css
+    filters: yui_css
+    debug: False
+    contents:
+        - pooldin-css
+
+pooldin-js:
+    output: ../static/script/pooldin.js
+    filters: coffeescript
+    debug: False
+    contents:
+        - ../assets/script/index.coffee
+        - ../assets/script/extend.coffee
+        - ../assets/script/schema.coffee
+        - ../assets/script/page.coffee
+
+pooldin-js-min:
+    output: ../static/script/pooldin.min.js
+    filters: uglifyjs
+    debug: False
+    contents:
+        - pooldin-js

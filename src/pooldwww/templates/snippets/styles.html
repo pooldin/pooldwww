@@ -1,3 +1,2 @@
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style/bootstrap-2.1.0.css') }}" />
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style/bootstrap-responsive-2.1.0.css') }}" />
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style/site.css') }}" />
+{% assets "lib-css" %}<link rel=stylesheet type=text/css href="{{ ASSET_URL }}" />{% endassets %}
+{% assets "pooldin-css" %}<link rel=stylesheet type=text/css href="{{ ASSET_URL }}" />{% endassets %}
