@@ -5,7 +5,8 @@
 	    js-lib-debug run shell ipy bpy tests
 
 
-MANAGE=foreman run python manage.py
+RUN=foreman run
+MANAGE=$(RUN) python manage.py
 
 
 assets:
@@ -22,7 +23,7 @@ css-debug:
 
 deps:
 	@easy_install readline
-	@pip install -r requirements.txt
+	@$(RUN) python setup.py dev
 	@pip install -r dev/requirements.txt
 
 js:
