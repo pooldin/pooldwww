@@ -25,12 +25,12 @@ class ServerController(cli.ServerController):
 class TestController(cli.Controller):
 
     class Meta:
-        label = 'test'
+        label = 'tests'
         description = "Run the pooldwww test suite"
 
     @controller.expose(hide=True, help='Run the pooldwww test suite')
     def default(self):
-        test.run('pooldwww.test')
+        test.run('tests')
 
 
 class AssetController(cli.Controller):

@@ -1,0 +1,2 @@
+recursive-include pooldwww/static *
+recursive-include pooldwww/templates *

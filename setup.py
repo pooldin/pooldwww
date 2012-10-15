@@ -46,7 +46,7 @@ required = [
     'PyYAML==3.10',
     'gunicorn==0.14.6',
     'yuicompressor==2.4.7',
-    'pooldlib',
+    'pooldlib==0.1.0-dev',
     'flask==0.9',
     'flask-gravatar==0.2.3',
     'flask-wtf==0.8',
@@ -79,7 +79,7 @@ dev = [
 
 
 setup(name='pooldwww',
-      version='0.1dev',
+      version='0.1-dev',
       description='The poold.in www website',
       long_description=__doc__,
       keywords='library',

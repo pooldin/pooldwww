@@ -30,7 +30,8 @@ manifest = manifest.load_bundles()
 app.assets = Environment(app)
 app.assets.directory = assets
 app.assets.url = '/static'
-app.assets.register(manifest)
+for name in manifest:
+    app.assets.register(name, manifest[name])
 
 # Initialize database
 db.init_connection(app.config)

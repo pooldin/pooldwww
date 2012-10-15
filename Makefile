@@ -2,7 +2,7 @@
 .DEFAULT_GOAL := deps
 
 .PHONY: assets build clean css css-debug deps js js-all js-debug js-lib \
-	    js-lib-debug run shell ipy bpy tests upload
+	    js-lib-debug run shell ipy bpy sdist tests upload
 
 
 RUN=foreman run
@@ -56,6 +56,9 @@ ipy:
 
 bpy:
 	@foreman run python manage.py shell -b
+
+sdist:
+	@$(RUN) python setup.py sdist
 
 tests:
 	@python manage.py tests
