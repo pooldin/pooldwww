@@ -11,7 +11,7 @@ from pooldwww import auth, legal, marketing, media
 DIR = os.path.dirname(__file__)
 DIR = os.path.abspath(DIR)
 
-settings = os.environ.get('POOLDIN_CONFIG')
+settings = os.environ.get('POOLDWWW_CONFIG')
 settings = settings or 'pooldwww.settings.dev'
 
 # Create app
