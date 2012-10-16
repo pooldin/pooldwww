@@ -38,6 +38,7 @@ pip-log.txt
 /local/
 
 .webassets-cache
+.webassets-manifest
 
 # Style build files
 bootstrap.css
