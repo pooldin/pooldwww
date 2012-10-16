@@ -16,7 +16,7 @@ MANAGE=$(RUN) python manage.py
 assets:
 	@$(MANAGE) assets rebuild
 
-build:
+build: clean assets
 	@$(SETUP) build
 
 clean:
