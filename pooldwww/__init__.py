@@ -22,16 +22,15 @@ app.config.from_object('pooldwww.settings.base')
 app.config.from_object(settings)
 
 # Configure and initialize assets
-assets = os.path.join(DIR, 'assets')
-manifest = os.path.join(assets, 'manifest.yaml')
-manifest = YAMLLoader(manifest)
-manifest = manifest.load_bundles()
+app.assets = Environment(app,
+                         directory=os.path.join(DIR, 'assets'),
+                         url='/static',
+                         manifest='file',
+                         auto_build=False)
 
-app.assets = Environment(app)
-app.assets.directory = assets
-app.assets.url = '/static'
-for name in manifest:
-    app.assets.register(name, manifest[name])
+manifest = YAMLLoader(os.path.join(DIR, 'assets', 'manifest.yaml'))
+manifest = manifest.load_bundles()
+[app.assets.register(n, manifest[n]) for n in manifest]
 
 # Initialize database
 db.init_connection(app.config)
