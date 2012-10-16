@@ -2,9 +2,12 @@
 .DEFAULT_GOAL := deps
 
 .PHONY: assets build clean css css-debug deps dist js js-all js-debug js-lib \
-	    js-lib-debug run shell ipy bpy tests upload
+		js-lib-debug run shell ipy bpy tests upload upload-dev upload-nightly \
+		upload-release
 
 
+REV=$(shell git rev-parse --short HEAD)
+TIMESTAMP=$(shell date +'%s')
 RUN=foreman run
 SETUP=$(RUN) python setup.py
 MANAGE=$(RUN) python manage.py
@@ -65,5 +68,13 @@ bpy:
 tests:
 	@python manage.py tests
 
-upload: clean assets
-	@$(SETUP) sdist upload -r pooldin
+upload: upload-dev
+
+upload-dev: clean assets
+	@python setup.py egg_info --tag-build='-dev.$(TIMESTAMP).$(REV)' sdist upload -r pooldin
+
+upload-nightly: clean assets
+	@python setup.py egg_info --tag-date --tag-build='-dev' sdist upload -r pooldin
+
+upload-release: clean assets
+	@python setup.py sdist upload -r pooldin
