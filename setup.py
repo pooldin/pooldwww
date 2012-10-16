@@ -79,7 +79,7 @@ dev = [
 
 
 setup(name='pooldwww',
-      version='0.1.0',
+      version='0.1',
       description='The poold.in www website',
       long_description=__doc__,
       keywords='library',
