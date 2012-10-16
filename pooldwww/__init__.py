@@ -22,11 +22,11 @@ app.config.from_object('pooldwww.settings.base')
 app.config.from_object(settings)
 
 # Configure and initialize assets
-app.assets = Environment(app,
-                         directory=os.path.join(DIR, 'assets'),
-                         url='/static',
-                         manifest='file',
-                         auto_build=False)
+app.assets = Environment(app)
+app.assets.auto_build = False
+app.assets.directory = os.path.join(DIR, 'assets')
+app.assets.manifest = 'file'
+app.assets.url = '/static'
 
 manifest = YAMLLoader(os.path.join(DIR, 'assets', 'manifest.yaml'))
 manifest = manifest.load_bundles()
