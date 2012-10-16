@@ -57,24 +57,24 @@ run-test:
 	@foreman start
 
 shell:
-	@foreman run python manage.py shell
+	@$(MANAGE) shell
 
 ipy:
-	@foreman run python manage.py shell -i
+	@$(MANAGE) shell -i
 
 bpy:
-	@foreman run python manage.py shell -b
+	@$(MANAGE) shell -b
 
 tests:
-	@python manage.py tests
+	@$(MANAGE) tests
 
 upload: upload-dev
 
 upload-dev: clean assets
-	@python setup.py egg_info --tag-build='-dev.$(TIMESTAMP).$(REV)' sdist upload -r pooldin
+	@$(SETUP) egg_info --tag-build='-dev.$(TIMESTAMP).$(REV)' sdist upload -r pooldin
 
 upload-nightly: clean assets
-	@python setup.py egg_info --tag-date --tag-build='-dev' sdist upload -r pooldin
+	@$(SETUP) egg_info --tag-date --tag-build='-dev' sdist upload -r pooldin
 
 upload-release: clean assets
-	@python setup.py sdist upload -r pooldin
+	@$(SETUP) sdist upload -r pooldin
