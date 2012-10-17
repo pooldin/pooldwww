@@ -46,7 +46,7 @@ required = [
     'PyYAML==3.10',
     'gunicorn==0.14.6',
     'yuicompressor==2.4.7',
-    'pooldlib==0.1-dev.1350414213.f62c89c',
+    'pooldlib==0.1-dev.1350504289.00b14b3',
     'flask==0.9',
     'flask-gravatar==0.2.3',
     'flask-wtf==0.8',

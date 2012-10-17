@@ -11,15 +11,15 @@ from pooldwww import auth, legal, marketing, media
 DIR = os.path.dirname(__file__)
 DIR = os.path.abspath(DIR)
 
-settings = os.environ.get('POOLDWWW_CONFIG')
-settings = settings or 'pooldwww.settings.dev'
-
 # Create app
 app = Flask(__name__)
 
 # Configure the app
-app.config.from_object('pooldwww.settings.base')
-app.config.from_object(settings)
+os.environ.setdefault('POOLDWWW_SETTINGS', 'pooldwww.settings.dev')
+app.config.from_object(os.environ.get('POOLDWWW_SETTINGS'))
+
+if 'POOLDWWW_CONFIG' in os.environ:
+    app.config.from_envvar('POOLDWWW_CONFIG')
 
 # Configure and initialize assets
 app.assets = Environment(app)

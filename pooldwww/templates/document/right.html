@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="container">
+  <div class="row">
+    <div class="span2">
+      {% block secondary %}
+      {% include 'marketing/nav.html' %}
+      {% endblock %}
+    </div>
+    <div class="span10">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+</div>
+{% endblock %}

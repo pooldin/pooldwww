@@ -1,3 +1,54 @@
+app-js:
+    output: ../static/script/pooldin/app.js
+    filters: coffeescript
+    debug: False
+    contents:
+        - ../assets/script/index.coffee
+        - ../assets/script/extend.coffee
+        - ../assets/script/schema.coffee
+        - ../assets/script/page.coffee
+
+app-js-min:
+    output: ../static/script/pooldin/app.min.js
+    filters: uglifyjs
+    debug: False
+    contents:
+        - app-js
+
+app-css:
+    output: ../static/style/pooldin/app.css
+    filters: less
+    debug: False
+    contents:
+        - filters: less
+          debug: false
+          contents:
+            - ../assets/style/app/index.less
+
+app-css-min:
+    output: ../static/style/pooldin/app.min.css
+    filters: yui_css
+    debug: False
+    contents:
+        - app-css
+
+auth-css:
+    output: ../static/style/pooldin/auth.css
+    filters: less
+    debug: False
+    contents:
+        - filters: less
+          debug: false
+          contents:
+            - ../assets/style/auth/index.less
+
+auth-css-min:
+    output: ../static/style/pooldin/auth.min.css
+    filters: yui_css
+    debug: False
+    contents:
+        - auth-css
+
 lib-css:
     output: ../static/style/bootstrap.css
     filters: less
@@ -33,39 +84,3 @@ lib-js-min:
     debug: False
     contents:
         - lib-js
-
-pooldin-css:
-    output: ../static/style/pooldin.css
-    filters: less
-    debug: False
-    contents:
-        - ../static/style/bootstrap-2.1.0.css
-        - ../static/style/bootstrap-responsive-2.1.0.css
-        - filters: less
-          debug: false
-          contents:
-            - ../assets/style/index.less
-
-pooldin-css-min:
-    output: ../static/style/pooldin.min.css
-    filters: yui_css
-    debug: False
-    contents:
-        - pooldin-css
-
-pooldin-js:
-    output: ../static/script/pooldin.js
-    filters: coffeescript
-    debug: False
-    contents:
-        - ../assets/script/index.coffee
-        - ../assets/script/extend.coffee
-        - ../assets/script/schema.coffee
-        - ../assets/script/page.coffee
-
-pooldin-js-min:
-    output: ../static/script/pooldin.min.js
-    filters: uglifyjs
-    debug: False
-    contents:
-        - pooldin-js

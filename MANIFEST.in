@@ -1,4 +1,5 @@
 recursive-include pooldwww/static *
 recursive-include pooldwww/templates *
+recursive-include pooldwww/settings *
 include pooldwww/assets/manifest.yaml
 include pooldwww/assets/.webassets-manifest

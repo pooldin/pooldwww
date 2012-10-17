@@ -1,0 +1,106 @@
+{%- import 'macros/asset.html' as assets with context -%}
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    {% block meta -%}
+    {% endblock -%}
+
+    <title>{% block title %}Poold.in{% endblock %}</title>
+
+    {% block favicon -%}
+    <link rel="shortcut icon" href="/static/favicon.ico" />
+    {% endblock -%}
+
+    {% block style -%}
+    {{ assets.style('lib-css-min', debug='lib-css') }}
+    {{ assets.style('app-css-min', debug='app-css') }}
+    {% endblock -%}
+
+    {% block modernizr -%}
+    <script src="{{ url_for('static', filename='script/modernizr.js') }}"></script>
+    {% endblock -%}
+  </head>
+  <body class="{% block body_class %}{% endblock %}">
+    {% block ie -%}
+    <!--[if lt IE 7]>
+    <p class="chromeframe">
+      You are using an outdated browser.
+      <a href="http://browsehappy.com/">Upgrade your browser today</a> or 
+      <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> 
+      to better experience this site.
+    </p>
+    <![endif]-->
+    {% endblock -%}
+
+    {% block header -%}
+    <header>
+      <div class="global">
+        <div class="container">
+          <div class="row">
+            <div class="span2 logo">
+              <h2><a href="{{ url_for('marketing.index') }}">poold.in</a></h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    {% endblock -%}
+
+    {% block flash -%}
+    {% if get_flashed_messages() -%}
+    <section id="flash-message">
+      <div class="container">
+        {% for message in get_flashed_messages() %}
+        <div class="span4">
+          <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            {{ message }}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif -%}
+    {% endblock -%}
+
+    {% block body -%}
+    {% endblock -%}
+
+    {% block footer -%}
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul>
+              <li><a href="{{ url_for('marketing.about') }}">About</a></li>
+              <li><a href="{{ url_for('marketing.contact') }}">Contact</a></li>
+              <li><a href="{{ url_for('legal.terms') }}">Terms of Service</a></li>
+            </ul>
+            <a class="pull-right" href="{{ url_for('marketing.index') }}">&copy; Pooldin</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    {% endblock -%}
+
+    {% block script -%}
+    {{ assets.script('lib-js-min', debug='lib-js') }}
+    {{ assets.script('app-js-min', debug='app-js') }}
+    {% endblock -%}
+
+    {% block init -%}
+    {% endblock -%}
+
+    {% block analytics -%}
+    {% include "snippets/analytics.html" %}
+    {% endblock -%}
+  </body>
+</html>

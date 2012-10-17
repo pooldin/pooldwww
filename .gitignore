@@ -45,9 +45,15 @@ bootstrap.css
 bootstrap.min.css
 pooldin.css
 pooldin.min.css
+app.css
+app.min.css
+auth.css
+auth.min.css
 
 # Script build files
 lib.js
 lib.min.js
 pooldin.js
 pooldin.min.js
+app.js
+app.min.js

@@ -1,11 +1,5 @@
-{% extends "document.html" %}
-
-{% block body %}
-<div class="container content">
-  <section class="row">
-    <div class="span12">
-      <p>Index</p>
-    </div>
-  </section>
-</div>
+{% extends "document/full_article.html" %}
+{% block article %}
+<h1>Index</h1>
+{% include 'snippets/lorem.html' %}
 {% endblock %}

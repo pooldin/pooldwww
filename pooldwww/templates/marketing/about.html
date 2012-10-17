@@ -1,15 +1,5 @@
-{% extends "document.html" %}
-
-{% block body %}
-<div class="container content">
-  <section class="row">
-    <div class="span3">
-      {% include 'marketing/nav.html' %}
-    </div>
-    <div class="span9">
-      <h1>About</h1>
-      {% include 'snippets/lorem.html' %}
-    </div>
-  </section>
-</div>
+{% extends "document/right_article.html" %}
+{% block article %}
+<h1>About</h1>
+{% include 'snippets/lorem.html' %}
 {% endblock %}
