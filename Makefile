@@ -51,7 +51,7 @@ js-lib-debug:
 	@$(MANAGE) assets rebuild -b libs-js
 
 run:
-	@foreman start -f dev/Procfile
+	@foreman start -f Procfile.dev
 
 run-test:
 	@foreman start

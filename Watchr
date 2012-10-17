@@ -1,0 +1,9 @@
+# vim: ft=ruby
+
+watch('pooldwww/assets/style/.*\.less$') { |md|
+    system("make css-debug")
+}
+
+watch('pooldwww/assets/script/.*\.coffee$') { |md|
+    system("make js-debug")
+}
