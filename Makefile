@@ -1,9 +1,8 @@
 # Magical make incantations...
 .DEFAULT_GOAL := deps
 
-.PHONY: assets build clean css css-debug deps dist js js-all js-debug js-lib \
-		js-lib-debug run shell ipy bpy tests upload upload-dev upload-nightly \
-		upload-release
+.PHONY: assets build clean deps dist run shell ipy bpy tests \
+		upload upload-dev upload-nightly upload-release
 
 
 REV=$(shell git rev-parse --short HEAD)
@@ -24,31 +23,11 @@ clean:
 	@$(SETUP) clean
 	@rm -rf dist build
 
-css:
-	@$(MANAGE) assets rebuild -b pooldin-css -b pooldin-css-min
-
-css-debug:
-	@$(MANAGE) assets rebuild -b pooldin-css
-
 deps:
 	@$(SETUP) dev
 
 dist: clean assets
 	@$(SETUP) sdist
-
-js:
-	@$(MANAGE) assets rebuild -b pooldin-js -b pooldin-js-min
-
-js-all: js-lib js
-
-js-debug:
-	@$(MANAGE) assets rebuild -b pooldin-js
-
-js-lib:
-	@$(MANAGE) assets rebuild -b libs-js -b libs-js-min
-
-js-lib-debug:
-	@$(MANAGE) assets rebuild -b libs-js
 
 run:
 	@foreman start -f Procfile.dev

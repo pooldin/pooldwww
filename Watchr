@@ -1,9 +1,13 @@
 # vim: ft=ruby
 
 watch('pooldwww/assets/style/.*\.less$') { |md|
-    system("make css-debug")
+    system("foreman run python manage.py assets rebuild -b pooldin-css")
 }
 
 watch('pooldwww/assets/script/.*\.coffee$') { |md|
-    system("make js-debug")
+    system("foreman run python manage.py assets rebuild -b pooldin-js")
+}
+
+watch('pooldwww/assets/manifest.yaml$') { |md|
+    system("foreman run python manage.py assets rebuild")
 }
