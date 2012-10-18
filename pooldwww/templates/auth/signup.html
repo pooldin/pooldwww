@@ -22,13 +22,13 @@
 
 {% block content %}
 <section class="auth signup">
-  <form action="" method="POST" class="content">
+  <form data-bind="submit: submit" class="content">
     <h1>Create your Pooldin account.</h1>
     <hr />
-    <input name="email" type="text" placeholder="Email" class="text" autofocus />
-    <input name="username" type="text" placeholder="Username" class="text" />
-    <input name="password" type="password" placeholder="Password" class="password" />
-    <input name="password_confirm" type="password" placeholder="Confirm Password" class="password" />
+    <input name="email" type="text" placeholder="Email" class="text" data-bind="value: email" AUTOFOCUS />
+    <input name="username" type="text" placeholder="Username" class="text" data-bind="value: username" />
+    <input name="password" type="password" placeholder="Password" class="password" data-bind="value: password" />
+    <input name="password_confirm" type="password" placeholder="Confirm Password" class="password" data-bind="value: passwordConfirm" />
     <div class="submit">
       <input type="submit" class="btn btn-info btn-large" value="Create your Pooldin account" />
     </div>
@@ -36,6 +36,10 @@
   <a class="rounded signup" href="{{ url_for('auth.login') }}">Already have an account? <span>Sign in</span>.</a>
 </section>
 </div>
+{% endblock %}
+
+{% block init %}
+<script>PI.UserSignup.init()</script>
 {% endblock %}
 
 {% block footer %}
