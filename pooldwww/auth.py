@@ -79,7 +79,7 @@ class LoginForm(BaseForm):
 @plan.route('/login', methods=['GET'])
 def login(form=None):
     title = 'Welcome Back!'
-    template = 'auth/login.html'
+    template = 'login.html'
 
     if form:
         return render_template(template, title=title, form=form)
@@ -126,7 +126,7 @@ def logout():
 @plan.route('/signup', methods=['GET'])
 def signup(form=None):
     title = 'Create your Pooldin account.'
-    template = 'auth/signup.html'
+    template = 'signup.html'
 
     if form:
         return render_template(template, form=form)
