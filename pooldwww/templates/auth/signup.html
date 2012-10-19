@@ -39,6 +39,11 @@
            placeholder="Email"
            autofocus="autofocus" />
 
+    <div class="mailcheck" style="display: none" data-bind="with: form, visible: form.email.mailcheck">
+      Did you mean <a tabindex="50000" href="javascript:void(0)" data-bind="text: email.mailcheck, click: email.mailcheck.accept"></a>?
+      <button tabindex="50001" type="button" class="close" data-bind="click: email.mailcheck.reject">×</button>
+    </div>
+
     <input name="username"
            type="text"
            class="text username"
@@ -72,7 +77,7 @@
   PI.pages.Signup.init({
     title: {{ title|tojson|safe }},
     error: {{ form.error|tojson|safe }},
-    email: {{ form.email.data|tojson|safe }}
+    email: {{ form.email.data|tojson|safe }},
     username: {{ form.username.data|tojson|safe }}
   });
 </script>

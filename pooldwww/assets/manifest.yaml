@@ -83,6 +83,7 @@ lib-js:
         - ../static/script/crossroads-0.10.0.js
         - ../static/script/accounting-0.3.2.js
         - ../static/script/spin-1.2.6.js
+        - ../static/script/mailcheck-1.1.js
 
 lib-js-min:
     output: ../static/script/lib.min.js

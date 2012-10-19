@@ -9,6 +9,8 @@ class PI.forms.SignupForm extends PI.forms.Form
         new PI.forms.Email(name: 'Email')
       ]
 
+    @email.extend(mailcheck: true)
+
     @field
       name: 'username',
       value: config.username,
