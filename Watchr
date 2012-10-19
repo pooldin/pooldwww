@@ -8,7 +8,7 @@ watch('pooldwww/assets/style/auth/.*\.less$') { |md|
     system("foreman run python manage.py assets rebuild -b auth-css")
 }
 
-watch('pooldwww/assets/style/*\.less$') { |md|
+watch('pooldwww/assets/style/.*\.less$') { |md|
     system("foreman run python manage.py assets rebuild -b app-css -b auth-css")
 }
 

@@ -77,3 +77,18 @@ footer ul li {
 footer ul li:first-child {
     padding-left: 0px;
 }
+
+.error {
+  color: #BD362F;
+}
+
+input.error {
+  border-color: #BD362F;
+
+  &:focus {
+    .box-shadow(inset 0 1px 1px #F0D3D3, 0 0 8px #BD362F);
+    border-color: #BD362F;
+    outline: 0;
+    outline: thin dotted \9;
+  }
+}

@@ -1,4 +1,7 @@
-class PI.Page
+PI.pages ?= {}
+
+
+class PI.pages.Page
 
   @init: (opts) ->
     page = PI.page = new this(opts)

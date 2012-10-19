@@ -12,7 +12,7 @@
     <div class="container">
       <div class="row">
         <div class="span12 logo">
-          <h2>poold.in</h1>
+          <h2>pooldin</h1>
         </div>
       </div>
     </div>
@@ -22,22 +22,49 @@
 
 {% block content %}
 <section class="auth login">
-  <form action="" method="POST" class="content">
-    <h1>Welcome Back!</h1>
+  <form class="content" action="{{ url_for('auth.login') }}" method="POST" data-bind="submit: form.submit">
+    {% if form.error %}
+    <h1 class="error" data-bind="text: title, css: { error: form.error }">{{ form.error }}</h1>
+    {% else %}
+    <h1 data-bind="text: title, css: { error: form.error }">{{ title }}</h1>
+    {% endif %}
+
     <hr />
-    <input name="login" type="text" placeholder="Email or Username" class="text" autofocus />
-    <input name="password" type="text" placeholder="Password" class="password" />
+
+    <input name="login"
+           type="text"
+           class="text login first"
+           value="{{ form.login.data or '' }}" }}
+           data-bind="value: form.login, css: { error: form.isInvalid('login') }"
+           placeholder="Email or Username"
+           autofocus="autofocus" />
+
+    <input name="password"
+           type="password"
+           class="password last"
+           data-bind="value: form.password, css: { error: form.isInvalid('password') }"
+           placeholder="Password" />
+
     <div class="submit">
-      <input type="submit" class="btn btn-info btn-large" value="Login to your account" />
+      <input type="submit" class="btn btn-info btn-large" value="Suit up!" />
     </div>
     <label class="remember">
-      <input name="remember" type="checkbox" class="checkbox" />
-      Remember Me
+      {{ form.remember(class="checkbox") }}
+      {{ form.remember.label.text }}
     </label>
   </form>
   <a class="rounded signup" href="{{ url_for('auth.signup') }}">Don't have an account? <span>Sign up</span>.</a>
 </section>
-</div>
+{% endblock %}
+
+{% block init %}
+<script type="text/javascript">
+  PI.pages.Login.init({
+    title: {{ title|tojson|safe }},
+    error: {{ form.error|tojson|safe }},
+    login: {{ form.login.data|tojson|safe }}
+  });
+</script>
 {% endblock %}
 
 {% block footer %}

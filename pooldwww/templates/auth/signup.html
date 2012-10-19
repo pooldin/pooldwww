@@ -12,7 +12,7 @@
     <div class="container">
       <div class="row">
         <div class="span12 logo">
-          <h2>poold.in</h1>
+          <h2>pooldin</h1>
         </div>
       </div>
     </div>
@@ -22,15 +22,44 @@
 
 {% block content %}
 <section class="auth signup">
-  <form data-bind="submit: submit" class="content">
-    <h1>Create your Pooldin account.</h1>
+  <form class="content" action="{{ url_for('auth.signup') }}" method="POST" data-bind="submit: form.submit">
+    {% if form.error %}
+    <h1 class="error" data-bind="text: title, css: { error: form.error }">{{ form.error }}</h1>
+    {% else %}
+    <h1 data-bind="text: title, css: { error: form.error }">{{ title }}</h1>
+    {% endif %}
+
     <hr />
-    <input name="email" type="text" placeholder="Email" class="text" data-bind="value: email" AUTOFOCUS />
-    <input name="username" type="text" placeholder="Username" class="text" data-bind="value: username" />
-    <input name="password" type="password" placeholder="Password" class="password" data-bind="value: password" />
-    <input name="password_confirm" type="password" placeholder="Confirm Password" class="password" data-bind="value: passwordConfirm" />
+
+    <input name="email"
+           type="text"
+           class="text email"
+           value="{{ form.email.data or '' }}" }}
+           data-bind="value: form.email, css: { error: form.isInvalid('email') }"
+           placeholder="Email"
+           autofocus="autofocus" />
+
+    <input name="username"
+           type="text"
+           class="text username"
+           value="{{ form.username.data or '' }}"
+           data-bind="value: form.username, css: { error: form.isInvalid('username') }"
+           placeholder="Username" />
+
+    <input name="password"
+           type="password"
+           class="password"
+           data-bind="value: form.password, css: { error: form.isInvalid('password') }"
+           placeholder="Password" />
+
+    <input name="password_confirm"
+           type="password"
+           class="password confirm last"
+           data-bind="value: form.password_confirm, css: { error: form.isInvalid('password_confirm') }"
+           placeholder="Confirm Password" />
+
     <div class="submit">
-      <input type="submit" class="btn btn-info btn-large" value="Create your Pooldin account" />
+      <input type="submit" class="btn btn-info btn-large" value="Dive In!" />
     </div>
   </form>
   <a class="rounded signup" href="{{ url_for('auth.login') }}">Already have an account? <span>Sign in</span>.</a>
@@ -39,7 +68,14 @@
 {% endblock %}
 
 {% block init %}
-<script>PI.UserSignup.init()</script>
+<script type="text/javascript">
+  PI.pages.Signup.init({
+    title: {{ title|tojson|safe }},
+    error: {{ form.error|tojson|safe }},
+    email: {{ form.email.data|tojson|safe }}
+    username: {{ form.username.data|tojson|safe }}
+  });
+</script>
 {% endblock %}
 
 {% block footer %}

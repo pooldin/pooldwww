@@ -6,8 +6,13 @@ app-js:
         - ../assets/script/index.coffee
         - ../assets/script/extend.coffee
         - ../assets/script/schema.coffee
+        - ../assets/script/form.coffee
+        - ../assets/script/validation.coffee
         - ../assets/script/page.coffee
-        - ../assets/script/auth/signup.coffee
+        - ../assets/script/signup/form.coffee
+        - ../assets/script/signup/page.coffee
+        - ../assets/script/login/form.coffee
+        - ../assets/script/login/page.coffee
 
 app-js-min:
     output: ../static/script/pooldin/app.min.js

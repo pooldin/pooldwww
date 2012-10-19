@@ -15,7 +15,7 @@
   margin: 0px auto;
 
   h1 {
-    font-size: 1.2em;
+    font-size: 1em;
     text-align: center;
     margin: 8px 0px;
     line-height: 1.4em;
@@ -27,13 +27,24 @@
 
   form {
     padding-bottom: 15px;
+
+    input {
+      &.first {
+        margin-top: 0px;
+      }
+
+      &.last {
+        margin-bottom: 20px;
+      }
+    }
   }
 
   .text,
   .password {
     width: 274px;
     padding: 10px 12px;
-    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-bottom: 5px;
     font-size: 1.2em;
     font-weight: normal;
     -webkit-font-smoothing: antialiased;
