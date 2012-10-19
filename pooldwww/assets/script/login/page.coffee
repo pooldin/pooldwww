@@ -8,6 +8,10 @@ class PI.pages.Login extends PI.pages.Page
     })
 
     @title = ko.computed(@title, this)
+    @form.saved.add(@onLogin, this)
 
   title: ->
     return @form.error() or @config.title
+
+  onLogin: ->
+    window.location = '/'

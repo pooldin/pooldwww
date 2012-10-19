@@ -1,7 +1,9 @@
 from werkzeug.datastructures import ImmutableMultiDict
-from flask import Blueprint, redirect, request, render_template, url_for
+from flask import Blueprint, redirect, request, render_template
 from wtforms import Form, BooleanField, TextField, PasswordField
+from wtforms import ValidationError
 from wtforms.validators import Email, EqualTo, Required, Length, Regexp
+from pooldlib import exceptions as exc
 from pooldlib.api import user
 
 plan = Blueprint('auth', __name__)
@@ -56,6 +58,18 @@ class SignupForm(BaseForm):
                 self.password,
                 self.password_confirm)
 
+    def save(self):
+        if not self.validate():
+            raise ValidationError(self.error)
+        try:
+            return user.create(self.email.data, self.password.data)
+        except exc.InvalidPasswordError:
+            raise ValidationError('Invalid Password')
+        except exc.UsernameUnavailableError:
+            raise ValidationError('Username has already been taken')
+        except exc.EmailUnavailableError:
+            raise ValidationError('Email has already been taken')
+
 
 class LoginForm(BaseForm):
     remember = BooleanField('Remember Me')
@@ -65,6 +79,9 @@ class LoginForm(BaseForm):
     password = PasswordField('Password', [
         Required(message="Missing Password")
     ])
+
+    def save(self):
+        pass
 
 
 @plan.route('/login', methods=['GET'])
@@ -95,8 +112,12 @@ def login(form=None):
 @plan.route('/login', methods=['POST'])
 def login_post():
     form = LoginForm(request.form)
-    if not form.validate():
-        return form.error, 403
+
+    try:
+        form.save()
+    except ValidationError, e:
+        return e.message, 403
+
     return '', 201
 
 
@@ -131,7 +152,10 @@ def signup(form=None):
 @plan.route('/signup', methods=['POST'])
 def signup_post():
     form = SignupForm(request.form)
-    if not form.validate():
-        return signup(form=form)
-    user.create()
-    return redirect(url_for('marketing.index'))
+
+    try:
+        form.save()
+    except ValidationError, e:
+        return e.message, 403
+
+    return '', 201

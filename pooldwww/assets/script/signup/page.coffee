@@ -10,18 +10,11 @@ class PI.pages.Signup extends PI.pages.Page
       username: config.username
     })
 
+    @form.saved.add(@onSignup, this)
     @title = ko.computed(@title, this)
 
   title: ->
     return @form.error() or @config.title
 
-  submit: ->
-    return if @error()
-    data = @dumpForm()
-    jQuery.post('/signup', data, undefined, 'json')
-          .done(@onSuccess)
-          .fail(@onError)
-
-  onSuccess: (data) ->
-
-  onError: ->
+  onSignup: ->
+    window.location = '/'

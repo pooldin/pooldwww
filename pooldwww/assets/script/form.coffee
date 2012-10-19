@@ -1,11 +1,20 @@
 PI.forms ?= {}
 
 class PI.forms.Form
+  autosave: true
+  saveDelay: -1
+  responseDelay: -1
+
   constructor: (config) ->
     config ?= {}
     @config = config
     @fields = []
 
+    @autosave = @config.autosave if @config.autosave?
+    @saveDelay = @config.saveDelay if @config.saveDelay?
+    @responseDelay = @config.responseDelay if @config.responseDelay?
+
+    @submitted = new signals.Signal()
     @saving = new signals.Signal()
     @saved = new signals.Signal()
     @failed = new signals.Signal()
@@ -82,24 +91,45 @@ class PI.forms.Form
     return @errors().length < 1
 
   submit: =>
-    @save() if @validate()
+    if @validate()
+      @submitted.dispatch(this)
+      @save() if @autosave
     return this
 
   save: ->
+    return this if @_saving
+    @_saving = true
     @saving.dispatch(this)
+    endpoint = @endpoint
+    data = @todict()
     @processing(true)
-    $.post(@endpoint, @todict(), undefined, 'json')
-     .done(@onSuccess)
-     .fail(@onError)
+    callback = =>
+      $.post(endpoint, data, undefined, 'json')
+       .done(@onSuccess)
+       .fail(@onError)
+
+    callback() unless @saveDelay > -1
+    setTimeout(callback, @saveDelay) if @saveDelay > -1
+    return this
 
   onSuccess: (value, message, xhr) =>
-    @processing(false)
-    @saved.dispatch(this, value)
+    callback = =>
+      @_saving = false
+      @processing(false)
+      @saved.dispatch(this, value)
+
+    callback() if @responseDelay > -1
+    setTimeout(callback, @responseDelay) unless @responseDelay > -1
 
   onError: (xhr, message, value) =>
-    @processing(false)
-    @error(xhr.responseText or 'An error occurred')
-    @failed.dispatch(this, xhr.responseText)
+    callback = =>
+      @_saving = false
+      @processing(false)
+      @error(xhr.responseText or 'An error occurred')
+      @failed.dispatch(this, xhr.responseText)
+
+    callback() unless @responseDelay > -1
+    setTimeout(callback, @responseDelay) if @responseDelay > -1
 
   todict: (args...) ->
     fields = []

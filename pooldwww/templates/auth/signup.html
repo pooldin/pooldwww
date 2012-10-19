@@ -23,8 +23,8 @@
 {% block content %}
 <section class="auth signup">
   <form class="content" action="{{ url_for('auth.signup') }}" method="POST" data-bind="submit: form.submit">
-    {% if form.error %}
-    <h1 class="error" data-bind="text: title, css: { error: form.error }">{{ form.error }}</h1>
+    {% if error or form.error %}
+    <h1 class="error" data-bind="text: title, css: { error: form.error }">{{ error or form.error }}</h1>
     {% else %}
     <h1 data-bind="text: title, css: { error: form.error }">{{ title }}</h1>
     {% endif %}
