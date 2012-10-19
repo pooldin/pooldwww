@@ -13,5 +13,5 @@ class PI.pages.Login extends PI.pages.Page
   title: ->
     return @form.error() or @config.title
 
-  onLogin: ->
-    window.location = '/'
+  onLogin: (form, xhr) ->
+    window.location = xhr.getResponseHeader('location')

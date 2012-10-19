@@ -37,7 +37,7 @@ github = 'https://github.com/%s'
 
 links = [
     pooldin % 'pooldlib/#egg==pooldlib',
-    github % 'maxcountryman/flask-login/tarball/master#egg=Flask-Login',
+    github % 'maxcountryman/flask-login/tarball/master#egg=flask-login',
 ]
 
 
@@ -46,7 +46,8 @@ required = [
     'PyYAML==3.10',
     'gunicorn==0.14.6',
     'yuicompressor==2.4.7',
-    'pooldlib==0.1-dev.1350672749.57dc001',
+    'itsdangerous==0.17',
+    'pooldlib==0.1-dev.1350681899.e2966cf',
     'flask==0.9',
     'flask-gravatar==0.2.3',
     'flask-wtf==0.8',

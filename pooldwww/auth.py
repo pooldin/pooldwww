@@ -1,38 +1,15 @@
 from werkzeug.datastructures import ImmutableMultiDict
-from flask import Blueprint, redirect, request, render_template
-from wtforms import Form, BooleanField, TextField, PasswordField
+from flask import Blueprint, redirect, request, render_template, url_for
+from flask import make_response
+from flask.ext.login import login_user, logout_user
+from wtforms import BooleanField, TextField, PasswordField
 from wtforms import ValidationError
 from wtforms.validators import Email, EqualTo, Required, Length, Regexp
 from pooldlib import exceptions as exc
 from pooldlib.api import user
+from pooldwww.form import BaseForm
 
 plan = Blueprint('auth', __name__)
-
-
-class BaseForm(Form):
-
-    @property
-    def fields(self):
-        fields = self._fields or dict()
-        return fields.values()
-
-    @property
-    def error_list(self):
-        errors = map(lambda f: f.errors, self.fields)
-        return reduce(lambda l, r: l + r, errors)
-
-    @property
-    def error(self):
-        errors = self.error_list
-
-        if len(errors) > 0:
-            return errors[0]
-
-    def todict(self, *fields):
-        return dict([(f.name, f.data)
-                      for f in self.fields
-                      if f.data is not None and
-                         (not fields or f.name in fields)])
 
 
 class SignupForm(BaseForm):
@@ -62,13 +39,16 @@ class SignupForm(BaseForm):
         if not self.validate():
             raise ValidationError(self.error)
         try:
-            return user.create(self.email.data, self.password.data)
+            usr = user.create(self.email.data, self.password.data)
         except exc.InvalidPasswordError:
             raise ValidationError('Invalid Password')
         except exc.UsernameUnavailableError:
             raise ValidationError('Username has already been taken')
         except exc.EmailUnavailableError:
             raise ValidationError('Email has already been taken')
+
+        login_user(usr, remember=False)
+        return usr
 
 
 class LoginForm(BaseForm):
@@ -81,7 +61,19 @@ class LoginForm(BaseForm):
     ])
 
     def save(self):
-        pass
+        if not self.validate():
+            raise ValidationError(self.error)
+
+        usr = user.get(self.login.data)
+
+        if not usr:
+            raise ValidationError('Invalid login or password')
+
+        if not user.verify_password(usr, self.password.data):
+            raise ValidationError('Invalid login or password')
+
+        login_user(usr, remember=self.remember.data)
+        return usr
 
 
 @plan.route('/login', methods=['GET'])
@@ -118,12 +110,17 @@ def login_post():
     except ValidationError, e:
         return e.message, 403
 
-    return '', 201
+    url = request.args.get('next')
+    url = url or url_for('marketing.index')
+    return make_response(('', 201, [('Location', url)]))
 
 
 @plan.route('/logout')
 def logout():
-    return redirect('auth.login')
+    logout_user()
+    url = request.args.get('next')
+    url = url or url_for('marketing.index')
+    return redirect(url)
 
 
 @plan.route('/signup', methods=['GET'])
@@ -158,4 +155,6 @@ def signup_post():
     except ValidationError, e:
         return e.message, 403
 
-    return '', 201
+    url = request.args.get('next')
+    url = url or url_for('marketing.index')
+    return make_response(('', 201, [('Location', url)]))

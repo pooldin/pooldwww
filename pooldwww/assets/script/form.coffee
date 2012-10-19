@@ -116,7 +116,7 @@ class PI.forms.Form
     callback = =>
       @_saving = false
       @processing(false)
-      @saved.dispatch(this, value)
+      @saved.dispatch(this, xhr, value)
 
     callback() if @responseDelay > -1
     setTimeout(callback, @responseDelay) unless @responseDelay > -1
@@ -125,8 +125,10 @@ class PI.forms.Form
     callback = =>
       @_saving = false
       @processing(false)
-      @error(xhr.responseText or 'An error occurred')
-      @failed.dispatch(this, xhr.responseText)
+      txt = 'An error occurred'
+      txt = xhr.responseText if xhr.status is 403
+      @error(txt)
+      @failed.dispatch(this, xhr, value)
 
     callback() unless @responseDelay > -1
     setTimeout(callback, @responseDelay) if @responseDelay > -1

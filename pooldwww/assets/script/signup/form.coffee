@@ -1,5 +1,7 @@
 class PI.forms.SignupForm extends PI.forms.Form
 
+  endpoint: '/signup' + (location?.search ? '')
+
   init: (config) ->
     @field
       name: 'email',
