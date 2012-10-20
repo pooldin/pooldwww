@@ -5,10 +5,12 @@ class PI.forms.SignupForm extends PI.forms.Form
   init: (config) ->
     @field
       name: 'email',
+      label: 'Email',
       value: config.email,
       validators: [
-        new PI.forms.Required(name: 'Email'),
-        new PI.forms.Email(name: 'Email')
+        new PI.forms.Required(),
+        new PI.forms.Email()
+        new PI.forms.Remote(url: '/signup/verify/email', field: 'email')
       ]
 
     @email.extend(mailcheck: true)
@@ -20,6 +22,7 @@ class PI.forms.SignupForm extends PI.forms.Form
         new PI.forms.Required(name: 'Username'),
         new PI.forms.MinimumLength(name: 'Username', length: 2)
         new PI.forms.AlphaNumeric(name: 'Username')
+        new PI.forms.Remote(url: '/signup/verify/username', field: 'username')
       ]
 
     @field

@@ -1,13 +1,11 @@
 from flask import Blueprint, render_template
-from pooldlib.postgresql import User
 
 plan = Blueprint('marketing', __name__)
 
 
 @plan.route('/')
 def index():
-    user = User.query.first()
-    return render_template('marketing/index.html', user=user)
+    return render_template('marketing/index.html')
 
 
 @plan.route('/about')

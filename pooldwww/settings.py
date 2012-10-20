@@ -1,27 +1,22 @@
-import os
-import uuid
+from flask import Blueprint, render_template, redirect, url_for
+from flask.ext.login import login_required
 
-secret = os.environ.get('POOLDWWW_SECRET', uuid.uuid4().hex)
-salt = os.environ.get('POOLDWWW_SESSION_SALT', uuid.uuid4().hex)
-
-
-class base(object):
-    DEBUG = False
-    TESTING = False
-    DATABASE_URL = os.environ.get('DATABASE_URL')
-    DATABASE_URL = DATABASE_URL or 'postgresql://localhost/pooldin'
-    SQLALCHEMY_DATABASE_URI = DATABASE_URL
-    SECRET_KEY = secret
-    SESSION_SALT = salt
+plan = Blueprint('settings', __name__)
 
 
-class dev(base):
-    DEBUG = True
+@plan.route('/')
+@login_required
+def index():
+    return redirect(url_for('settings.profile'))
 
 
-class test(base):
-    TESTING = True
+@plan.route('/profile', methods=['GET'])
+@login_required
+def profile():
+    return render_template('settings/profile.html')
 
 
-class prod(base):
-    pass
+@plan.route('/password', methods=['GET'])
+@login_required
+def password():
+    return render_template('settings/password.html')

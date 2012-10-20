@@ -3,6 +3,12 @@ from flask.sessions import SessionInterface, SessionMixin
 from itsdangerous import URLSafeTimedSerializer, BadSignature
 
 
+def init_app(app):
+    salt = app.config['SESSION_SALT']
+    app.session_interface = ItsdangerousSessionInterface(salt=salt)
+    return app
+
+
 class ItsdangerousSession(CallbackDict, SessionMixin):
 
     def __init__(self, initial=None):

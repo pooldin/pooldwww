@@ -1,0 +1,55 @@
+{% extends "document/right_article.html" %}
+
+{% block secondary %}
+{% include 'settings/nav.html' %}
+{% endblock %}
+
+{% block article %}
+<form class="profile" action="{{ url_for('settings.profile') }}" method="PUT" data-bind="submit: form.submit">
+  <h1>Your Profile</h1>
+  <hr />
+  <label>
+    <span class="field">Name</span>
+    <input name="name"
+           type="text"
+           class="text name first"
+           value="{{ user.name or '' }}" }}
+           data-bind="value: form.name, css: { error: form.isInvalid('name') }"
+           placeholder="Name"
+           autofocus="autofocus" />
+  </label>
+  <label>
+    <span class="field">Username</span>
+    <input name="username"
+           type="text"
+           class="text username first"
+           value="{{ user.username or '' }}" }}
+           data-bind="value: form.username, css: { error: form.isInvalid('username') }"
+           placeholder="Username" />
+  </label>
+  <label>
+    <span class="field">Email</span>
+    <input name="email"
+           type="text"
+           class="text email first"
+           value="{{ user.email or '' }}" }}
+           data-bind="value: form.email, css: { error: form.isInvalid('email') }"
+           placeholder="Email" />
+  </label>
+  <div class="submit">
+    <input type="submit" class="btn btn-info btn-large" value="Save" />
+  </div>
+</form>
+{% endblock %}
+
+{% block init %}
+<script type="text/javascript">
+  PI.pages.Settings.init({
+    form: new PI.forms.ProfileForm({
+      name: {{ user.name|tojson|safe }}
+      username: {{ user.username|tojson|safe }}
+      email: {{ user.email|tojson|safe }}
+    })
+  });
+</script>
+{% endblock %}

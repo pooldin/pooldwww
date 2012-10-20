@@ -2,28 +2,64 @@ class PI.forms.Validator
 
   constructor: (config) ->
     config ?= {}
-    @name = 'Field'
+    @config = config
     @name = config.name if config.name
-    @message = config.message if config.message
+    @name ?= 'Field'
 
-  error: (value) ->
-    return @errors(value)[0]
-
-  errors: (value) ->
-    return [] if @isValid(value)
-    return [@getMessage()]
-
-  isValid: ->
-    return True
-
-  getMessage: ->
-    return @message or @defaultMessage()
+  message: ->
+    return @config.message or @defaultMessage()
 
   defaultMessage: ->
     return "Invalid #{@name.toLowerCase()}"
 
-  value: (value) ->
-    return value
+  validate: (value) ->
+    deferred = @isValid(value)
+
+    unless deferred is true or deferred is false
+      return deferred
+
+    return $.Deferred (resp) =>
+      resp.resolve(@message()) if deferred is false
+      resp.resolve() unless deferred is false
+
+  isValid: ->
+    return true
+
+
+class PI.forms.Remote extends PI.forms.Validator
+
+  constructor: (config) ->
+    super(config)
+    @field = config.field if config.field?
+    throw 'Field name must be specified' unless @field?
+
+    @url = @config.url if @config.url?
+    throw 'Missing server url' unless @url
+
+    @method = @config.method if @config.method?
+    @method ?= 'POST'
+
+  isValid: (value) ->
+    response = $.Deferred()
+    data = {}
+    data[@field] = value
+    request = $.ajax(@url, {
+      context: this,
+      data: data,
+      dataType: 'json',
+      type: @method
+    })
+
+    request.done ->
+      response.resolve()
+
+    request.error (xhr) ->
+      if xhr.status is 403 and xhr.responseText
+        response.resolve([xhr.responseText])
+      else
+        response.resolve(@message())
+
+    return response
 
 
 class PI.forms.Required extends PI.forms.Validator

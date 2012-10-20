@@ -45,6 +45,46 @@ header h2 a:hover {
     margin-bottom: 10px;
     background-color: #fff;
     padding: 10px 20px;
+    min-height: 300px;
+}
+
+.nav-list {
+  .border-radius(5px 0 0 5px);
+  .box-shadow(inset 0 1px 0 rgba(255, 255, 255, 0.6),
+                    0 0 1px rgba(80, 84, 92, 0.45),
+                    0 1px 2px rgba(80, 84, 92, 0.2));
+
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65);
+  margin-top: 25px;
+  margin-right: -35px;
+  padding: 15px 0px;
+  background: rgba(255, 255, 255, 0.25);
+  height: 100%;
+
+  & > li {
+    margin: 4px 0px;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    padding: 0px;
+
+    &:hover {
+      border-top: 1px solid rgba(156, 165, 181, 0.25);
+      border-bottom: 1px solid #CACDD3;
+      box-shadow: 1px 0 rgba(156, 165, 181, 0.08);
+      background-image: -webkit-gradient(linear, left top, left bottom, from(white), to(#F0F2F5));
+      background-image: -moz-linear-gradient(top, white, #F0F2F5);
+      background-image: -o-linear-gradient(top, white, #F0F2F5);
+    }
+
+    & > a {
+      margin: 0px;
+      padding: 3px 0px 3px 10px;
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
 }
 
 footer {

@@ -39,7 +39,9 @@ class SignupForm(BaseForm):
         if not self.validate():
             raise ValidationError(self.error)
         try:
-            usr = user.create(self.email.data, self.password.data)
+            usr = user.create(self.username.data,
+                              self.password.data,
+                              email=self.email.data)
         except exc.InvalidPasswordError:
             raise ValidationError('Invalid Password')
         except exc.UsernameUnavailableError:
@@ -158,3 +160,29 @@ def signup_post():
     url = request.args.get('next')
     url = url or url_for('marketing.index')
     return make_response(('', 201, [('Location', url)]))
+
+
+@plan.route('/signup/verify/email', methods=['POST'])
+def signup_verify_email():
+    email = request.form.get('email')
+
+    if not email:
+        return 'Invalid email', 403
+
+    if user.email_exists(email):
+        return 'Email already taken', 403
+
+    return '', 201
+
+
+@plan.route('/signup/verify/username', methods=['POST'])
+def signup_verify_username():
+    username = request.form.get('username')
+
+    if not username:
+        return 'Invalid username', 403
+
+    if user.username_exists(username):
+        return 'Username already taken', 403
+
+    return '', 201
