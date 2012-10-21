@@ -12,7 +12,7 @@
     <div class="container">
       <div class="row">
         <div class="span12 logo">
-          <h2>pooldin</h1>
+          <h2><a href="{{ url_for('marketing.index') }}">pooldin</a></h1>
         </div>
       </div>
     </div>
@@ -40,8 +40,8 @@
            autofocus="autofocus" />
 
     <div class="mailcheck" style="display: none" data-bind="with: form, visible: form.email.mailcheck">
+      <button tabindex="50001" type="button" class="pull-left close" data-bind="click: email.mailcheck.reject">×</button>
       Did you mean <a tabindex="50000" href="javascript:void(0)" data-bind="text: email.mailcheck, click: email.mailcheck.accept"></a>?
-      <button tabindex="50001" type="button" class="close" data-bind="click: email.mailcheck.reject">×</button>
     </div>
 
     <input name="username"

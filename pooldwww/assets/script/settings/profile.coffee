@@ -29,6 +29,8 @@ class PI.forms.ProfileForm extends PI.forms.Form
         new PI.forms.Remote(url: '/verify/email', field: 'email')
       ]
 
+    @email.extend(mailcheck: true)
+
 
 class PI.pages.ProfilePage extends PI.pages.Page
 

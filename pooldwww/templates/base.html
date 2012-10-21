@@ -13,7 +13,7 @@
     {% block meta -%}
     {% endblock -%}
 
-    <title>{% block title %}Poold.in{% endblock %}</title>
+    <title>{% block title %}Pooldin{% endblock %}</title>
 
     {% block favicon -%}
     <link rel="shortcut icon" href="/static/favicon.ico" />
@@ -46,7 +46,7 @@
         <div class="container">
           <div class="row">
             <div class="span4 logo">
-              <h2><a href="{{ url_for('marketing.index') }}">poold.in</a></h1>
+              <h2><a href="{{ url_for('marketing.index') }}">pooldin</a></h1>
             </div>
             <div class="span8 profile-menu">
               {% if user and user.is_authenticated() %}
@@ -106,7 +106,7 @@
               <li><a href="{{ url_for('marketing.contact') }}">Contact</a></li>
               <li><a href="{{ url_for('legal.terms') }}">Terms of Service</a></li>
             </ul>
-            <a class="pull-right" href="{{ url_for('marketing.index') }}">&copy; Pooldin</a>
+            <a class="pull-right" href="{{ url_for('marketing.index') }}">&copy; pooldin</a>
           </div>
         </div>
       </div>
