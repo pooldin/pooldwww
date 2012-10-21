@@ -6,35 +6,41 @@
 
 {% block article %}
 <form class="profile" action="{{ url_for('settings.profile') }}" method="PUT" data-bind="submit: form.submit">
-  <h1>Your Profile</h1>
+  <h1 data-bind="text: title, css: { error: error, success: success }">Your Profile</h1>
   <hr />
   <label>
-    <span class="field">Name</span>
-    <input name="name"
-           type="text"
+    <span
+      class="field"
+      data-bind="text: form.name.title, css: { error: form.isInvalid('name') }">
+      Name
+    </span>
+    <input type="text"
            class="text name first"
            value="{{ user.name or '' }}" }}
            data-bind="value: form.name, css: { error: form.isInvalid('name') }"
-           placeholder="Name"
            autofocus="autofocus" />
   </label>
   <label>
-    <span class="field">Username</span>
-    <input name="username"
-           type="text"
-           class="text username first"
+    <span
+      class="field"
+      data-bind="text: form.username.title, css: { error: form.isInvalid('username') }">
+      Username
+    </span>
+    <input type="text"
+           class="text username"
            value="{{ user.username or '' }}" }}
-           data-bind="value: form.username, css: { error: form.isInvalid('username') }"
-           placeholder="Username" />
+           data-bind="value: form.username, css: { error: form.isInvalid('username') }" />
   </label>
   <label>
-    <span class="field">Email</span>
-    <input name="email"
-           type="text"
-           class="text email first"
+    <span
+      class="field"
+      data-bind="text: form.email.title, css: { error: form.isInvalid('email') }">
+      Email
+    </span>
+    <input type="text"
+           class="text email last"
            value="{{ user.email or '' }}" }}
-           data-bind="value: form.email, css: { error: form.isInvalid('email') }"
-           placeholder="Email" />
+           data-bind="value: form.email, css: { error: form.isInvalid('email') }" />
   </label>
   <div class="submit">
     <input type="submit" class="btn btn-info btn-large" value="Save" />
@@ -44,12 +50,10 @@
 
 {% block init %}
 <script type="text/javascript">
-  PI.pages.Settings.init({
-    form: new PI.forms.ProfileForm({
-      name: {{ user.name|tojson|safe }}
-      username: {{ user.username|tojson|safe }}
-      email: {{ user.email|tojson|safe }}
-    })
+  PI.pages.ProfilePage.init({
+    name: {{ user.name|tojson|safe }},
+    username: {{ user.username|tojson|safe }},
+    email: {{ user.email|tojson|safe }}
   });
 </script>
 {% endblock %}

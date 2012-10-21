@@ -6,7 +6,7 @@ from flask.ext.assets import Environment
 from flask.ext.gravatar import Gravatar
 from pooldlib.postgresql import db
 
-from pooldwww import DIR, media, auth, legal, marketing
+from pooldwww import DIR, media, auth, legal, marketing, verify
 from pooldwww.app import login, session, settings
 from pooldwww.settings import plan as settings_plan
 
@@ -51,6 +51,7 @@ def init_gravatar(app):
 def init_blueprints(app):
     app.register_blueprint(media.plan)
     app.register_blueprint(auth.plan)
+    app.register_blueprint(verify.plan, url_prefix='/verify')
     app.register_blueprint(settings_plan, url_prefix='/settings')
     app.register_blueprint(legal.plan)
     app.register_blueprint(marketing.plan)

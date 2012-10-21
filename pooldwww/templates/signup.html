@@ -23,8 +23,8 @@
 {% block content %}
 <section class="auth signup">
   <form class="content" action="{{ url_for('auth.signup') }}" method="POST" data-bind="submit: form.submit">
-    {% if error or form.error %}
-    <h1 class="error" data-bind="text: title, css: { error: form.error }">{{ error or form.error }}</h1>
+    {% if error %}
+    <h1 class="error" data-bind="text: title, css: { error: form.error }">{{ error }}</h1>
     {% else %}
     <h1 data-bind="text: title, css: { error: form.error }">{{ title }}</h1>
     {% endif %}
@@ -34,7 +34,7 @@
     <input name="email"
            type="text"
            class="text email"
-           value="{{ form.email.data or '' }}" }}
+           value="{{ email }}" }}
            data-bind="value: form.email, css: { error: form.isInvalid('email') }"
            placeholder="Email"
            autofocus="autofocus" />
@@ -47,7 +47,7 @@
     <input name="username"
            type="text"
            class="text username"
-           value="{{ form.username.data or '' }}"
+           value="{{ username }}"
            data-bind="value: form.username, css: { error: form.isInvalid('username') }"
            placeholder="Username" />
 
@@ -76,9 +76,9 @@
 <script type="text/javascript">
   PI.pages.Signup.init({
     title: {{ title|tojson|safe }},
-    error: {{ form.error|tojson|safe }},
-    email: {{ form.email.data|tojson|safe }},
-    username: {{ form.username.data|tojson|safe }}
+    error: {{ error|default('')|tojson|safe }},
+    email: {{ email|default('')|tojson|safe }},
+    username: {{ username|default('')|tojson|safe }}
   });
 </script>
 {% endblock %}

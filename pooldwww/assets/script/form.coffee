@@ -15,24 +15,35 @@ class PI.forms.Field
       @value = ko.observable(config.value) if config.value?
       @value = ko.observable(@default) unless config.value?
 
+    @remote = config.remote if config.remote?
+    @remote = @name unless @remote?
     @label = config.label if config.label?
     @default = config.default if config.default?
     @error = ko.observable()
-    @value.error = @error
     @errors = ko.observableArray([])
     @errors.subscribe(@onErrors, this)
-    @value.errors = @errors
     @valid = ko.observable()
-    @value.valid = @valid
     @validating = ko.observable()
-    @value.validating = @validating
-    @value.field = this
-    @value.validate = => @validate()
-
+    @title = ko.computed(@title, this)
+    @disabled = ko.observable(false)
     @validators = config.validators ? []
     (validator.name = @label for validator in @validators) if @label
 
+    @value.error = @error
+    @value.errors = @errors
+    @value.valid = @valid
+    @value.validating = @validating
+    @value.field = this
+    @value.title = @title
+    @value.validate = => @validate()
+    @value.empty = => @empty()
+    @value.reset = (args...) =>
+      @reset.apply(this, args)
+
     @value.subscribe(@onChanged, this)
+
+  title: ->
+    return @error() or @label or @name
 
   validate: (value, validators, deferred) ->
     deferred ?= $.Deferred()
@@ -63,22 +74,33 @@ class PI.forms.Field
     return deferred
 
   onErrors: (errors) ->
+    return if @disabled()
     errors ?= @errors()
     error = errors?[0]
     @error(error)
     @valid(not error?)
 
   onChanged: (value) ->
-    return if @validating() or @defaulting
+    return if @validating() or @disabled()
     value ?= @value()
 
     if @default? and ((not value?) or value is '')
-      @defaulting = true
+      @disabled(true)
       value = @default
       @value(@default)
-      @defaulting = false
+      @disabled(false)
 
     @validate(value)
+
+  empty: ->
+    @reset(undefined)
+
+  reset: (value) ->
+    @disabled(true)
+    @value(value) unless arguments.length < 1
+    @errors([])
+    @error(undefined)
+    @disabled(false)
 
 
 class PI.forms.Form
@@ -152,6 +174,18 @@ class PI.forms.Form
       deferred.resolve(@invalids().length < 1)
     return deferred
 
+  empty: ->
+    @[field].empty() for field in @fields
+    return this
+
+  reset: (values) ->
+    values ?= {}
+    for field in @fields
+      hasValue = values.hasOwnProperty(field)
+      @[field].reset(values[field]) if hasValue
+      @[field].reset() unless hasValue
+    return this
+
   submit: =>
     @validate().done (valid) =>
       return unless valid
@@ -208,7 +242,8 @@ class PI.forms.Form
       return dict if fields.length < 1
 
     for field in fields
+      key = @[field].field.remote
       value = @[field]()
-      dict[field] = value if value?
+      dict[key] = value if value?
 
     return dict

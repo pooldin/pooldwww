@@ -6,8 +6,8 @@ class PI.forms.Validator
     @name = config.name if config.name
     @name ?= 'Field'
 
-  message: ->
-    return @config.message or @defaultMessage()
+  message: (msg) ->
+    return @config.message or msg or @defaultMessage()
 
   defaultMessage: ->
     return "Invalid #{@name.toLowerCase()}"
@@ -55,7 +55,7 @@ class PI.forms.Remote extends PI.forms.Validator
 
     request.error (xhr) ->
       if xhr.status is 403 and xhr.responseText
-        response.resolve([xhr.responseText])
+        response.resolve(@message(xhr.responseText))
       else
         response.resolve(@message())
 
@@ -157,6 +157,15 @@ class PI.forms.Equal extends PI.forms.Validator
 
   isValid: (value) ->
     return @callback() is value
+
+
+class PI.forms.NotEqual extends PI.forms.Equal
+
+  defaultMessage: ->
+    return "#{@name} cannot be equal"
+
+  isValid: (value) ->
+    return not super(value)
 
 
 class PI.forms.ContainsNumber extends PI.forms.Regex

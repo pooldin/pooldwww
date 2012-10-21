@@ -23,8 +23,8 @@
 {% block content %}
 <section class="auth login">
   <form class="content" action="{{ url_for('auth.login') }}" method="POST" data-bind="submit: form.submit">
-    {% if error or form.error %}
-    <h1 class="error" data-bind="text: title, css: { error: form.error }">{{ error or form.error }}</h1>
+    {% if error %}
+    <h1 class="error" data-bind="text: title, css: { error: form.error }">{{ error }}</h1>
     {% else %}
     <h1 data-bind="text: title, css: { error: form.error }">{{ title }}</h1>
     {% endif %}
@@ -34,7 +34,7 @@
     <input name="login"
            type="text"
            class="text login first"
-           value="{{ form.login.data or '' }}" }}
+           value="{{ login or '' }}" }}
            data-bind="value: form.login, css: { error: form.isInvalid('login') }"
            placeholder="Email or Username"
            autofocus="autofocus" />
@@ -49,8 +49,8 @@
       <input type="submit" class="btn btn-info btn-large" value="Suit up!" />
     </div>
     <label class="remember">
-      {{ form.remember(class="checkbox") }}
-      {{ form.remember.label.text }}
+      <input name="remember" type="checkbox" class="checkbox" />
+      Remember Me
     </label>
   </form>
   <a class="rounded signup" href="{{ url_for('auth.signup') }}">Don't have an account? <span>Sign up</span>.</a>
@@ -61,8 +61,7 @@
 <script type="text/javascript">
   PI.pages.Login.init({
     title: {{ title|tojson|safe }},
-    error: {{ form.error|tojson|safe }},
-    login: {{ form.login.data|tojson|safe }}
+    login: {{ login|default('')|tojson|safe }}
   });
 </script>
 {% endblock %}

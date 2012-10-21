@@ -50,7 +50,6 @@ required = [
     'pooldlib==0.1-dev.1350681899.e2966cf',
     'flask==0.9',
     'flask-gravatar==0.2.3',
-    'flask-wtf==0.8',
     'flask-login',
     'flask-assets',
 ]
