@@ -1,6 +1,9 @@
 import os
 import uuid
 
+database = os.environ.get('DATABASE_URL')
+database = os.environ.get('POOLDWWW_DATABASE_URL', database)
+database = database or 'postgresql://localhost/pooldin'
 secret = os.environ.get('POOLDWWW_SECRET', uuid.uuid4().hex)
 salt = os.environ.get('POOLDWWW_SESSION_SALT', uuid.uuid4().hex)
 whitelist = os.environ.get('POOLDWWW_WHITELIST', '')
@@ -20,9 +23,7 @@ def init_app(app):
 class base(object):
     DEBUG = False
     TESTING = False
-    DATABASE_URL = os.environ.get('DATABASE_URL')
-    DATABASE_URL = DATABASE_URL or 'postgresql://localhost/pooldin'
-    SQLALCHEMY_DATABASE_URI = DATABASE_URL
+    SQLALCHEMY_DATABASE_URI = database
     SECRET_KEY = secret
     SESSION_SALT = salt
     WHITELIST = whitelist
