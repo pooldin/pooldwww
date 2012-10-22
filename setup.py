@@ -32,7 +32,7 @@ if py > (2, 7) or py < (2, 7):
 
 
 # Specify non-pypi dependency links (i.e. locate poold.in and github packages)
-pooldin = 'http://%s:%s@code.poold.in/pypi/%s/' % (username, password, '%s')
+pooldin = 'http://%s:%s@code.poold.in/pypi/%s' % (username, password, '%s')
 github = 'https://github.com/%s'
 
 links = [
