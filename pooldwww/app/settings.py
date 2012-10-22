@@ -8,7 +8,7 @@ secret = os.environ.get('POOLDWWW_SECRET', uuid.uuid4().hex)
 salt = os.environ.get('POOLDWWW_SESSION_SALT', uuid.uuid4().hex)
 whitelist = os.environ.get('POOLDWWW_WHITELIST', '')
 whitelist = whitelist.split('|')
-blacklist = os.environ.get('POOLDWWW_BLACKLIST')
+blacklist = os.environ.get('POOLDWWW_BLACKLIST', '')
 blacklist = blacklist.split('|')
 
 
