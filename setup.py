@@ -33,11 +33,10 @@ if py > (2, 7) or py < (2, 7):
 
 # Specify non-pypi dependency links (i.e. locate poold.in and github packages)
 pooldin = 'http://%s:%s@code.poold.in/pypi/%s' % (username, password, '%s')
-github = 'https://github.com/%s'
 
 links = [
     pooldin % 'pooldlib/#egg==pooldlib',
-    github % 'maxcountryman/flask-login/tarball/master#egg=flask-login',
+    pooldin % 'flask-login/#egg==flask-login',
 ]
 
 
