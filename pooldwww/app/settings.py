@@ -3,6 +3,10 @@ import uuid
 
 secret = os.environ.get('POOLDWWW_SECRET', uuid.uuid4().hex)
 salt = os.environ.get('POOLDWWW_SESSION_SALT', uuid.uuid4().hex)
+whitelist = os.environ.get('POOLDWWW_WHITELIST', '')
+whitelist = whitelist.split('|')
+blacklist = os.environ.get('POOLDWWW_BLACKLIST')
+blacklist = blacklist.split('|')
 
 
 def init_app(app):
@@ -21,6 +25,8 @@ class base(object):
     SQLALCHEMY_DATABASE_URI = DATABASE_URL
     SECRET_KEY = secret
     SESSION_SALT = salt
+    WHITELIST = whitelist
+    BLACKLIST = blacklist
 
 
 class dev(base):

@@ -7,7 +7,7 @@ from flask.ext.gravatar import Gravatar
 from pooldlib.postgresql import db
 
 from pooldwww import DIR, media, auth, legal, marketing, verify
-from pooldwww.app import login, session, settings
+from pooldwww.app import login, session, settings, restrict
 from pooldwww.settings import plan as settings_plan
 
 
@@ -20,6 +20,7 @@ def create_app(*args, **kw):
     login.init_app(app)
     init_gravatar(app)
     init_blueprints(app)
+    restrict.init_app(app)
     return app
 
 
