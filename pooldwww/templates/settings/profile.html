@@ -46,6 +46,12 @@
       <button tabindex="50001" type="button" class="pull-left close" data-bind="click: email.mailcheck.reject">×</button>
     </div>
   </label>
+  {% set url = user.email or 'anonymous@poold.in' %}
+  {% set url = url | gravatar(size=32) %}
+  <label class="gravatar">
+    <img alt="{{ user.name }}" src="{{ url }}" />
+    <a target="_blank" href="http://gravatar.com/">Change your avatar at Gravatar.com.</a>
+  </label>
   <div class="submit">
     <input type="submit" class="btn btn-info btn-large" value="Save" />
   </div>
