@@ -20,6 +20,19 @@
 </header>
 {% endblock -%}
 
+{% block flash %}
+{% if get_flashed_messages() -%}
+<section id="flash-message" class="auth login">
+  {% for message in get_flashed_messages() %}
+  <div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    {{ message }}
+  </div>
+  {% endfor %}
+</section>
+{% endif -%}
+{% endblock %}
+
 {% block content %}
 <section class="auth signup">
   <form class="content" action="{{ url_for('auth.signup') }}" method="POST" data-bind="submit: form.submit">

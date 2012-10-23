@@ -1,12 +1,12 @@
 {% extends "document/right_article.html" %}
 
 {% block secondary %}
-{% include 'settings/nav.html' %}
+{% include 'account/nav.html' %}
 {% endblock %}
 
 {% block article %}
-<form class="profile" action="{{ url_for('settings.profile') }}" method="PUT" data-bind="submit: form.submit">
-  <h1 data-bind="text: title, css: { error: error, success: success }">Your Profile</h1>
+<form class="profile" action="{{ url_for('account.details') }}" method="PUT" data-bind="submit: form.submit">
+  <h1 data-bind="text: title, css: { error: error, success: success }">Account Details</h1>
   <hr />
   <label>
     <span
@@ -60,7 +60,7 @@
 
 {% block init %}
 <script type="text/javascript">
-  PI.pages.ProfilePage.init({
+  PI.pages.AccountDetailsPage.init({
     name: {{ user.name|tojson|safe }},
     username: {{ user.username|tojson|safe }},
     email: {{ user.email|tojson|safe }}

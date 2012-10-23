@@ -6,9 +6,8 @@ from flask.ext.assets import Environment
 from flask.ext.gravatar import Gravatar
 from pooldlib.postgresql import db
 
-from pooldwww import DIR, media, auth, legal, marketing, verify
+from pooldwww import DIR, account, media, auth, legal, marketing, verify
 from pooldwww.app import login, session, settings, restrict
-from pooldwww.settings import plan as settings_plan
 
 
 def create_app(*args, **kw):
@@ -53,6 +52,6 @@ def init_blueprints(app):
     app.register_blueprint(media.plan)
     app.register_blueprint(auth.plan)
     app.register_blueprint(verify.plan, url_prefix='/verify')
-    app.register_blueprint(settings_plan, url_prefix='/settings')
+    app.register_blueprint(account.plan, url_prefix='/account')
     app.register_blueprint(legal.plan)
     app.register_blueprint(marketing.plan)

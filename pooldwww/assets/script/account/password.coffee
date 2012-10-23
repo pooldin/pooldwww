@@ -1,6 +1,6 @@
 class PI.forms.ChangePasswordForm extends PI.forms.Form
 
-  endpoint: '/settings/password'
+  endpoint: '/account/password'
 
   init: (config) ->
     @saved.add(@empty, this)

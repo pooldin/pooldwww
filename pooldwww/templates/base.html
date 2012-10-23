@@ -52,10 +52,10 @@
               {% if user and user.is_authenticated() %}
               {% set url = user.email or 'anonymous@poold.in' %}
               {% set url = url | gravatar(size=17) %}
-              <a class="btn-border" href="{{ url_for('settings.profile') }}">
+              <a class="btn-border" href="{{ url_for('account.details') }}">
                 <span class="btn">
                   <span class="avatar" style="background-image: url({{ url }})"></span>
-                  Profile
+                  {{ user.display_name }}
                 </span>
               </a>
               <a class="btn-border" href="{{ url_for('auth.logout') }}">
@@ -80,14 +80,16 @@
     {% if get_flashed_messages() -%}
     <section id="flash-message">
       <div class="container">
-        {% for message in get_flashed_messages() %}
-        <div class="span4">
-          <div class="alert alert-error">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            {{ message }}
+        <div class="row">
+          {% for message in get_flashed_messages() %}
+          <div class="span4">
+            <div class="alert alert-error">
+              <button type="button" class="close" data-dismiss="alert">×</button>
+              {{ message }}
+            </div>
           </div>
+          {% endfor %}
         </div>
-        {% endfor %}
       </div>
     </section>
     {% endif -%}

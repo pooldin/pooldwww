@@ -13,8 +13,8 @@ app-js:
         - ../assets/script/signup/page.coffee
         - ../assets/script/login/form.coffee
         - ../assets/script/login/page.coffee
-        - ../assets/script/settings/profile.coffee
-        - ../assets/script/settings/password.coffee
+        - ../assets/script/account/details.coffee
+        - ../assets/script/account/password.coffee
 
 app-js-min:
     output: ../static/script/pooldin/app.min.js

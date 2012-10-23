@@ -5,22 +5,22 @@ from pooldlib.exceptions import InvalidPasswordError
 from pooldwww.auth import validate_username, validate_email
 from pooldwww.exceptions import ValidationError
 
-plan = Blueprint('settings', __name__)
+plan = Blueprint('account', __name__)
 
 
 @plan.route('/')
 @login_required
 def index():
-    return redirect(url_for('settings.profile'))
+    return redirect(url_for('account.details'))
 
 
-@plan.route('/profile', methods=['GET'])
+@plan.route('/details', methods=['GET'])
 @login_required
-def profile():
-    return render_template('settings/profile.html')
+def details():
+    return render_template('account/details.html')
 
 
-@plan.route('/profile', methods=['POST'])
+@plan.route('/details', methods=['POST'])
 @login_required
 def profile_update():
     usr = current_user._get_current_object()
@@ -46,7 +46,7 @@ def profile_update():
 @plan.route('/password', methods=['GET'])
 @login_required
 def password():
-    return render_template('settings/password.html')
+    return render_template('account/password.html')
 
 
 @plan.route('/password', methods=['POST'])

@@ -1,6 +1,6 @@
-class PI.forms.ProfileForm extends PI.forms.Form
+class PI.forms.AccountDetailsForm extends PI.forms.Form
 
-  endpoint: '/settings/profile'
+  endpoint: '/account/details'
 
   init: (config) ->
     @field
@@ -32,21 +32,21 @@ class PI.forms.ProfileForm extends PI.forms.Form
     @email.extend(mailcheck: true)
 
 
-class PI.pages.ProfilePage extends PI.pages.Page
+class PI.pages.AccountDetailsPage extends PI.pages.Page
 
   constructor: (config) ->
     @error = ko.observable(false)
     @success = ko.observable(false)
     @title = ko.computed(@title, this)
 
-    @form = new PI.forms.ProfileForm(config)
+    @form = new PI.forms.AccountDetailsForm(config)
     @form.saved.add(@onSaved, this)
     @form.failed.add(@onFailed, this)
 
   title: ->
-    return 'Your Profile was Saved Successfully!' if @success() is true
-    return 'Your Profile was not Saved!' if @error() is true
-    return 'Your Profile'
+    return 'Account Details were Saved Successfully!' if @success() is true
+    return 'Account Details were not Saved!' if @error() is true
+    return 'Account Details'
 
   onSaved: ->
     @success(true)
