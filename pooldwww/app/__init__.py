@@ -20,7 +20,7 @@ def create_app(*args, **kw):
     login.init_app(app)
     init_gravatar(app)
     init_blueprints(app)
-    #restrict.init_app(app)
+    restrict.init_app(app)
     return app
 
 

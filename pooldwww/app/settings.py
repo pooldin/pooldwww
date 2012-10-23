@@ -7,9 +7,9 @@ database = database or 'postgresql://localhost/pooldin'
 secret = os.environ.get('POOLDWWW_SECRET', uuid.uuid4().hex)
 salt = os.environ.get('POOLDWWW_SESSION_SALT', uuid.uuid4().hex)
 whitelist = os.environ.get('POOLDWWW_WHITELIST', '')
-whitelist = whitelist.split('|')
+whitelist = filter(lambda ip: ip, whitelist.split('|'))
 blacklist = os.environ.get('POOLDWWW_BLACKLIST', '')
-blacklist = blacklist.split('|')
+blacklist = filter(lambda ip: ip, blacklist.split('|'))
 
 
 def init_app(app):

@@ -31,6 +31,9 @@ class RestrictMiddleware(object):
         if ips:
             ip = ips[0].strip()
 
+        if not ip:
+            ip = environ.get('REMOTE_ADDR') or None
+
         allowed = self.is_whitelisted(ip)
         allowed = allowed and not self.is_blacklisted(ip)
 
