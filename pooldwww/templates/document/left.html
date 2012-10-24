@@ -13,3 +13,20 @@
   </div>
 </div>
 {% endblock %}
+
+{% block footer -%}
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="span10">
+        <ul>
+          <li><a href="{{ url_for('marketing.about') }}">About</a></li>
+          <li><a href="{{ url_for('marketing.contact') }}">Contact</a></li>
+          <li><a href="{{ url_for('legal.terms') }}">Terms of Service</a></li>
+        </ul>
+        <a class="pull-right" href="{{ url_for('marketing.index') }}">&copy; poold inc.</a>
+      </div>
+    </div>
+  </div>
+</footer>
+{% endblock -%}

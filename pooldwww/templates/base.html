@@ -42,34 +42,32 @@
 
     {% block header -%}
     <header>
-      <div class="global">
-        <div class="container">
-          <div class="row">
-            <div class="span4 logo">
-              <h2><a href="{{ url_for('marketing.index') }}">pooldin</a></h1>
-            </div>
-            <div class="span8 profile-menu">
-              {% if user and user.is_authenticated() %}
-              {% set url = user.email or 'anonymous@poold.in' %}
-              {% set url = url | gravatar(size=17) %}
-              <a class="btn-border" href="{{ url_for('account.details') }}">
-                <span class="btn">
+      <div class="navbar">
+        <div class="navbar-inner navbar-fixed-top">
+          <div class="container">
+            <h2><a class="brand" href="{{ url_for('marketing.index') }}">pooldin</a></h1>
+            <ul class="nav pull-right">
+            {% if user and user.is_authenticated() %}
+            {% set url = user.email or 'anonymous@poold.in' %}
+            {% set url = url | gravatar(size=17) %}
+              <li>
+                <a class="btn" href="{{ url_for('account.details') }}">
                   <span class="avatar" style="background-image: url({{ url }})"></span>
                   {{ user.display_name }}
-                </span>
-              </a>
-              <a class="btn-border" href="{{ url_for('auth.logout') }}">
-                <span class="btn">Logout</span>
-              </a>
+                </a>
+              </li>
+              <li>
+                <a class="btn" href="{{ url_for('auth.logout') }}">Logout</a>
+              </li>
               {% else %}
-              <a class="btn-border" href="{{ url_for('auth.signup') }}">
-                <span class="btn">Signup</span>
-              </a>
-              <a class="btn-border" href="{{ url_for('auth.login') }}">
-                <span class="btn">Login</span>
-              </a>
-              {% endif %}
-            </div>
+              <li>
+                <a class="btn" href="{{ url_for('auth.signup') }}">Signup</a>
+              </li>
+              <li>
+                <a class="btn" href="{{ url_for('auth.login') }}">Login</a>
+              </li>
+            {% endif %}
+            </ul>
           </div>
         </div>
       </div>

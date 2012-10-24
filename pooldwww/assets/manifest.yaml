@@ -31,7 +31,7 @@ app-css:
         - filters: less
           debug: false
           contents:
-            - ../assets/style/app/index.less
+            - ../assets/style/index.less
 
 app-css-min:
     output: ../static/style/pooldin/app.min.css
@@ -48,7 +48,7 @@ auth-css:
         - filters: less
           debug: false
           contents:
-            - ../assets/style/auth/index.less
+            - ../assets/style/auth.less
 
 auth-css-min:
     output: ../static/style/pooldin/auth.min.css

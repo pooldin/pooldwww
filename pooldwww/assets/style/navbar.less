@@ -1,0 +1,72 @@
+.navbar {
+  margin-bottom: 50px;
+}
+
+.navbar-inner {
+  padding-top: 5px;
+  min-height: 36px;
+
+  h2 {
+    margin: 0px 0px 0px 20px;
+  }
+
+  a.brand {
+    padding: 0px;
+    line-height: 1.5em;
+  }
+
+  .nav {
+    font-size: 0.9em;
+    margin-right: 0px;
+
+    & > li {
+      .inline-block;
+      .border-radius(13px);
+
+      border: solid 1px #6FB2D6;
+      background-color: #6FB2D6;
+      margin-left: 4px;
+      margin-right: 4px;
+
+      & > a {
+        padding: 4px 10px;
+        &:hover {
+          background-color: #ddd;
+        }
+      }
+    }
+  }
+
+  a.btn {
+    .border-radius(13px);
+    color: #218BC4;
+    border-width: 0px;
+    padding: 5px 12px;
+    margin-top: 0px;
+  }
+
+  .avatar {
+    .inline-block;
+    .border-radius(3px);
+    width: 18px;
+    height: 18px;
+    margin-top: -2px;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 979px) {
+  .navbar {
+    margin-bottom: 7px;
+  }
+}
+
+@media (max-width: 979px) {
+  .navbar {
+    margin-bottom: 7px;
+  }
+  .navbar-fixed-top {
+    margin-bottom: 0px;
+  }
+}

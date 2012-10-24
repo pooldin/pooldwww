@@ -1,6 +1,6 @@
-@import "../variables.less";
-@import "../mixins.less";
-@import "../global.less";
+@import "variables.less";
+@import "mixins.less";
+@import "global.less";
 
 .global {
   margin-top: 50px;
@@ -83,7 +83,7 @@
   .remember {
     font-size: 0.87em;
     color: #666;
-    width: 100px;
+    width: 105px;
     cursor: pointer;
     margin-top: -5px;
 
@@ -103,6 +103,28 @@
 
     span {
       text-decoration: underline;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .global {
+    margin-top: 5px;
+  }
+
+  .auth {
+    width: 280px;
+    margin: 0px auto;
+
+    .text,
+    .password {
+      width: 215px;
+    }
+
+    .submit {
+      input {
+        width: 200px;
+      }
     }
   }
 }

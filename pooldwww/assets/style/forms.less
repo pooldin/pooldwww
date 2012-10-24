@@ -14,12 +14,34 @@ label {
 
 input.text,
 input.password {
-  width: 95%;
+  width: 715px;
+  display: block;
   padding: 10px 12px;
   margin-bottom: 25px;
   font-size: 1.5em;
   font-weight: normal;
   -webkit-font-smoothing: antialiased;
+}
+
+@media (min-width: 1200px) {
+  input.text,
+  input.password {
+    width: 905px;
+  }
+}
+
+@media (max-width: 979px) {
+  input.text,
+  input.password {
+    width: 535px;
+  }
+}
+
+@media (max-width: 767px) {
+  input.text,
+  input.password {
+    width: 90%;
+  }
 }
 
 .mailcheck {
