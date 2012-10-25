@@ -33,6 +33,7 @@ class base(object):
     BLACKLIST = blacklist
     SESSION_COOKIE_NAME = 'poold_session'
     CSRF_COOKIE_NAME = 'poold_csrf'
+    CSRF_DISABLE = False
 
 
 class dev(base):
