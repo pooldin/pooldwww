@@ -29,13 +29,16 @@ class Emailer(object):
                        sender=app.config.get('EMAIL_SENDER'),
                        **kw)
 
-    def send_text(self, text, recipients):
-        message = self.message(text=text, recipients=recipients)
-        return message.send()
+    def send_text(self, subject, text, recipients):
+        return self.message(subject=subject,
+                            text=text,
+                            recipients=recipients).send()
 
-    def send_html(self, html, text, recipients):
-        message = self.message(html=html, text=text, recipients=recipients)
-        return message.send()
+    def send_html(self, subject, html, text, recipients):
+        return self.message(subject=subject,
+                            html=html,
+                            text=text,
+                            recipients=recipients).send()
 
 
 class Message(object):
@@ -43,6 +46,7 @@ class Message(object):
     def __init__(self, host, port, username=None,
                                    password=None,
                                    sender=None,
+                                   subject=None,
                                    text=None,
                                    html=None,
                                    recipients=None):
@@ -64,6 +68,7 @@ class Message(object):
         self.port = port
         self.username = username
         self.password = password
+        self.subject = subject
         self.sender = sender
         self.text = text
         self.html = html
@@ -80,6 +85,7 @@ class Message(object):
             email = Email(self.host, self.port, sender=self.sender)
             email.set_content(self.text)
 
+        email.set_subject(self.subject)
         email.add_recipients(self.recipients)
 
         try:

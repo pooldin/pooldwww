@@ -72,6 +72,7 @@ def reset_email(usr):
 
     url = '%s?t=%s' % (url, token.value)
 
+    subject = 'Pooldin Password Reset'
     text = app.jinja_env.get_template('email/reset.txt')
     text = text.render(url=url, email=token.user.email)
-    return app.emailer.send_text(text, [usr.email])
+    return app.emailer.send_text(subject, text, [usr.email])
