@@ -1,0 +1,48 @@
+{% extends "auth/base.html" %}
+
+{% block content %}
+<section class="auth reset" data-bind="css: { sent: sent }">
+  <form class="content" action="{{ url_for('auth.reset') }}" method="POST" data-bind="submit: form.submit">
+    {% if error %}
+    <h1 class="error" data-bind="text: title, css: { error: form.error }">{{ error }}</h1>
+    {% else %}
+    <h1 data-bind="text: title, css: { error: form.error }">{{ title }}</h1>
+    {% endif %}
+
+    <hr />
+
+    <div data-bind="visible: !sent()">
+      <input name="email"
+             type="text"
+             class="text email"
+             value="{{ email }}" }}
+             data-bind="value: form.email, css: { error: form.isInvalid('email') }"
+             placeholder="Email"
+             autofocus="autofocus" />
+
+      <div class="mailcheck" style="display: none" data-bind="with: form, visible: form.email.mailcheck">
+        <button tabindex="50001" type="button" class="pull-left close" data-bind="click: email.mailcheck.reject">×</button>
+        Did you mean <a tabindex="50000" href="javascript:void(0)" data-bind="text: email.mailcheck, click: email.mailcheck.accept"></a>?
+      </div>
+
+      <div class="submit">
+        <input type="submit" class="btn btn-info btn-large" value="Help a swimmer out!" />
+      </div>
+    </div>
+    <div class="success" style="display: none" data-bind="visible: sent">
+      Email Sent. Follow the instructions to reset your password.
+    </div>
+  </form>
+  <a class="rounded signup" href="{{ url_for('auth.login') }}">Know your password? <span>Sign in</span>.</a>
+</section>
+</div>
+{% endblock %}
+
+{% block init %}
+<script type="text/javascript">
+  PI.pages.PasswordResetPage.init({
+    title: {{ title|tojson|safe }},
+    email: {{ email|default('')|tojson|safe }}
+  });
+</script>
+{% endblock %}

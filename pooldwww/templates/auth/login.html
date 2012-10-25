@@ -1,37 +1,4 @@
-{%- import 'macros/asset.html' as assets with context -%}
-{% extends "document/full.html" %}
-
-{% block style %}
-{{ assets.style('lib-css-min', debug='lib-css') }}
-{{ assets.style('auth-css-min', debug='auth-css') }}
-{% endblock %}
-
-{% block header -%}
-<header>
-  <div class="global">
-    <div class="container">
-      <div class="row">
-        <div class="span12 logo">
-          <h2><a href="{{ url_for('marketing.index') }}">pooldin</a></h1>
-        </div>
-      </div>
-    </div>
-  </div>
-</header>
-{% endblock -%}
-
-{% block flash %}
-{% if get_flashed_messages() -%}
-<section id="flash-message" class="auth login">
-  {% for message in get_flashed_messages() %}
-  <div class="alert alert-error">
-    <button type="button" class="close" data-dismiss="alert">×</button>
-    {{ message }}
-  </div>
-  {% endfor %}
-</section>
-{% endif -%}
-{% endblock %}
+{% extends "auth/base.html" %}
 
 {% block content %}
 <section class="auth login">
@@ -62,7 +29,10 @@
       <input type="submit" class="btn btn-info btn-large" value="Suit up!" />
     </div>
     <label class="remember">
-      <input name="remember" type="checkbox" class="checkbox" />
+      <input name="remember"
+             type="checkbox"
+             class="checkbox"
+             data-bind="checked: form.remember" />
       Remember Me
     </label>
   </form>
@@ -72,12 +42,9 @@
 
 {% block init %}
 <script type="text/javascript">
-  PI.pages.Login.init({
+  PI.pages.LoginPage.init({
     title: {{ title|tojson|safe }},
     login: {{ login|default('')|tojson|safe }}
   });
 </script>
-{% endblock %}
-
-{% block footer %}
 {% endblock %}

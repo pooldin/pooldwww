@@ -14,6 +14,12 @@
   width: 340px;
   margin: 0px auto;
 
+  &.flash {
+    .alert {
+      margin-bottom: 0px;
+    }
+  }
+
   h1 {
     font-size: 1em;
     text-align: center;
@@ -103,6 +109,26 @@
 
     span {
       text-decoration: underline;
+    }
+  }
+
+  &.reset {
+    .content {
+      min-height: auto;
+    }
+
+    .submit {
+      margin-top: 25px;
+    }
+
+    .success {
+      text-align: center;
+      color: inherit;
+      padding: 10px 0px;
+      font-size: 1.1em;
+    }
+
+    &.change {
     }
   }
 }

@@ -4,8 +4,6 @@ import uuid
 database = os.environ.get('DATABASE_URL')
 database = os.environ.get('POOLDWWW_DATABASE_URL', database)
 database = database or 'postgresql://localhost/pooldin'
-secret = os.environ.get('POOLDWWW_SECRET', uuid.uuid4().hex)
-salt = os.environ.get('POOLDWWW_SESSION_SALT', uuid.uuid4().hex)
 whitelist = os.environ.get('POOLDWWW_WHITELIST', '')
 whitelist = filter(lambda ip: ip, whitelist.split('|'))
 blacklist = os.environ.get('POOLDWWW_BLACKLIST', '')
@@ -24,8 +22,13 @@ class base(object):
     DEBUG = False
     TESTING = False
     SQLALCHEMY_DATABASE_URI = database
-    SECRET_KEY = secret
-    SESSION_SALT = salt
+    SECRET_KEY = os.environ.get('POOLDWWW_SECRET', uuid.uuid4().hex)
+    SESSION_SALT = os.environ.get('POOLDWWW_SESSION_SALT', uuid.uuid4().hex)
+    EMAIL_HOST = os.environ.get('POOLDWWW_EMAIL_HOST')
+    EMAIL_PORT = os.environ.get('POOLDWWW_EMAIL_PORT')
+    EMAIL_USERNAME = os.environ.get('POOLDWWW_EMAIL_USERNAME')
+    EMAIL_PASSWORD = os.environ.get('POOLDWWW_EMAIL_PASSWORD')
+    EMAIL_SENDER = os.environ.get('POOLDWWW_EMAIL_SENDER')
     WHITELIST = whitelist
     BLACKLIST = blacklist
 

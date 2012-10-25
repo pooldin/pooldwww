@@ -16,7 +16,7 @@ def load_user(user_id):
         user_id = long(user_id)
     except (ValueError, TypeError):
         return
-    return user.get(user_id)
+    return user.get_by_id(user_id)
 
 
 def user_context():

@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, request, url_for
 from flask.ext.login import login_required, current_user
 from pooldlib.api import user
 from pooldlib.exceptions import InvalidPasswordError
-from pooldwww.auth import validate_username, validate_email
+from pooldwww.auth.validate import validate_username, validate_email
 from pooldwww.exceptions import ValidationError
 
 plan = Blueprint('account', __name__)

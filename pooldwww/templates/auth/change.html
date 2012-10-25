@@ -1,0 +1,44 @@
+{% extends "auth/base.html" %}
+
+{% block content %}
+<section class="auth reset change">
+  <form class="content" action="{{ url_for('auth.reset') }}" method="POST" data-bind="submit: form.submit">
+    {% if error %}
+    <h1 class="error" data-bind="text: title, css: { error: form.error }">{{ error }}</h1>
+    {% else %}
+    <h1 data-bind="text: title, css: { error: form.error }">{{ title }}</h1>
+    {% endif %}
+
+    <hr />
+    <p>Enter a new password to reset the password on your account</p>
+
+    <input name="password"
+           type="password"
+           class="text password"
+           data-bind="value: form.password, css: { error: form.isInvalid('password') }"
+           placeholder="New Password"
+           autofocus="autofocus" />
+
+    <input name="password_confirm"
+           type="password"
+           class="password confirm"
+           data-bind="value: form.password_confirm, css: { error: form.isInvalid('password_confirm') }"
+           placeholder="Confirm Password" />
+
+    <div class="submit">
+      <input type="submit" class="btn btn-info btn-large" value="Suit Up!" />
+    </div>
+  </form>
+  <a class="rounded signup" href="{{ url_for('auth.login') }}">Know your password? <span>Sign in</span>.</a>
+</section>
+</div>
+{% endblock %}
+
+{% block init %}
+<script type="text/javascript">
+  PI.pages.PasswordChangePage.init({
+    title: {{ title|tojson|safe }},
+    token: {{ token|tojson|safe }}
+  });
+</script>
+{% endblock %}

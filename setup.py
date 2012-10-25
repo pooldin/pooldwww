@@ -46,7 +46,7 @@ required = [
     'gunicorn==0.14.6',
     'yuicompressor==2.4.7',
     'itsdangerous==0.17',
-    'pooldlib==0.1-dev.1350681899.e2966cf',
+    'pooldlib==0.1',
     'flask==0.9',
     'flask-gravatar==0.2.3',
     'flask-login==0.1.3-json',

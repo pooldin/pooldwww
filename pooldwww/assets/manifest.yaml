@@ -9,10 +9,9 @@ app-js:
         - ../assets/script/form.coffee
         - ../assets/script/validation.coffee
         - ../assets/script/page.coffee
-        - ../assets/script/signup/form.coffee
-        - ../assets/script/signup/page.coffee
-        - ../assets/script/login/form.coffee
-        - ../assets/script/login/page.coffee
+        - ../assets/script/auth/signup.coffee
+        - ../assets/script/auth/login.coffee
+        - ../assets/script/auth/reset.coffee
         - ../assets/script/account/details.coffee
         - ../assets/script/account/password.coffee
 
