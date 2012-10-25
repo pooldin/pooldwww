@@ -6,6 +6,7 @@
 
 {% block article %}
 <form class="profile" action="{{ url_for('account.details') }}" method="PUT" data-bind="submit: form.submit">
+  <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
   <h1 data-bind="text: title, css: { error: error, success: success }">Account Details</h1>
   <hr />
   <label>

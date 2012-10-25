@@ -51,6 +51,7 @@ required = [
     'flask-gravatar==0.2.3',
     'flask-login==0.1.3-json',
     'flask-assets',
+    'flask-seasurf',
 ]
 
 

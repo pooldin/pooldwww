@@ -174,6 +174,9 @@ class PI.forms.Form
       deferred.resolve(@invalids().length < 1)
     return deferred
 
+  csrf: ->
+    return $('head:first > meta[name=csrf-token]:first').attr('content')
+
   empty: ->
     @[field].empty() for field in @fields
     return this
@@ -197,19 +200,29 @@ class PI.forms.Form
     return this if @_saving
     @_saving = true
     @saving.dispatch(this)
+    csrf = @csrf()
+    headers = {}
+    headers['X-CSRFToken'] = csrf if csrf
     endpoint = @endpoint
     data = @todict()
     @processing(true)
     callback = =>
-      $.post(endpoint, data, undefined, 'json')
-       .done(@onSuccess)
-       .fail(@onError)
+      $.ajax({
+        context: this,
+        data: data,
+        dataType: 'json',
+        error: @onError,
+        headers: headers,
+        success: @onSuccess,
+        type: 'POST'
+        url: endpoint
+      })
 
     callback() unless @saveDelay > -1
     setTimeout(callback, @saveDelay) if @saveDelay > -1
     return this
 
-  onSuccess: (value, message, xhr) =>
+  onSuccess: (value, message, xhr) ->
     callback = =>
       @_saving = false
       @processing(false)
@@ -218,7 +231,7 @@ class PI.forms.Form
     callback() if @responseDelay > -1
     setTimeout(callback, @responseDelay) unless @responseDelay > -1
 
-  onError: (xhr, message, value) =>
+  onError: (xhr, message, value) ->
     callback = =>
       @_saving = false
       @processing(false)

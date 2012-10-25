@@ -5,9 +5,9 @@ from pooldlib.api import user
 plan = Blueprint('verify', __name__)
 
 
-@plan.route('/password', methods=['POST'])
+@plan.route('/password', methods=['GET'])
 def password():
-    password = request.form.get('password')
+    password = request.args.get('password')
 
     if not password:
         return 'Invalid password', 403
@@ -23,9 +23,9 @@ def password():
     return '', 201
 
 
-@plan.route('/email', methods=['POST'])
+@plan.route('/email', methods=['GET'])
 def email():
-    email = request.form.get('email')
+    email = request.args.get('email')
 
     if not email:
         return 'Invalid email', 403
@@ -41,9 +41,9 @@ def email():
     return '', 201
 
 
-@plan.route('/username', methods=['POST'])
+@plan.route('/username', methods=['GET'])
 def username():
-    username = request.form.get('username')
+    username = request.args.get('username')
 
     if not username:
         return 'Invalid username', 403

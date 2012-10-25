@@ -3,6 +3,7 @@
 {% block content %}
 <section class="auth reset" data-bind="css: { sent: sent }">
   <form class="content" action="{{ url_for('auth.reset') }}" method="POST" data-bind="submit: form.submit">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
     {% if error %}
     <h1 class="error" data-bind="text: title, css: { error: form.error }">{{ error }}</h1>
     {% else %}

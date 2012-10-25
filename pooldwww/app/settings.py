@@ -31,6 +31,8 @@ class base(object):
     EMAIL_SENDER = os.environ.get('POOLDWWW_EMAIL_SENDER')
     WHITELIST = whitelist
     BLACKLIST = blacklist
+    SESSION_COOKIE_NAME = 'poold_session'
+    CSRF_COOKIE_NAME = 'poold_csrf'
 
 
 class dev(base):

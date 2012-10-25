@@ -37,7 +37,7 @@ class PI.forms.Remote extends PI.forms.Validator
     throw 'Missing server url' unless @url
 
     @method = @config.method if @config.method?
-    @method ?= 'POST'
+    @method ?= 'GET'
 
   isValid: (value) ->
     response = $.Deferred()

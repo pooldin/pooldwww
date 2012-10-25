@@ -4,6 +4,7 @@ from webassets.loaders import YAMLLoader
 from flask import Flask
 from flask.ext.assets import Environment
 from flask.ext.gravatar import Gravatar
+from flask.ext.seasurf import SeaSurf
 from pooldlib.postgresql import db
 
 from pooldwww import DIR, account, media, auth, legal, marketing, verify
@@ -18,6 +19,7 @@ def create_app(*args, **kw):
     init_database(app)
     login.init_app(app)
     init_gravatar(app)
+    init_seasurf(app)
     init_blueprints(app)
     email.init_app(app)
     restrict.init_app(app)
@@ -39,6 +41,10 @@ def init_assets(app):
 def init_database(app):
     db.init_connection(app.config)
     app.teardown_appcontext(lambda r: db.session.remove())
+
+
+def init_seasurf(app):
+    app.csrf = SeaSurf(app)
 
 
 def init_gravatar(app):
