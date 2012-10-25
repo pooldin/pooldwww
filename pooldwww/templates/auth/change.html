@@ -34,6 +34,12 @@
 </div>
 {% endblock %}
 
+{% block footer %}
+<footer class="auth change">
+  {% include "auth/footer.html" %}
+</footer>
+{% endblock %}
+
 {% block init %}
 <script type="text/javascript">
   PI.pages.PasswordChangePage.init({

@@ -36,8 +36,15 @@
       Remember Me
     </label>
   </form>
-  <a class="rounded signup" href="{{ url_for('auth.signup') }}">Don't have an account? <span>Sign up</span>.</a>
+  <a class="rounded signup" href="{{ url_for('auth.signup') }}">Signup</a>
+  <a class="rounded reset" href="{{ url_for('auth.reset') }}">Reset Password</a>
 </section>
+{% endblock %}
+
+{% block footer %}
+<footer class="auth login">
+  {% include "auth/footer.html" %}
+</footer>
 {% endblock %}
 
 {% block init %}

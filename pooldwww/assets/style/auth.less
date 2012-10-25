@@ -3,7 +3,7 @@
 @import "global.less";
 
 .global {
-  margin-top: 50px;
+  margin-top: 5px;
 }
 
 .logo {
@@ -58,7 +58,8 @@
 
   .remember,
   .submit,
-  .signup {
+  .signup,
+  .reset {
     text-align: center;
     margin: 0px auto;
   }
@@ -98,7 +99,10 @@
     }
   }
 
-  a.signup {
+  a.signup,
+  a.login,
+  a.reset {
+    text-align: center;
     display: block;
     margin-top: 20px;
     padding: 15px 20px;
@@ -127,30 +131,66 @@
       padding: 10px 0px;
       font-size: 1.1em;
     }
+  }
+  &.signup a.login,
+  &.signup a.reset,
+  &.login a.signup,
+  &.login a.reset {
+    float: left;
+    width: 110px;
+    margin: 0px 5px;
+  }
+  &.signup a.reset,
+  &.login a.reset {
+    margin-left: 20px;
+  }
+}
 
-    &.change {
+footer.auth {
+  margin-top: 10px;
+  width: auto;
+  .navbar-inner {
+    border: 0;
+    background-image: none;
+    background: transparent;
+    text-align: center;
+    .box-shadow(none);
+    .nav {
+      float: none;
+      width: 300px;
+      margin: 0px auto;
     }
   }
 }
 
-@media (max-width: 480px) {
-  .global {
-    margin-top: 5px;
-  }
-
-  .auth {
-    width: 280px;
-    margin: 0px auto;
-
-    .text,
-    .password {
-      width: 215px;
+@media (max-height: 510px) {
+  footer.auth.login {
+    .navbar-fixed-bottom {
+      position: static;
     }
+  }
+}
 
-    .submit {
-      input {
-        width: 200px;
-      }
+@media (max-height: 617px) {
+  footer.auth.signup {
+    .navbar-fixed-bottom {
+      position: static;
+    }
+  }
+}
+
+@media (max-height: 430px) {
+  footer.auth.reset {
+    .navbar-fixed-bottom {
+      position: static;
+    }
+  }
+}
+
+@media (max-height: 548px) {
+  footer.auth.change {
+    .navbar-fixed-bottom {
+      position: static;
     }
   }
 }

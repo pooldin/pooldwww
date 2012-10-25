@@ -47,9 +47,16 @@
       <input type="submit" class="btn btn-info btn-large" value="Dive In!" />
     </div>
   </form>
-  <a class="rounded signup" href="{{ url_for('auth.login') }}">Already have an account? <span>Sign in</span>.</a>
+  <a class="rounded login" href="{{ url_for('auth.login') }}">Login</a>
+  <a class="rounded reset" href="{{ url_for('auth.reset') }}">Reset Password</a>
 </section>
 </div>
+{% endblock %}
+
+{% block footer %}
+<footer class="auth signup">
+  {% include "auth/footer.html" %}
+</footer>
 {% endblock %}
 
 {% block init %}
