@@ -194,3 +194,34 @@ footer.auth {
     }
   }
 }
+
+@media (max-width: 480px) {
+  .auth {
+    width: 280px;
+
+    .text,
+    .password,
+    .submit input {
+      width: 90%;
+    }
+
+    &.signup,
+    &.login {
+      a.signup,
+      a.login,
+      a.reset {
+        width: 80px;
+      }
+    }
+    a.signup,
+    a.login {
+      line-height: 40px;
+    }
+  }
+  footer.auth {
+    .navbar .nav > li > a {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+  }
+}
