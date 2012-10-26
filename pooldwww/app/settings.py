@@ -34,6 +34,7 @@ class base(object):
     SESSION_COOKIE_NAME = 'poold_session'
     CSRF_COOKIE_NAME = 'poold_csrf'
     CSRF_DISABLE = False
+    GOOGLE_ANALYTICS_ID = os.environ.get('POOLDWWW_GOOGLE_ANALYTICS_ID')
 
 
 class dev(base):
