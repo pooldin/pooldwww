@@ -1,6 +1,7 @@
 @import "variables.less";
 @import "mixins.less";
 @import "global.less";
+@import "modal.less";
 
 .global {
   margin-top: 5px;
@@ -32,6 +33,7 @@
   }
 
   form {
+    position: relative;
     padding-bottom: 15px;
 
     input {
@@ -42,6 +44,9 @@
       &.last {
         margin-bottom: 20px;
       }
+    }
+    .pending-overlay {
+      position: absolute;
     }
   }
 
@@ -72,7 +77,9 @@
       width: 250px;
       padding: 10px 20px;
       font-size: 1em;
-      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.53);
+      &.btn-info {
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.53);
+      }
     }
   }
 

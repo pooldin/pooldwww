@@ -60,11 +60,16 @@ class PI.pages.PasswordResetPage extends PI.pages.Page
     })
 
     @title = ko.computed(@title, this)
+    @submitText = ko.computed(@submitText, this)
     @sent = ko.observable(false)
     @form.saved.add(@onSaved, this)
 
   title: ->
     return @form.error() or @config.title
+
+  submitText: ->
+    return 'Sending Email...' if @form.saving()
+    return 'Help a swimmer out!'
 
   onSaved: (form, xhr) ->
     @sent(true)
@@ -80,6 +85,7 @@ class PI.pages.PasswordChangePage extends PI.pages.Page
     })
 
     @title = ko.computed(@title, this)
+    @submitText = ko.computed(@submitText, this)
     @form.saved.add(@onSaved, this)
 
   title: ->
@@ -87,3 +93,7 @@ class PI.pages.PasswordChangePage extends PI.pages.Page
 
   onSaved: (form, xhr) ->
     window.location = xhr.getResponseHeader('location')
+
+  submitText: ->
+    return 'Resetting and Logging in...' if @form.saving()
+    return 'Suit up!'

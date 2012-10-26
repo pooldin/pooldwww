@@ -4,6 +4,7 @@
 <section class="auth signup">
   <form class="content" action="{{ url_for('auth.signup') }}" method="POST" data-bind="submit: form.submit">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
+    <div class="pending-overlay" style="display: none" data-bind="visible: form.processing"></div>
     {% if error %}
     <h1 class="error" data-bind="text: title, css: { error: form.error }">{{ error }}</h1>
     {% else %}
@@ -45,7 +46,10 @@
            placeholder="Confirm Password" />
 
     <div class="submit">
-      <input type="submit" class="btn btn-info btn-large" value="Dive In!" />
+      <input type="submit"
+             class="btn btn-info btn-large"
+             value="Dive In!"
+             data-bind="value: submitText, css: { 'btn-info': !form.saving() }" />
     </div>
   </form>
   <a class="rounded login" href="{{ url_for('auth.login') }}">Login</a>

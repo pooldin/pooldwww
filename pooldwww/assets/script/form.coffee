@@ -118,10 +118,10 @@ class PI.forms.Form
     @responseDelay = @config.responseDelay if @config.responseDelay?
 
     @submitted = new signals.Signal()
-    @saving = new signals.Signal()
     @saved = new signals.Signal()
     @failed = new signals.Signal()
 
+    @saving = ko.observable(false)
     @processing = ko.observable(false)
     @invalids = ko.observableArray([])
     @invalid = ko.observable()
@@ -197,9 +197,8 @@ class PI.forms.Form
     return this
 
   save: ->
-    return this if @_saving
-    @_saving = true
-    @saving.dispatch(this)
+    return this if @saving()
+    @saving(true)
     csrf = @csrf()
     headers = {}
     headers['X-CSRFToken'] = csrf if csrf
@@ -224,21 +223,21 @@ class PI.forms.Form
 
   onSuccess: (value, message, xhr) ->
     callback = =>
-      @_saving = false
       @processing(false)
       @saved.dispatch(this, xhr, value)
+      setTimeout((() => @saving(false)), 2)
 
     callback() if @responseDelay > -1
     setTimeout(callback, @responseDelay) unless @responseDelay > -1
 
   onError: (xhr, message, value) ->
     callback = =>
-      @_saving = false
       @processing(false)
       txt = 'An error occurred'
       txt = xhr.responseText if xhr.status is 403
       @error(txt)
       @failed.dispatch(this, xhr, value)
+      @saving(false)
 
     callback() unless @responseDelay > -1
     setTimeout(callback, @responseDelay) if @responseDelay > -1

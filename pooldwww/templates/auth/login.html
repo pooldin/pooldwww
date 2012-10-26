@@ -4,6 +4,7 @@
 <section class="auth login">
   <form class="content" action="{{ url_for('auth.login') }}" method="POST" data-bind="submit: form.submit">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
+    <div class="pending-overlay" style="display: none" data-bind="visible: form.processing"></div>
     {% if error %}
     <h1 class="error" data-bind="text: title, css: { error: form.error }">{{ error }}</h1>
     {% else %}
@@ -27,7 +28,10 @@
            placeholder="Password" />
 
     <div class="submit">
-      <input type="submit" class="btn btn-info btn-large" value="Suit up!" />
+      <input type="submit"
+             class="btn btn-info btn-large"
+             value="Suit up!"
+             data-bind="value: submitText, css: { 'btn-info': !form.saving() }" />
     </div>
     <label class="remember">
       <input name="remember"

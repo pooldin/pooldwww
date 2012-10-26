@@ -28,10 +28,15 @@ class PI.pages.LoginPage extends PI.pages.Page
     })
 
     @title = ko.computed(@title, this)
-    @form.saved.add(@onLogin, this)
+    @submitText = ko.computed(@submitText, this)
+    @form.saved.add(@onSaved, this)
 
   title: ->
     return @form.error() or @config.title
 
-  onLogin: (form, xhr) ->
+  submitText: ->
+    return 'Logging in...' if @form.saving()
+    return 'Suit up!'
+
+  onSaved: (form, xhr) ->
     window.location = xhr.getResponseHeader('location')

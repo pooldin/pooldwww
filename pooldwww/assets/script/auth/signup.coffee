@@ -59,11 +59,16 @@ class PI.pages.SignupPage extends PI.pages.Page
       username: config.username
     })
 
-    @form.saved.add(@onSignup, this)
     @title = ko.computed(@title, this)
+    @submitText = ko.computed(@submitText, this)
+    @form.saved.add(@onSignup, this)
 
   title: ->
     return @form.error() or @config.title
+
+  submitText: ->
+    return 'Creating account...' if @form.saving()
+    return 'Dive In!'
 
   onSignup: (form, xhr) ->
     window.location = xhr.getResponseHeader('location')

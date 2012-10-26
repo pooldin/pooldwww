@@ -27,7 +27,10 @@
            placeholder="Confirm Password" />
 
     <div class="submit">
-      <input type="submit" class="btn btn-info btn-large" value="Suit Up!" />
+      <input type="submit"
+             class="btn btn-info btn-large"
+             value="Suit up!"
+             data-bind="value: submitText, css: { 'btn-info': !form.saving() }" />
     </div>
   </form>
   <a class="rounded signup" href="{{ url_for('auth.login') }}">Know your password? <span>Sign in</span>.</a>
