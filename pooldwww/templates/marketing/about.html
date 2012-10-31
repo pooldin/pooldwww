@@ -16,7 +16,7 @@
 <ul class="media-list avatars">
   <li class="media">
     <div class="pull-left">
-      <img class="pulse media-object" alt="Kevin Berger" src="{{ url_for('static', filename='img/avatar/kevin.png') }}" />
+      <img class="media-object" alt="Kevin Berger" src="{{ url_for('static', filename='img/avatar/kevin.png') }}" />
     </div>
     <div class="media-body">
       <h4 class="media-heading">Kevin Berger</h4>
@@ -27,7 +27,7 @@
   </li>
   <li class="media">
     <div class="pull-left">
-      <img class="pulse media-object" alt="Sung Kim" src="{{ url_for('static', filename='img/avatar/sung.png') }}" />
+      <img class="media-object" alt="Sung Kim" src="{{ url_for('static', filename='img/avatar/sung.png') }}" />
     </div>
     <div class="media-body">
       <h4 class="media-heading">Sung Kim</h4>
@@ -38,7 +38,7 @@
   </li>
   <li class="media">
     <div class="pull-left">
-      <img class="pulse media-object" alt="Patrick Murck" src="{{ url_for('static', filename='img/avatar/patrick.png') }}" />
+      <img class="media-object" alt="Patrick Murck" src="{{ url_for('static', filename='img/avatar/patrick.png') }}" />
     </div>
     <div class="media-body">
       <h4 class="media-heading">Patrick Murck</h4>
@@ -49,7 +49,7 @@
   </li>
   <li class="media">
     <div class="pull-left">
-      <img class="pulse media-object" alt="Brian Oldfield" src="{{ url_for('static', filename='img/avatar/brian.png') }}" />
+      <img class="media-object" alt="Brian Oldfield" src="{{ url_for('static', filename='img/avatar/brian.png') }}" />
     </div>
     <div class="media-body">
       <h4 class="media-heading">Brian Oldfield</h4>
@@ -60,7 +60,7 @@
   </li>
   <li class="media">
     <div class="pull-left">
-      <img class="pulse media-object" alt="Collin Watson" src="{{ url_for('static', filename='img/avatar/collin.png') }}" />
+      <img class="media-object" alt="Collin Watson" src="{{ url_for('static', filename='img/avatar/collin.png') }}" />
     </div>
     <div class="media-body">
       <h4 class="media-heading">Collin Watson</h4>
@@ -71,7 +71,7 @@
   </li>
   <li class="media">
     <div class="pull-left">
-      <img class="pulse media-object" alt="Lloyd" src="{{ url_for('static', filename='img/avatar/lloyd.png') }}" />
+      <img class="media-object" alt="Lloyd" src="{{ url_for('static', filename='img/avatar/lloyd.png') }}" />
     </div>
     <div class="media-body">
       <h4 class="media-heading">Lloyd</h4>
@@ -83,7 +83,7 @@
   </li>
   <li class="media">
     <div class="pull-left">
-      <img class="pulse media-object" alt="Benny" src="{{ url_for('static', filename='img/avatar/benny.png') }}" />
+      <img class="media-object" alt="Benny" src="{{ url_for('static', filename='img/avatar/benny.png') }}" />
     </div>
     <div class="media-body">
       <h4 class="media-heading">Benny</h4>
@@ -100,11 +100,10 @@
 <script type="text/javascript">
 (function() {
   var popovers = $('li.media img.media-object');
-  var onhoverin = function() { $(this).addClass('pulse'); };
-  var onhoverout = function() { $(this).removeClass('pulse'); };
+  var addPulse = function() { $(this).addClass('pulse'); };
 
   $('li.media').each(function() {
-      $(this).find('img.media-object').hover(onhoverin, onhoverout).popover({
+      $(this).find('img.media-object').on('click tap', addPulse).popover({
         title: $(this).find('.media-heading').html(),
         content: $(this).find('.media-content').html(),
         html: true,
@@ -115,7 +114,7 @@
   $(document).bind('click tap', function(e) {
     $('li.media').each(function() {
       if ($(this).find(e.target).length < 1)
-          $(this).find('img.media-object').popover('hide');
+          $(this).find('img.media-object').removeClass('pulse').popover('hide');
     });
   });
 })();

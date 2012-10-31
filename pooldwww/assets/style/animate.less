@@ -19,16 +19,19 @@
   100% { transform: scale(1); }
 }
 
-.pulse {
+.pulse,
+.pulse-hover {
   -webkit-animation-name: pulse;
   -moz-animation-name: pulse;
   -o-animation-name: pulse;
   animation-name: pulse;
-  &:hover {
-    .backface-visibility(hidden);
-    .animation-duration(0.6s);
-    .animation-delay(0s);
-    .animation-timing-function(ease);
-    .animation-fill-mode(both);
-  }
+}
+
+.pulse,
+.pulse-hover:hover {
+  .backface-visibility(hidden);
+  .animation-duration(0.6s);
+  .animation-delay(0s);
+  .animation-timing-function(ease);
+  .animation-fill-mode(both);
 }

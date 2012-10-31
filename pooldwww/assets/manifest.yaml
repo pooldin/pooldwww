@@ -75,6 +75,8 @@ lib-js:
     output: ../static/script/lib.js
     contents:
         - ../static/script/jquery-1.8.0.js
+        - ../static/script/jquery-touch.js
+        - ../static/script/jquery-vmouse.js
         - ../static/script/moment-1.7.0.js
         - ../static/script/knockout-2.1.0.js
         - ../static/script/knockout.mapping-2.3.2.js
