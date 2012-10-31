@@ -112,7 +112,7 @@
       });
   });
 
-  $(document).click(function(e) {
+  $(document).bind('click tap', function(e) {
     $('li.media').each(function() {
       if ($(this).find(e.target).length < 1)
           $(this).find('img.media-object').popover('hide');

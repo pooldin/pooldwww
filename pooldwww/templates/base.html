@@ -120,6 +120,8 @@
     {% block script -%}
     {{ assets.script('lib-js-min', debug='lib-js') }}
     {{ assets.script('app-js-min', debug='app-js') }}
+    <script src="{{ url_for('static', filename='script/jquery-touch.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/jquery-vmouse.js') }}"></script>
     {% endblock -%}
 
     {% block init -%}
