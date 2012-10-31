@@ -102,12 +102,17 @@
   var popovers = $('li.media img.media-object');
   var addPulse = function() {
     var el = $(this);
-    el.removeClass('pulse');
-    setTimeout(function() { el.addClass('pulse'); }, 0);
+    if (!el.data('pulseTimeout')) {
+      el.removeClass('pulse');
+      el.data('pulseTimeout', setTimeout(function() {
+        el.addClass('pulse');
+        el.data('pulseTimeout', null);
+      }, 0));
+    }
   };
 
   $('li.media').each(function() {
-      $(this).find('img.media-object').on('click tap', addPulse).popover({
+      $(this).find('img.media-object').on('tap', addPulse).popover({
         title: $(this).find('.media-heading').html(),
         content: $(this).find('.media-content').html(),
         html: true,
@@ -115,11 +120,10 @@
       });
   });
 
-  $(document).bind('click tap', function(e) {
+  $(document).bind('tap', function(e) {
     $('li.media').each(function() {
-      if ($(this).find(e.target).length < 1) {
-        $(this).find('img.media-object').removeClass('pulse').popover('hide');
-      }
+      if ($(this).find(e.target).length < 1)
+        $(this).find('img.media-object').popover('hide');
     });
   });
 })();
