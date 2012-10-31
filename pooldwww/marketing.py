@@ -13,6 +13,11 @@ def about():
     return render_template('marketing/about.html')
 
 
+@plan.route('/manifesto')
+def manifesto():
+    return render_template('marketing/manifesto.html')
+
+
 @plan.route('/how')
 def how():
     return render_template('marketing/how.html')
