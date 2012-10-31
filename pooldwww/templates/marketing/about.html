@@ -99,10 +99,12 @@
 {% block init %}
 <script type="text/javascript">
 (function() {
+  var current = undefined;
   var popovers = $('li.media img.media-object');
   var addPulse = function() {
     var el = $(this);
     if (!el.data('pulseTimeout')) {
+      current = el;
       el.removeClass('pulse');
       el.data('pulseTimeout', setTimeout(function() {
         el.addClass('pulse');
@@ -126,6 +128,11 @@
         $(this).find('img.media-object').popover('hide');
     });
   });
+
+  $(document).on('orientationchange', function(e) {
+    if (current && current.data('popover') && current.data('popover').enabled)
+      current.popover('show');
+  })
 })();
 </script>
 {% endblock %}
