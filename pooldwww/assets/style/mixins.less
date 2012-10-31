@@ -250,3 +250,44 @@
   *display: inline; /* IE7 inline-block hack */
   *zoom: 1;
 }
+
+.backface-visibility(@visibility) {
+  -webkit-backface-visibility: @visibility;
+     -moz-backface-visibility: @visibility;
+      -ms-backface-visibility: @visibility;
+       -o-backface-visibility: @visibility;
+          backface-visibility: @visibility;
+
+}
+
+.animation-duration(@duration) {
+  -webkit-animation-duration: @duration;
+     -moz-animation-duration: @duration;
+      -ms-animation-duration: @duration;
+       -o-animation-duration: @duration;
+          animation-duration: @duration;
+}
+
+.animation-delay(@delay) {
+  -webkit-animation-delay: @delay;
+     -moz-animation-delay: @delay;
+      -ms-animation-delay: @delay;
+       -o-animation-delay: @delay;
+          animation-delay: @delay;
+}
+
+.animation-timing-function(@fn) {
+  -webkit-animation-timing-function: @fn;
+     -moz-animation-timing-function: @fn;
+      -ms-animation-timing-function: @fn;
+       -o-animation-timing-function: @fn;
+          animation-timing-function: @fn;
+}
+
+.animation-fill-mode(@mode) {
+  -webkit-animation-fill-mode: @mode;
+     -moz-animation-fill-mode: @mode;
+      -ms-animation-fill-mode: @mode;
+       -o-animation-fill-mode: @mode;
+          animation-fill-mode: @mode;
+}

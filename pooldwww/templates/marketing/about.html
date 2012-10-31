@@ -1,60 +1,123 @@
 {% extends "document/right_article.html" %}
 {% block article %}
 <h1>Team Poold</h1>
-<h2><i>Who we are . . . </i></h2>
-<p></p>
 <p>
   We're a group of friends hacking away in the Center of the Universe
   (aka Fremont, Seattle). We pool time. We pool money. We pool ideas.
   We even pooled some <a href="http://coconuts.poold.in">coconuts</a>.
   Now we're pooling together to bring you Poold.
 </p>
-<p></p>
-<h2><i>What we do . . . </i></h2>
-<p></p>
 <p>
   We're working hard to give you more control over what you can do with
   your money in the mobile payments space. Check out our
   <a href="{{ url_for('marketing.manifesto') }}">Manifesto</a> and join the
   movement!
 </p>
-<p></p>
-<h2><i>Meet Team Poold . . . (alpha order for now, fellas)</i></h2>
-<p></p>
-<ul>
-  <li>
-    <p><a href="mailto:kevin@poold.in">Kevin Berger</a></p>
-    <p><img src="http://sphotos-b.xx.fbcdn.net/hphotos-ash4/421083_3130868512842_334525719_n.jpg" height="150" width="150"></p>
-    <hr />
+<ul class="media-list avatars">
+  <li class="media">
+    <div class="pull-left">
+      <img class="pulse media-object" alt="Kevin Berger" src="{{ url_for('static', filename='img/avatar/kevin.png') }}" />
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">Kevin Berger</h4>
+      <div class="media-content">
+        <a href="mailto:kevin@poold.in">kevin@poold.in</a>
+      </div>
+    </div>
   </li>
-  <li>
-    <p><a href="mailto:sung@poold.in">Sung Kim</a></p>
-    <p><img src="http://i0.kym-cdn.com/photos/images/original/000/100/128/happycat.gif?1318992465" height="150" width="150"></p>
-    <hr />
+  <li class="media">
+    <div class="pull-left">
+      <img class="pulse media-object" alt="Sung Kim" src="{{ url_for('static', filename='img/avatar/sung.png') }}" />
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">Sung Kim</h4>
+      <div class="media-content">
+        <a href="mailto:sung@poold.in">sung@poold.in</a>
+      </div>
+    </div>
   </li>
-  <li>
-    <p><a href="mailto:patrick@poold.in">Patrick Murck</a></p>
-    <p><img src="http://m3.licdn.com/media/p/1/000/07f/0cc/09ddbf0.jpg" height="150" width="150"></p>
-    <hr />
+  <li class="media">
+    <div class="pull-left">
+      <img class="pulse media-object" alt="Patrick Murck" src="{{ url_for('static', filename='img/avatar/patrick.png') }}" />
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">Patrick Murck</h4>
+      <div class="media-content">
+        <a href="mailto:patrick@poold.in">patrick@poold.in</a>
+      </div>
+    </div>
   </li>
-  <li>
-    <p><a href="mailto:brian@poold.in">Brian Oldfield</a></p>
-    <p><img src="http://m3.licdn.com/media/p/2/000/051/1b1/310f3c3.jpg" height="150" width="150"></p>
-    <hr />
+  <li class="media">
+    <div class="pull-left">
+      <img class="pulse media-object" alt="Brian Oldfield" src="{{ url_for('static', filename='img/avatar/brian.png') }}" />
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">Brian Oldfield</h4>
+      <div class="media-content">
+        <a href="mailto:brian@poold.in">brian@poold.in</a>
+      </div>
+    </div>
   </li>
-  <li>
-    <p><a href="mailto:collin@poold.in">Collin Watson</a></p>
-    <p><img src="http://m4.licdn.com/media/p/1/000/122/14b/00b9330.jpg" height="150" width="150"></p>
-    <hr />
+  <li class="media">
+    <div class="pull-left">
+      <img class="pulse media-object" alt="Collin Watson" src="{{ url_for('static', filename='img/avatar/collin.png') }}" />
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">Collin Watson</h4>
+      <div class="media-content">
+        <a href="mailto:collin@poold.in">collin@poold.in</a>
+      </div>
+    </div>
   </li>
-  <li>
-    <p><a href="mailto:lloyd@poold.in">Lloyd</a>, Chief Paw Licker</p>
-    <p><img src="http://www.olympiclabradoodles.com/images/Happy%20Kira%20April%202007%20web.JPG" height="150" width="150"></p>
-    <hr />
+  <li class="media">
+    <div class="pull-left">
+      <img class="pulse media-object" alt="Lloyd" src="{{ url_for('static', filename='img/avatar/lloyd.png') }}" />
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">Lloyd</h4>
+      <div class="media-content">
+        <p>Chief Paw Licker</p>
+        <a href="mailto:lloyd@poold.in">lloyd@poold.in</a>
+      </div>
+    </div>
   </li>
-  <li>
-    <p><a href="mailto:benny@poold.in">Benny</a>, Chief Security Officer</p>
-    <p><img src="http://www.thestranger.com/binary/1f2a/feat1-160.jpg" height="150" width="150"></p>
+  <li class="media">
+    <div class="pull-left">
+      <img class="pulse media-object" alt="Benny" src="{{ url_for('static', filename='img/avatar/benny.png') }}" />
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">Benny</h4>
+      <div class="media-content">
+        <p>Chief Security Officer</p>
+        <a href="mailto:benny@poold.in">benny@poold.in</a>
+      </div>
+    </div>
   </li>
 </ul>
+{% endblock %}
+
+{% block init %}
+<script type="text/javascript">
+(function() {
+  var popovers = $('li.media img.media-object');
+  var onhoverin = function() { $(this).addClass('pulse'); };
+  var onhoverout = function() { $(this).removeClass('pulse'); };
+
+  $('li.media').each(function() {
+      $(this).find('img.media-object').hover(onhoverin, onhoverout).popover({
+        title: $(this).find('.media-heading').html(),
+        content: $(this).find('.media-content').html(),
+        html: true,
+        placement: 'top'
+      });
+  });
+
+  $(document).click(function(e) {
+    $('li.media').each(function() {
+      if ($(this).find(e.target).length < 1)
+          $(this).find('img.media-object').popover('hide');
+    });
+  });
+})();
+</script>
 {% endblock %}
