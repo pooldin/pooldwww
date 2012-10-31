@@ -100,7 +100,11 @@
 <script type="text/javascript">
 (function() {
   var popovers = $('li.media img.media-object');
-  var addPulse = function() { $(this).addClass('pulse'); };
+  var addPulse = function() {
+    var el = $(this);
+    el.removeClass('pulse');
+    setTimeout(function() { el.addClass('pulse'); }, 0);
+  };
 
   $('li.media').each(function() {
       $(this).find('img.media-object').on('click tap', addPulse).popover({
@@ -113,8 +117,9 @@
 
   $(document).bind('click tap', function(e) {
     $('li.media').each(function() {
-      if ($(this).find(e.target).length < 1)
-          $(this).find('img.media-object').removeClass('pulse').popover('hide');
+      if ($(this).find(e.target).length < 1) {
+        $(this).find('img.media-object').removeClass('pulse').popover('hide');
+      }
     });
   });
 })();
