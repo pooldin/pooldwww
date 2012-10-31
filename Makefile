@@ -1,5 +1,5 @@
 # Magical make incantations...
-.DEFAULT_GOAL := deps
+.DEFAULT_GOAL := all
 
 .PHONY: assets build clean deps dist run shell ipy bpy tests \
 		upload upload-dev upload-nightly upload-release
@@ -11,6 +11,8 @@ RUN=foreman run
 SETUP=$(RUN) python setup.py
 MANAGE=$(RUN) python manage.py
 
+
+all: deps assets
 
 assets:
 	@$(MANAGE) assets rebuild
