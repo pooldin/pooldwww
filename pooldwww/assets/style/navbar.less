@@ -34,9 +34,10 @@
   }
 
   &.navbar-fixed-top {
+    position: fixed;
+
     .nav {
       font-size: 0.9em;
-      margin-right: 0px;
 
       & > li {
         .inline-block;
@@ -70,5 +71,8 @@
   }
   .navbar-fixed-top {
     margin-bottom: 0px;
+    .nav.pull-right {
+      margin-right: 10px;
+    }
   }
 }
