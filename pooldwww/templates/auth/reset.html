@@ -2,7 +2,7 @@
 
 {% block content %}
 <section class="auth reset" data-bind="css: { sent: sent }">
-  <form class="content" action="{{ url_for('auth.reset') }}" method="POST" data-bind="submit: form.submit">
+  <form class="boxy focal content" action="{{ url_for('auth.reset') }}" method="POST" data-bind="submit: form.submit">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
     <div class="pending-overlay" style="display: none" data-bind="visible: form.processing"></div>
     {% if error %}
@@ -16,7 +16,7 @@
     <div data-bind="visible: !sent()">
       <input name="email"
              type="text"
-             class="text email"
+             class="large last"
              value="{{ email }}" }}
              data-bind="value: form.email, css: { error: form.isInvalid('email') }"
              placeholder="Email"
@@ -27,18 +27,21 @@
         Did you mean <a tabindex="50000" href="javascript:void(0)" data-bind="text: email.mailcheck, click: email.mailcheck.accept"></a>?
       </div>
 
-      <div class="submit">
-        <input type="submit"
-               class="btn btn-info btn-large"
-               value="Help a swimmer out!"
-               data-bind="value: submitText, css: { 'btn-info': !form.saving() }" />
-      </div>
+      <input type="submit"
+             class="btn btn-info btn-large"
+             value="Help a swimmer out!"
+             data-bind="value: submitText, css: { 'btn-info': !form.saving() }" />
     </div>
     <div class="success" style="display: none" data-bind="visible: sent">
       Email Sent. Follow the instructions to reset your password.
     </div>
   </form>
-  <a class="rounded signup" href="{{ url_for('auth.login') }}">Know your password? <span>Sign in</span>.</a>
+  <div class="columns focal">
+    <div class="column">
+      <a class="rounded signup" href="{{ url_for('auth.login') }}">Know your password? <span>Sign in</span>.</a>
+    </div>
+    <div class="clearfix"></div>
+  </div>
 </section>
 </div>
 {% endblock %}

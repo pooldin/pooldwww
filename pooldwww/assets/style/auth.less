@@ -1,8 +1,3 @@
-@import "variables.less";
-@import "mixins.less";
-@import "global.less";
-@import "modal.less";
-
 .global {
   margin-top: 5px;
 }
@@ -26,130 +21,6 @@
     text-align: center;
     margin: 8px 0px;
     line-height: 1.4em;
-  }
-
-  hr {
-    margin: 20px 0px 15px;
-  }
-
-  form {
-    position: relative;
-    padding-bottom: 15px;
-
-    input {
-      &.first {
-        margin-top: 0px;
-      }
-
-      &.last {
-        margin-bottom: 20px;
-      }
-    }
-    .pending-overlay {
-      position: absolute;
-    }
-  }
-
-  .text,
-  .password {
-    width: 274px;
-    padding: 10px 12px;
-    margin-top: 20px;
-    margin-bottom: 5px;
-    font-size: 1.2em;
-    font-weight: normal;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  .remember,
-  .submit,
-  .signup,
-  .reset {
-    text-align: center;
-    margin: 0px auto;
-  }
-
-  .submit {
-    margin-top: 5px;
-    margin-bottom: 15px;
-
-    input {
-      width: 250px;
-      padding: 10px 20px;
-      font-size: 1em;
-      &.btn-info {
-        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.53);
-      }
-    }
-  }
-
-  .mailcheck {
-    font-size: 0.8em;
-    .close {
-      line-height: 0.8em;
-      &.pull-left {
-        margin-top: -1px;
-        margin-right: 5px;
-      }
-    }
-  }
-
-  .remember {
-    font-size: 0.87em;
-    color: #666;
-    width: 105px;
-    cursor: pointer;
-    margin-top: -5px;
-
-    input {
-      margin: 0px;
-    }
-  }
-
-  a.signup,
-  a.login,
-  a.reset {
-    text-align: center;
-    display: block;
-    margin-top: 20px;
-    padding: 15px 20px;
-    border: solid 1px rgba(14, 41, 57, 0.1);
-    text-decoration: none;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
-                      0 1px 0 rgba(255, 255, 255, 0.5);
-
-    span {
-      text-decoration: underline;
-    }
-  }
-
-  &.reset {
-    .content {
-      min-height: auto;
-    }
-
-    .submit {
-      margin-top: 25px;
-    }
-
-    .success {
-      text-align: center;
-      color: inherit;
-      padding: 10px 0px;
-      font-size: 1.1em;
-    }
-  }
-  &.signup a.login,
-  &.signup a.reset,
-  &.login a.signup,
-  &.login a.reset {
-    float: left;
-    width: 110px;
-    margin: 0px 5px;
-  }
-  &.signup a.reset,
-  &.login a.reset {
-    margin-left: 20px;
   }
 }
 
@@ -205,25 +76,6 @@ footer.auth {
 @media (max-width: 480px) {
   .auth {
     width: 280px;
-
-    .text,
-    .password,
-    .submit input {
-      width: 90%;
-    }
-
-    &.signup,
-    &.login {
-      a.signup,
-      a.login,
-      a.reset {
-        width: 80px;
-      }
-    }
-    a.signup,
-    a.login {
-      line-height: 40px;
-    }
   }
   footer.auth {
     .navbar .nav > li > a {

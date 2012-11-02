@@ -11,35 +11,35 @@
   <hr />
   <label>
     <span
-      class="field"
+      class="label"
       data-bind="text: form.name.title, css: { error: form.isInvalid('name') }">
       Name
     </span>
     <input type="text"
-           class="text name first"
+           class="large"
            value="{{ user.name or '' }}" }}
            data-bind="value: form.name, css: { error: form.isInvalid('name') }"
            autofocus="autofocus" />
   </label>
   <label>
     <span
-      class="field"
+      class="label"
       data-bind="text: form.username.title, css: { error: form.isInvalid('username') }">
       Username
     </span>
     <input type="text"
-           class="text username"
+           class="large"
            value="{{ user.username or '' }}" }}
            data-bind="value: form.username, css: { error: form.isInvalid('username') }" />
   </label>
   <label>
     <span
-      class="field"
+      class="label"
       data-bind="text: form.email.title, css: { error: form.isInvalid('email') }">
       Email
     </span>
     <input type="text"
-           class="text email last"
+           class="large"
            value="{{ user.email or '' }}" }}
            data-bind="value: form.email, css: { error: form.isInvalid('email') }" />
     <div class="mailcheck" style="display: none" data-bind="with: form, visible: form.email.mailcheck">
@@ -49,13 +49,11 @@
   </label>
   {% set url = user.email or 'anonymous@poold.in' %}
   {% set url = url | gravatar(size=32) %}
-  <label class="gravatar">
+  <label class="label gravatar">
     <img alt="{{ user.name }}" src="{{ url }}" />
     <a target="_blank" href="http://gravatar.com/">Change your Gravatar</a>
   </label>
-  <div class="submit">
-    <input type="submit" class="btn btn-info btn-large" value="Save" />
-  </div>
+  <input type="submit" class="btn btn-info" value="Save" />
 </form>
 {% endblock %}
 

@@ -3,8 +3,8 @@
 }
 
 .navbar-inner {
-  padding-top: 5px;
   min-height: 36px;
+  padding-top: 2px;
 
   h2 {
     margin: 0px 0px 0px 20px;
@@ -13,28 +13,6 @@
   a.brand {
     padding: 0px;
     line-height: 1.5em;
-  }
-
-  .nav {
-    font-size: 0.9em;
-    margin-right: 0px;
-
-    & > li {
-      .inline-block;
-      .border-radius(13px);
-
-      border: solid 1px #6FB2D6;
-      background-color: #6FB2D6;
-      margin-left: 4px;
-      margin-right: 4px;
-
-      & > a {
-        padding: 4px 10px;
-        &:hover {
-          background-color: #ddd;
-        }
-      }
-    }
   }
 
   a.btn {
@@ -53,6 +31,30 @@
     margin-top: -2px;
     vertical-align: middle;
     background-repeat: no-repeat;
+  }
+
+  &.navbar-fixed-top {
+    .nav {
+      font-size: 0.9em;
+      margin-right: 0px;
+
+      & > li {
+        .inline-block;
+        .border-radius(13px);
+
+        border: solid 1px #6FB2D6;
+        background-color: #6FB2D6;
+        margin-left: 4px;
+        margin-right: 4px;
+
+        & > a {
+          padding: 4px 10px;
+          &:hover {
+            background-color: #ddd;
+          }
+        }
+      }
+    }
   }
 }
 

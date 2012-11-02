@@ -1,0 +1,82 @@
+{% extends "document/right_article.html" %}
+
+{% block secondary %}
+{% include 'pool/nav.html' %}
+{% endblock %}
+
+{% block article %}
+<form>
+  <h1>Create Pool</h1>
+  <hr />
+  <label class="full">
+    <span class="label">Pool Name <i class="icon-info-sign pull-right"></i></span>
+    <input type="text" />
+  </label>
+  <label>
+    <span class="label">Pool Description</span>
+    <textarea></textarea>
+  </label>
+  <label>
+    <span class="label">End Date</span>
+    <input type="date" />
+  </label>
+  <label>
+    <span class="label">I Want to Raise</span>
+    <span class="input-prepend">
+      <span class="add-on">$</span>
+      <input type="number" min="1" />
+    </span>
+  </label>
+  <label>
+    <span class="label">Suggested Amount Per Person</span>
+    <span class="input-prepend">
+      <span class="add-on">$</span>
+      <input type="number" min="1" />
+    </span>
+  </label>
+  <label class="pinup">
+    <input type="checkbox" />
+    <span class="label">Set this as required amount</span>
+  </label>
+  <label class="label">
+    If your pool successfully hits your goal, then:
+  </label>
+  <div class="two columns">
+    <div class="column">
+      <label>
+        <input type="radio" name="met" value="continue" />
+        <span class="label">Keep collecting until the end date</span>
+      </label>
+    </div>
+    <div class="column">
+      <label>
+        <input type="radio" name="met" value="stop" />
+        <span class="label">Stop collecting once the goal is met</span>
+      </label>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+  <label class="label">How would you like to receive your funds?</label>
+  <div class="two columns">
+    <div class="column">
+      <label>
+        <input type="radio" name="receive" value="met" />
+        <span class="label">I want to receive funds only if goal is met</span>
+      </label>
+    </div>
+    <div class="column">
+      <label>
+        <input type="radio" name="receive" value="immediate" />
+        <span class="label">I want to receive funds as they are committed</span>
+      </label>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</form>
+{% endblock %}
+
+{% block init %}
+<script type="text/javascript">
+  PI.pages.Page.init();
+</script>
+{% endblock %}

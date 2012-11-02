@@ -2,7 +2,7 @@
 
 {% block content %}
 <section class="auth reset change">
-  <form class="content" action="{{ url_for('auth.reset') }}" method="POST" data-bind="submit: form.submit">
+  <form class="boxy focal content" action="{{ url_for('auth.reset') }}" method="POST" data-bind="submit: form.submit">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
     {% if error %}
     <h1 class="error" data-bind="text: title, css: { error: form.error }">{{ error }}</h1>
@@ -15,25 +15,28 @@
 
     <input name="password"
            type="password"
-           class="text password"
+           class="large"
            data-bind="value: form.password, css: { error: form.isInvalid('password') }"
            placeholder="New Password"
            autofocus="autofocus" />
 
     <input name="password_confirm"
            type="password"
-           class="password confirm"
+           class="large"
            data-bind="value: form.password_confirm, css: { error: form.isInvalid('password_confirm') }"
            placeholder="Confirm Password" />
 
-    <div class="submit">
-      <input type="submit"
-             class="btn btn-info btn-large"
-             value="Suit up!"
-             data-bind="value: submitText, css: { 'btn-info': !form.saving() }" />
-    </div>
+    <input type="submit"
+           class="btn btn-info btn-large"
+           value="Suit up!"
+           data-bind="value: submitText, css: { 'btn-info': !form.saving() }" />
   </form>
-  <a class="rounded signup" href="{{ url_for('auth.login') }}">Know your password? <span>Sign in</span>.</a>
+  <div class="columns focal">
+    <div class="column">
+      <a class="rounded signup" href="{{ url_for('auth.login') }}">Know your password? <span>Sign in</span>.</a>
+    </div>
+    <div class="clearfix"></div>
+  </div>
 </section>
 </div>
 {% endblock %}

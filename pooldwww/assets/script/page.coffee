@@ -14,4 +14,3 @@ class PI.pages.Page
   render: ->
     ko.applyBindings(this)
     return this
-

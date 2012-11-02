@@ -39,23 +39,6 @@ app-css-min:
     contents:
         - app-css
 
-auth-css:
-    output: ../static/style/pooldin/auth.css
-    filters: less
-    debug: False
-    contents:
-        - filters: less
-          debug: false
-          contents:
-            - ../assets/style/auth.less
-
-auth-css-min:
-    output: ../static/style/pooldin/auth.min.css
-    filters: yui_css
-    debug: False
-    contents:
-        - auth-css
-
 lib-css:
     output: ../static/style/bootstrap.css
     filters: less
