@@ -62,8 +62,8 @@ lib-js:
         - ../static/script/jquery-touch.js
         - ../static/script/jquery-orientation.js
         - ../static/script/moment-1.7.0.js
-        - ../static/script/knockout-2.1.0.js
-        - ../static/script/knockout.mapping-2.3.2.js
+        - ../static/script/knockout-2.2.0.js
+        - ../static/script/knockout.mapping-2.3.3.js
         - ../static/script/bootstrap-2.2.0.js
         - ../static/script/signals-0.8.1.js
         - ../static/script/hasher-1.1.0.js
