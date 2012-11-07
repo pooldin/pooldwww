@@ -1,0 +1,9 @@
+{% extends "document/full_article.html" %}
+
+
+{% block article %}
+<h2>Stripe User ID: {{ user.stripe_user_id }}</h2>
+<h2>Stripe User Token: {{ user.stripe_user_token }}</h2>
+<h2>Stripe User Public Key: {{ user.stripe_user_public_key }}</h2>
+<h2>Stripe User Grant Scope: {{ user.stripe_user_grant_scope }}</h2>
+{% endblock %}

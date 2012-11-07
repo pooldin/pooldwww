@@ -35,6 +35,9 @@ class base(object):
     CSRF_COOKIE_NAME = 'poold_csrf'
     CSRF_DISABLE = False
     GOOGLE_ANALYTICS_ID = os.environ.get('POOLDWWW_GOOGLE_ANALYTICS_ID')
+    STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY')
+    STRIPE_APP_CID = os.environ.get('STRIPE_APP_CID')
+    STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
 
 
 class dev(base):

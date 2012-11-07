@@ -1,0 +1,6 @@
+{% extends "document/full_article.html" %}
+
+
+{% block article %}
+<a href="https://connect.stripe.com/oauth/authorize?state={{ csrf_token() }}&response_type=code&scope=read_write&client_id={{ config.STRIPE_APP_CID }}" target="_blank"><img src='/static/img/stripe/connect-blue.png' alt="Connect With Stripe"/></a>
+{% endblock %}
