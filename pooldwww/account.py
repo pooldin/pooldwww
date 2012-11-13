@@ -1,4 +1,4 @@
-from flask import g, Blueprint, render_template, redirect, request, url_for, current_app
+from flask import Blueprint, render_template, redirect, request, url_for, current_app
 from flask.ext.login import login_required, current_user
 
 from pooldlib.api import user
@@ -9,6 +9,7 @@ from pooldlib.exceptions import (InvalidPasswordError,
                                  ExternalAPIUnavailableError)
 from pooldwww.auth.validate import validate_username, validate_email
 from pooldwww.exceptions import ValidationError
+from pooldwww.app.negotiate import accepts
 
 plan = Blueprint('account', __name__)
 
@@ -26,20 +27,21 @@ def details():
 
 
 @plan.route('/details', methods=['POST'])
+@accepts('application/json')
 @login_required
 def profile_update():
     usr = current_user._get_current_object()
     fields = dict()
-    name = request.form.get('name')
-    email = request.form.get('email')
-    username = request.form.get('username')
+    name = request.json.get('name')
+    email = request.json.get('email')
+    username = request.json.get('username')
 
     try:
-        if 'name' in request.form:
+        if 'name' in request.json:
             fields['name'] = name or ''
-        if 'username' in request.form:
+        if 'username' in request.json:
             fields['username'] = validate_username(username)
-        if 'email' in request.form:
+        if 'email' in request.json:
             fields['email'] = validate_email(email)
     except ValidationError, e:
         return e.message, 403
@@ -55,11 +57,12 @@ def password():
 
 
 @plan.route('/password', methods=['POST'])
+@accepts('application/json')
 @login_required
 def password_change():
-    old = request.form.get('old')
-    new = request.form.get('new')
-    confirm = request.form.get('confirm')
+    old = request.json.get('old')
+    new = request.json.get('new')
+    confirm = request.json.get('confirm')
 
     usr = current_user._get_current_object()
 
