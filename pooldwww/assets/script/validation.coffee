@@ -134,6 +134,32 @@ class PI.forms.PositiveInteger extends PI.forms.Regex
     return "#{@name} is not a positive integer"
 
 
+class PI.forms.MonthInteger extends PI.forms.PositiveInteger
+
+  isValid: (value) ->
+    return false if not @pattern.test(value)
+    return 0 < @value(value) < 13
+
+
+class PI.forms.DayInteger extends PI.forms.PositiveInteger
+
+  isValid: (value) ->
+    return false if not @pattern.test(value)
+    date = new Date()
+    month = PI.page.form.date_month()
+    year = PI.page.form.date_year() ? date.getFullYear()
+    date = new Date(year, month, 0)
+    return 0 < @value(value) <= date.getDate()
+
+
+class PI.forms.YearInteger extends PI.forms.PositiveInteger
+
+  isValid: (value) ->
+    date = new Date()
+    return false if not @pattern.test(value)
+    return date.getFullYear() <= @value(value)
+
+
 class PI.forms.Integer extends PI.forms.Regex
   pattern: /^\-?[0-9]+$/
 
