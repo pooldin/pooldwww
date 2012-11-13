@@ -30,6 +30,7 @@ pip-log.txt
 # Generated files
 *.[oa]
 *.py[co]
+.ropeproject
 
 # Development environment
 .env
