@@ -5,78 +5,165 @@
 {% endblock %}
 
 {% block article %}
-<form>
-  <h1>Create Pool</h1>
-  <hr />
-  <label class="full">
-    <span class="label">Pool Name <i class="icon-info-sign pull-right"></i></span>
-    <input type="text" />
-  </label>
-  <label>
-    <span class="label">Pool Description</span>
-    <textarea></textarea>
-  </label>
-  <label>
-    <span class="label">End Date</span>
-    <input type="date" />
-  </label>
-  <label>
-    <span class="label">I Want to Raise</span>
-    <span class="input-prepend">
-      <span class="add-on">$</span>
-      <input type="number" min="1" />
-    </span>
-  </label>
-  <label>
-    <span class="label">Suggested Amount Per Person</span>
-    <span class="input-prepend">
-      <span class="add-on">$</span>
-      <input type="number" min="1" />
-    </span>
-  </label>
-  <label class="pinup">
-    <input type="checkbox" />
-    <span class="label">Set this as required amount</span>
-  </label>
-  <label class="label">
-    If your pool successfully hits your goal, then:
-  </label>
-  <div class="two columns">
-    <div class="column">
+<section class="pool create">
+  <form action="{{ url_for('pool.create') }}" method="POST" data-bind="submit: form.submit">
+    <div id="pool-create-describe" class="padded-content inactive-screen">
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
+      <div class="h1">Create Pool</div>
+      <label class="full">
+        <span class="label">Pool Name <i class="icon-info-sign pull-right"></i></span>
+        <input name="name"
+               type="text"
+               data-bind="value: form.name, valueUpdate: 'afterkeydown', css: { error: form.isInvalid('name') }"
+               placeholder="Pool Name"
+               autofocus="autofocus" />
+      </label>
       <label>
-        <input type="radio" name="met" value="continue" />
-        <span class="label">Keep collecting until the end date</span>
+        <span class="label">Pool Description<i class="icon-info-sign pull-right"></i></span>
+        <textarea class="large"
+                  name="description"
+                  data-bind="value: form.description, valueUpdate: 'afterkeydown', css: { error: form.isInvalid('description') }">
+        </textarea>
+      </label>
+      <label>
+        <span class="label">End Date</span>
+        <div class="five columns">
+          <div class="column">
+            <input type="text"
+                   name="date_month"
+                   placeholder="MM"
+                   data-bind="value: form.date_month, css: { error: form.isInvalid('date_month') }" />
+          </div>
+          <div class="column">
+            <input type="text"
+                   name="date_day"
+                   placeholder="DD"
+                   data-bind="value: form.date_day, css: { error: form.isInvalid('date_day') }" />
+          </div>
+          <div class="column">
+            <input type="text"
+                   name="date_year"
+                   placeholder="YYYY"
+                   data-bind="value: form.date_year, css: { error: form.isInvalid('date_year') }" />
+          </div>
+        </div>
+        <input type="hidden" data-bind="value: form.date">
+        <div class="clearfix"></div>
       </label>
     </div>
-    <div class="column">
+    <div id="pool-create-funds" class="padded-content inactive-screen">
       <label>
-        <input type="radio" name="met" value="stop" />
-        <span class="label">Stop collecting once the goal is met</span>
+        <span class="label">I Want to Raise</span>
+        <span class="input-prepend">
+          <span class="add-on">$</span>
+          <input type="number"
+                 min="1"
+                 data-bind="value: form.amount, valueUpdate: 'afterkeydown', css: { error: form.isInvalid('amount') }" />
+        </span>
       </label>
+      <label>
+        <span class="label">Suggested Amount Per Person</span>
+        <span class="input-prepend">
+          <span class="add-on">$</span>
+          <input type="number"
+                 min="0"
+                 data-bind="value: form.contribution, valueUpdate: 'afterkeydown', css: { error: form.isInvalid('contribution') }" />
+        </span>
+      </label>
+      <label class="pinup">
+        <input type="checkbox"
+               name="required_contribution"
+               data-bind="checked: form.required_contribution" />
+        <span class="label">Set this as required amount</span>
+      </label>
+      <hr />
+      <label class="label">
+        If your pool successfully hits your goal, then:
+      </label>
+      <div class="two columns">
+        <div class="column">
+          <label>
+            <input type="radio"
+                   name="fund_collection"
+                   value="continue"
+                   data-bind="checked: form.fund_collection, css: { error: form.isInvalid('collection') }" />
+            <span class="label">Keep collecting until the end date</span>
+          </label>
+        </div>
+        <div class="column">
+          <label>
+            <input type="radio"
+                   name="fund_collection"
+                   value="stop_when_met"
+                   data-bind="checked: form.fund_collection, css: { error: form.isInvalid('collection') }" />
+            <span class="label">Stop collecting once the goal is met</span>
+          </label>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <hr />
+      <label class="label">How would you like to receive your funds?</label>
+      <div class="two columns">
+        <div class="column">
+          <label>
+            <input type="radio"
+                   name="disburse_funds"
+                   value="disburse_when_met"
+                   data-bind="checked: form.disburse_funds, css: { error: form.isInvalid('receive_funds') }" />
+            <span class="label">I want to receive funds only if goal is met</span>
+          </label>
+        </div>
+        <div class="column">
+          <label>
+            <input type="radio"
+                   name="disburse_funds"
+                   value="disburse_immediately"
+                   data-bind="checked: form.disburse_funds, css: { error: form.isInvalid('receive_funds') }" />
+            <span class="label">I want to receive funds as they are committed</span>
+          </label>
+        </div>
+      </div>
+    <hr />
+    </div>
+    <div id="pool-create-goals" class="inactive-screen">
+      <div  class="padded-content">
+        <span class="h3">Milestones</span> <span class="subheading h3">(optional)</span>
+        <span class="subtext">
+          Backers will pay a portion of their pledge with each milestone and have the option to opt out at each milestone.
+        </span>
+      </div>
+      <div class="ribbon">
+        <span class="banner">
+          <a href="#" data-bind="click: function (e) { alert('Currently not supported!'); }"><i class="icon-black icon-plus-sign"></i> <span class="h3">Add a milestone</span></a>
+        </span>
+      </div>
+      <div class="no-goals">
+        <span class="subheading h3 block">Don't want to add milestones?</span>
+        <span class="h3 block">Then make it happen!</span>
+      </div>
+      <div class="span9 text-center">
+        <input type="submit"
+              class="btn btn-danger"
+              value="Make pool active" />
+      </div>
     </div>
     <div class="clearfix"></div>
+  </form>
+  <div class="clearfix"></div>
+  <div id="screeninator">
+    <div class="previous" data-bind="click: screens.previousScreen"><i class="icon-chevron-left icon-white"></i> Back</div>
+    <div class="next" data-bind="click: screens.nextScreen">Next <i class="icon-chevron-right icon-white"></i></div>
+    <div class="indicators"></div>
   </div>
-  <label class="label">How would you like to receive your funds?</label>
-  <div class="two columns">
-    <div class="column">
-      <label>
-        <input type="radio" name="receive" value="met" />
-        <span class="label">I want to receive funds only if goal is met</span>
-      </label>
-    </div>
-    <div class="column">
-      <label>
-        <input type="radio" name="receive" value="immediate" />
-        <span class="label">I want to receive funds as they are committed</span>
-      </label>
-    </div>
-    <div class="clearfix"></div>
-  </div>
-</form>
+</section>
 {% endblock %}
 
 {% block init %}
 <script type="text/javascript">
-  PI.pages.Page.init();
+  PI.pages.PoolCreatePage.init({
+    title: {{ title|tojson|safe }},
+    error: {{ error|default('')|tojson|safe }},
+    screens: ['#pool-create-describe', '#pool-create-funds', '#pool-create-goals']
+  });
 </script>
 {% endblock %}
