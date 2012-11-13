@@ -209,7 +209,9 @@ class PI.forms.Form
     callback = =>
       $.ajax({
         context: this,
-        data: data,
+        data: JSON.stringify(data),
+        mimeType: 'application/json',
+        contentType: 'application/json',
         dataType: 'json',
         error: @onError,
         headers: headers,
@@ -221,6 +223,11 @@ class PI.forms.Form
     callback() unless @saveDelay > -1
     setTimeout(callback, @saveDelay) if @saveDelay > -1
     return this
+
+  setJsonMimeType: (request) ->
+    if request and request.overrideMimeType
+      request.overrideMimeType("application/json;charset=UTF-8")
+
 
   onSuccess: (value, message, xhr) ->
     callback = =>
