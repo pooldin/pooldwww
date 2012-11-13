@@ -1,101 +1,102 @@
 {% extends "document/right_article.html" %}
 {% block article %}
-<h1>Team Poold</h1>
-<p>
-  We're a group of friends hacking away in the Center of the Universe
-  (aka Fremont, Seattle). We pool time. We pool money. We pool ideas.
-  We even pooled some <a href="http://coconuts.poold.in">coconuts</a>.
-  Now we're pooling together to bring you Poold.
-</p>
-<p>
-  We're working hard to give you more control over what you can do with
-  your money in the mobile payments space. Check out our
-  <a href="{{ url_for('marketing.manifesto') }}">Manifesto</a> and join the
-  movement!
-</p>
-<ul class="media-list avatars">
-  <li class="media">
-    <div class="pull-left">
-      <img class="media-object" alt="Kevin Berger" src="{{ url_for('static', filename='img/avatar/kevin.png') }}" />
-    </div>
-    <div class="media-body">
-      <h4 class="media-heading">Kevin Berger</h4>
-      <div class="media-content">
-        <a href="mailto:kevin@poold.in">kevin@poold.in</a>
+<div class="padded-content">
+  <h1>Team Poold</h1>
+  <p>
+    We're a group of friends hacking away in the Center of the Universe
+    (aka Fremont, Seattle). We pool time. We pool money. We pool ideas.
+    We even pooled some <a href="http://coconuts.poold.in">coconuts</a>.
+    Now we're pooling together to bring you Poold.
+  </p>
+  <p>
+    We're working hard to give you more control over what you can do with
+    your money in the mobile payments space. Check out our
+    <a href="{{ url_for('marketing.manifesto') }}">Manifesto</a> and join the
+    movement!
+  </p>
+  <ul class="media-list avatars">
+    <li class="media">
+      <div class="pull-left">
+        <img class="media-object" alt="Kevin Berger" src="{{ url_for('static', filename='img/avatar/kevin.png') }}" />
       </div>
-    </div>
-  </li>
-  <li class="media">
-    <div class="pull-left">
-      <img class="media-object" alt="Sung Kim" src="{{ url_for('static', filename='img/avatar/sung.png') }}" />
-    </div>
-    <div class="media-body">
-      <h4 class="media-heading">Sung Kim</h4>
-      <div class="media-content">
-        <a href="mailto:sung@poold.in">sung@poold.in</a>
+      <div class="media-body">
+        <h4 class="media-heading">Kevin Berger</h4>
+        <div class="media-content">
+          <a href="mailto:kevin@poold.in">kevin@poold.in</a>
+        </div>
       </div>
-    </div>
-  </li>
-  <li class="media">
-    <div class="pull-left">
-      <img class="media-object" alt="Patrick Murck" src="{{ url_for('static', filename='img/avatar/patrick.png') }}" />
-    </div>
-    <div class="media-body">
-      <h4 class="media-heading">Patrick Murck</h4>
-      <div class="media-content">
-        <a href="mailto:patrick@poold.in">patrick@poold.in</a>
+    </li>
+    <li class="media">
+      <div class="pull-left">
+        <img class="media-object" alt="Sung Kim" src="{{ url_for('static', filename='img/avatar/sung.png') }}" />
       </div>
-    </div>
-  </li>
-  <li class="media">
-    <div class="pull-left">
-      <img class="media-object" alt="Brian Oldfield" src="{{ url_for('static', filename='img/avatar/brian.png') }}" />
-    </div>
-    <div class="media-body">
-      <h4 class="media-heading">Brian Oldfield</h4>
-      <div class="media-content">
-        <a href="mailto:brian@poold.in">brian@poold.in</a>
+      <div class="media-body">
+        <h4 class="media-heading">Sung Kim</h4>
+        <div class="media-content">
+          <a href="mailto:sung@poold.in">sung@poold.in</a>
+        </div>
       </div>
-    </div>
-  </li>
-  <li class="media">
-    <div class="pull-left">
-      <img class="media-object" alt="Collin Watson" src="{{ url_for('static', filename='img/avatar/collin.png') }}" />
-    </div>
-    <div class="media-body">
-      <h4 class="media-heading">Collin Watson</h4>
-      <div class="media-content">
-        <a href="mailto:collin@poold.in">collin@poold.in</a>
+    </li>
+    <li class="media">
+      <div class="pull-left">
+        <img class="media-object" alt="Patrick Murck" src="{{ url_for('static', filename='img/avatar/patrick.png') }}" />
       </div>
-    </div>
-  </li>
-  <li class="media">
-    <div class="pull-left">
-      <img class="media-object" alt="Lloyd" src="{{ url_for('static', filename='img/avatar/lloyd.png') }}" />
-    </div>
-    <div class="media-body">
-      <h4 class="media-heading">Lloyd</h4>
-      <div class="media-content">
-        <p>Chief Paw Licker</p>
-        <a href="mailto:lloyd@poold.in">lloyd@poold.in</a>
+      <div class="media-body">
+        <h4 class="media-heading">Patrick Murck</h4>
+        <div class="media-content">
+          <a href="mailto:patrick@poold.in">patrick@poold.in</a>
+        </div>
       </div>
-    </div>
-  </li>
-  <li class="media">
-    <div class="pull-left">
-      <img class="media-object" alt="Benny" src="{{ url_for('static', filename='img/avatar/benny.png') }}" />
-    </div>
-    <div class="media-body">
-      <h4 class="media-heading">Benny</h4>
-      <div class="media-content">
-        <p>Chief Security Officer</p>
-        <a href="mailto:benny@poold.in">benny@poold.in</a>
+    </li>
+    <li class="media">
+      <div class="pull-left">
+        <img class="media-object" alt="Brian Oldfield" src="{{ url_for('static', filename='img/avatar/brian.png') }}" />
       </div>
-    </div>
-  </li>
-</ul>
+      <div class="media-body">
+        <h4 class="media-heading">Brian Oldfield</h4>
+        <div class="media-content">
+          <a href="mailto:brian@poold.in">brian@poold.in</a>
+        </div>
+      </div>
+    </li>
+    <li class="media">
+      <div class="pull-left">
+        <img class="media-object" alt="Collin Watson" src="{{ url_for('static', filename='img/avatar/collin.png') }}" />
+      </div>
+      <div class="media-body">
+        <h4 class="media-heading">Collin Watson</h4>
+        <div class="media-content">
+          <a href="mailto:collin@poold.in">collin@poold.in</a>
+        </div>
+      </div>
+    </li>
+    <li class="media">
+      <div class="pull-left">
+        <img class="media-object" alt="Lloyd" src="{{ url_for('static', filename='img/avatar/lloyd.png') }}" />
+      </div>
+      <div class="media-body">
+        <h4 class="media-heading">Lloyd</h4>
+        <div class="media-content">
+          <p>Chief Paw Licker</p>
+          <a href="mailto:lloyd@poold.in">lloyd@poold.in</a>
+        </div>
+      </div>
+    </li>
+    <li class="media">
+      <div class="pull-left">
+        <img class="media-object" alt="Benny" src="{{ url_for('static', filename='img/avatar/benny.png') }}" />
+      </div>
+      <div class="media-body">
+        <h4 class="media-heading">Benny</h4>
+        <div class="media-content">
+          <p>Chief Security Officer</p>
+          <a href="mailto:benny@poold.in">benny@poold.in</a>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 {% endblock %}
-
 {% block init %}
 <script type="text/javascript">
 (function() {
