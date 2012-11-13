@@ -18,6 +18,7 @@ class PI.forms.Field
     @remote = config.remote if config.remote?
     @remote = @name unless @remote?
     @label = config.label if config.label?
+    @filter = config.filter
     @default = config.default if config.default?
     @error = ko.observable()
     @errors = ko.observableArray([])
@@ -254,6 +255,7 @@ class PI.forms.Form
       return dict if fields.length < 1
 
     for field in fields
+      continue if @[field].field.filter
       key = @[field].field.remote
       value = @[field]()
       dict[key] = value if value?
