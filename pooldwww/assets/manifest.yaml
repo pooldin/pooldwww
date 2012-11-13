@@ -14,6 +14,8 @@ app-js:
         - ../assets/script/auth/reset.coffee
         - ../assets/script/account/details.coffee
         - ../assets/script/account/password.coffee
+        - ../assets/script/pool/create.coffee
+        - ../assets/script/pool/view.coffee
 
 app-js-min:
     output: ../static/script/pooldin/app.min.js
