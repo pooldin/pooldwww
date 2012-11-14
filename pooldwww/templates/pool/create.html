@@ -11,7 +11,7 @@
       <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
       <div class="h1">Create Pool</div>
       <label class="full">
-        <span class="label">Pool Name <i class="icon-info-sign pull-right"></i></span>
+        <span class="label">Pool Name <i class="icon-question-sign pull-right" data-bind="click: function () { $('#pool-create-name-help').show(); }"></i></span>
         <input name="name"
                type="text"
                data-bind="value: form.name, valueUpdate: 'afterkeydown', css: { error: form.isInvalid('name') }"
@@ -19,7 +19,7 @@
                autofocus="autofocus" />
       </label>
       <label>
-        <span class="label">Pool Description<i class="icon-info-sign pull-right"></i></span>
+        <span class="label">Pool Description<i class="icon-question-sign pull-right" data-bind="click: function () { $('#pool-create-describe-help').show(); }"></i></span>
         <textarea class="large"
                   name="description"
                   data-bind="value: form.description, valueUpdate: 'afterkeydown', css: { error: form.isInvalid('description') }">
@@ -156,6 +156,18 @@
     <div class="indicators"></div>
   </div>
 </section>
+
+<div id="pool-create-name-help" class="help-screen" style="display: none;">
+  <a href="#" class="btn pull-right" data-bind="click: function () { $('#pool-create-name-help').hide(); }">Done</a>
+  <div class="title"><span class="bold red">Help Tip:</span> Pool Name</div>
+  <div class="body">This will identify your campaign and will be how participants will refer to it. Must be 50 characters or less.</div>
+</div>
+
+<div id="pool-create-describe-help" class="help-screen" style="display: none;">
+  <a href="#" class="btn pull-right" data-bind="click: function () { $('#pool-create-describe-help').hide(); }">Done</a>
+  <div class="title"><span class="bold red">Help Tip:</span> Pool Description</div>
+  <div class="body">A 1 to 2 paragraph description of the goal of your campaign. Let people know what you need their money for!</div>
+</div>
 {% endblock %}
 
 {% block init %}
