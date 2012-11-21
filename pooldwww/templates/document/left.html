@@ -19,12 +19,12 @@
   <div class="container">
     <div class="row">
       <div class="span10 content">
+        <div><a href="{{ url_for('marketing.index') }}">&copy; 2012 Poold Inc.</a></div>
         <ul>
-          <li><a href="{{ url_for('marketing.about') }}">About</a></li>
-          <li><a href="{{ url_for('marketing.contact') }}">Contact</a></li>
           <li><a href="{{ url_for('legal.terms') }}">Terms of Service</a></li>
+          <li>|</li>
+          <li><a href="{{ url_for('legal.privacy') }}">Privacy Policy</a></li>
         </ul>
-        <a class="pull-right" href="{{ url_for('marketing.index') }}">&copy; poold inc.</a>
       </div>
     </div>
   </div>
