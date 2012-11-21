@@ -17,24 +17,6 @@ class PI.forms.PoolCreateForm extends PI.forms.Form
       ]
 
     @field
-      name: 'date_month',
-      label: 'MM',
-      filter: true,
-      validators: [
-        new PI.forms.Required(),
-        new PI.forms.MonthInteger(),
-      ]
-
-    @field
-      name: 'date_day',
-      label: 'DD',
-      filter: true,
-      validators: [
-        new PI.forms.Required(),
-        new PI.forms.DayInteger(),
-      ]
-
-    @field
       name: 'date_year',
       label: 'YYYY',
       filter: true,
@@ -44,53 +26,79 @@ class PI.forms.PoolCreateForm extends PI.forms.Form
       ]
 
     @field
-      name: 'amount',
+      name: 'date_month',
+      label: 'MM',
+      filter: true,
       validators: [
         new PI.forms.Required(),
-        new PI.forms.PositiveInteger(),
+        new PI.forms.MonthInteger()
+      ]
+
+    @field
+      name: 'date_day',
+      label: 'DD',
+      filter: true,
+      validators: [
+        new PI.forms.Required(),
+        new PI.forms.DayInteger({yearField: @date_year, monthField: @date_month})
+      ]
+
+    @field
+      name: 'amount',
+      label: 'amount',
+      validators: [
+        new PI.forms.Required(),
+        new PI.forms.PositiveInteger()
       ]
 
     @field
       name: 'contribution',
+      label: 'contribution',
       validators: [
         new PI.forms.Required(),
-        new PI.forms.PositiveInteger(),
+        new PI.forms.PositiveInteger()
       ]
 
     @field
       name: 'required_contribution',
+      label: 'required_contribution',
       value: false
 
     @field
       name: 'fund_collection',
+      label: 'fund_collection',
       validators: [
         new PI.forms.Required(),
       ]
 
     @field
       name: 'disburse_funds',
+      label: 'disburse_funds',
       validators: [
         new PI.forms.Required(),
       ]
 
     @field
       name: 'date'
-      value: ko.computed(@date_value, this)
+      label: 'date',
+      value: ko.computed(@dateValue, this)
       validators: [
         new PI.forms.Required(),
+        new PI.forms.FutureTimestamp(),
       ]
 
     @field
       name: 'milestones'
+      label: 'milestones',
       value: ko.observable([])
 
-  date_value: ->
+  dateValue: ->
     year = @date_year()
     month = @date_month()
     day = @date_day()
     return if not year? or not month? or not day?
-    date = new Date(year, month - 1, day - 1)
-    return parseInt(date.getTime() / 1000)
+    date = new Date(year, month - 1, day)
+    return parseInt(date.getTime())
 
 
 class PI.pages.PoolCreatePage extends PI.pages.Page
