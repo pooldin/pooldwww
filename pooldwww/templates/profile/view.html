@@ -1,0 +1,89 @@
+{% extends "document/right_article.html" %}
+
+{% block secondary %}
+{% endblock %}
+
+{% block article %}
+<section id="profile-view">
+<div class="profile">
+  <div class="padded-content">
+    <div class="basics">
+      {% set url = profile_user.email or 'anonymous@poold.in' %}
+      {% set url = url | gravatar(size=80) %}
+      {% set country = user.country or 'U.S.A.' %}
+      <img src="{{ url }}" />
+      <div class="info grey">
+        <span class="h2 black">{{ profile_user.username }}</span>
+        <div class="general">
+          {% if profile_user.name %}
+          <span class="block capitolized bold">{{ profile_user.name }}</span>
+          {% endif %}
+          <span class="block">Member since {{ profile_user.created.year }}</span>
+          <span class="block">{{ country }}</span>
+        </div>
+      </div>
+    </div>
+    {% if is_user %}
+    <div class="change-gravatar"><a class="grey small" href="http://www.gravatar.com" target="_blank">Change Gravatar</a> <i class="icon-question-sign"></i></div>
+    {% endif %}
+  </div>
+  <div class="details">
+    <span class="bold block h3" style="margin-bottom: 10px;" data-bind="text: title, css: { error: error, success: success }"></span>
+    {% if is_user %}
+    <a href="#" class="btn pull-right edit" data-bind="click: toggleEdit, visible: ! isEditing()">Edit</a>
+    <a href="#" class="btn pull-right edit cancel" style="display: none;" data-bind="click: cancelEdit, visible: isEditing()">Cancel</a>
+    <a href="#" class="btn pull-right edit save" style="display: none;" data-bind="click: saveEdit, visible: isEditing()">Save</a>
+    {% endif %}
+    <span class="content-editable about-text" style="display: block;" data-bind="attr: { contentEditable: isEditing }">
+      {% if about %}
+      {{ about }}
+      {% endif %}
+    </span>
+    <span class="about-text-placeholder" data-bind="visible: displayAboutTextPlaceholder">
+      {% if is_user %}
+        {% if not about %}
+        Tell us more about yourself!
+        {% endif %}
+      {% else %}
+      We're sorry, <span class="capitolized">{{ profile_user.display_name }}</span> hasn't taken the time to let you know a little bit more about themselves.  We know, we're sad too.
+      {% endif %}
+    </span>
+  </div>
+  <div class="clearfix"></div>
+  <div class="padded-content">
+    <span class="bold black">Where I'm poold in.</span>
+    <hr />
+
+    <span class="bold black" data-bind="ifnot: campaigns().length"><span class="capitolized">{{ profile_user.display_name }}</span> hasn't poold in with anyone yet!</span>
+
+    <div class="campaigns" data-bind="foreach: campaigns">
+      <div class="campaign">
+        <div class="dot"></div>
+        <div class="campaign-name">
+          <a class="name bold capitolized" data-bind="text: name, attr: { href: link }"></a> | <span class="role lower" data-bind="text: role"></span>
+        </div>
+        <div class="campaign-status">
+          <span style="line-height: 15px;" class="status" data-bind="text: activeString()"></span>
+          <span style="line-height: 15px;" class="end-date" data-bind="if: endString(), text: endString()"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</div>
+
+</section>
+{% endblock %}
+
+
+{% block init %}
+<script type="text/javascript">
+  PI.pages.ProfileViewPage.init({
+    title: {{ title|tojson|safe }},
+    username: {{ user.username|default(None, True)|tojson|safe }},
+    about: {{ about|tojson|safe }},
+    campaigns: {{ campaigns|tojson|safe }},
+    isUser: {{ is_user|tojson }}
+  });
+</script>
+{% endblock %}

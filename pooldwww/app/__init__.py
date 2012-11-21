@@ -7,7 +7,7 @@ from flask.ext.gravatar import Gravatar
 from flask.ext.seasurf import SeaSurf
 from pooldlib.postgresql import db
 
-from pooldwww import DIR, account, media, auth, legal, marketing, pool, verify
+from pooldwww import DIR, account, media, auth, legal, marketing, pool, verify, profile
 from pooldwww.app import email, login, session, settings, restrict
 
 
@@ -63,3 +63,4 @@ def init_blueprints(app):
     app.register_blueprint(legal.plan)
     app.register_blueprint(marketing.plan)
     app.register_blueprint(pool.plan, url_prefix='/pool')
+    app.register_blueprint(profile.plan, url_prefix='/profile')

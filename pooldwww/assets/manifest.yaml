@@ -9,6 +9,7 @@ app-js:
         - ../assets/script/form.coffee
         - ../assets/script/validation.coffee
         - ../assets/script/page.coffee
+        - ../assets/script/user.coffee
         - ../assets/script/auth/signup.coffee
         - ../assets/script/auth/login.coffee
         - ../assets/script/auth/reset.coffee
@@ -16,6 +17,7 @@ app-js:
         - ../assets/script/account/password.coffee
         - ../assets/script/pool/create.coffee
         - ../assets/script/pool/view.coffee
+        - ../assets/script/profile/view.coffee
 
 app-js-min:
     output: ../static/script/pooldin/app.min.js
