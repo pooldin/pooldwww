@@ -6,59 +6,228 @@
 
 {% block article %}
 <section id="pool-view-overview" class="pool overview">
+  {% if is_organizer %}
+  <div class="content-spacer" style="height: 5px; width: 100%"></div>
+  <div class="promote-bar" data-bind="click: viewPromoteTransition">
+    <span class="h4">Promote Your Campaign!</span>
+    <i class="icon-chevron-right icon-white"></i>
+  </div>
+  {% endif %}
   <div class="padded-content">
     <div class="title">
       <div class="h3">{{ campaign.name|safe }}</div>
-      <div class="organizer">Organized by <span class="bold black">{{ organizer.display_name }}</span></div>
+      <div class="organizer">Organized by <span class="bold teal">{{ organizer.display_name }}</span></div>
     </div>
   </div>
   <div class="details">
-    <h3 class="text-center pinup"><span class="upper">Goal:</span> <span class="grey" data-bind="text: amount">0</span></h3>
-    <div class="span9 text-center">
+    <h3 class="text-center pinup"><span class="upper">Goal:</span> <span class="grey" data-bind="text: campaign.amount">0</span></h3>
+    <div class="text-center">
       <a href="#" class="btn btn-danger upper" data-bind="click: function (e) { alert('Currently not supported'); }">Pool In</a>
     </div>
     <hr />
     <div class="text-center lower">
-      <div><i>Current Total</i> = <span class="bold black" data-bind="text: contributionAmount"></span></div>
-      <div><i>Poold In</i> = <span class="bold black" data-bind="text: participantCount"></span></div>
+      <div><i>Poold In</i> = <span class="bold black" data-bind="text: campaign.participantCount"></span></div>
+      <div><i>Total Pledged</i> = <span class="bold black" data-bind="text: campaign.contributionAmount"></span></div>
     </div>
   </div>
   <div class="text-center remaining">
-    <span class="digit" data-bind="text: daysRemaining"></span> Days
-    <span class="digit" data-bind="text: hoursRemaining"></span>  Hrs
-    <span class="digit" data-bind="text: minutesRemaining"></span>  Mins
+    <span class="digit" data-bind="text: campaign.days"></span> Days
+    <span class="digit" data-bind="text: campaign.hours"></span>  Hrs
+    <span class="digit" data-bind="text: campaign.minutes"></span>  Mins
   </div>
-</section>
-  <ul id="poold-view-details-tabs" class="nav nav-tabs two">
+  <ul id="pool-view-details-tabs" class="nav nav-tabs two">
     <li><a href="#description" data-toggle="tab">Description <i class="icon-chevron-down icon-white" style="float: right;"></i></a></li>
-    <li><a href="#participants" data-toggle="tab">Participants <i class="icon-chevron-up icon-white" style="float: right;"></i></a></li>
+    <li><a href="#participants" data-toggle="tab">Community <i class="icon-chevron-up icon-white" style="float: right;"></i></a></li>
   </ul>
-<section id="pool-view-description" class="pool tab-body" style="display: none;" data-bind="visible: tabs['#description'].visible">
-  {{ campaign.description|safe }}
-</section>
-<section id="pool-view-participants" class="pool tab-body" style="display: none;" data-bind="visible: tabs['#participants'].visible">
-<div data-bind="foreach: participants">
-  <div class="participant">
-    <div class="profile-image"><img data-bind="attr: {src: gravatar, alt: name}" /></div>
-    <div class="details">
-      <span class="name" data-bind="text: name"></span> | <span class="role" data-bind="text: role"></span>
-      <span class="status" style="display: block;" data-bind="text: status"></span>
+  <div id="pool-view-description" class="pool tab-body" style="display: none;" data-bind="visible: tabs('#description').visible">
+    <hr />
+    <span data-bind="text: campaign.description"></span>
+    <div data-bind="foreach: campaign.updates">
+      <hr />
+      <div data-bind="text: dateString"></div>
+      <div data-bind="text: text"></div>
+    </div>
+    <hr />
+    {% if is_organizer %}
+    <div class="clickable" data-bind="click: addDescriptionUpdate">
+      <div class="dot"><i class="icon-plus icon-white"></i></div>
+      <span class="dot-label">Add more info</span>
+    </div>
+    <form style="display: none">
+      <textarea class="pool-description-update" data-bind="value: updateForm.text, valueUpdate: 'afterkeydown'">
+      </textarea>
+      <a href="#" class="btn pull-right" data-bind="click: submitDescriptionUdate">Submit</a>
+      <a href="#" class="btn pull-right" data-bind="click: removeDescriptionUpdate">Cancel</a>
+    </form>
+    <div class="clearfix"></div>
+    {% endif %}
+  </div>
+  <div id="pool-view-participants" class="pool tab-body" style="display: none;" data-bind="visible: tabs('#participants').visible">
+    <div data-bind="foreach: campaign.participants">
+      <div class="participant">
+        <div class="profile-image"><img data-bind="attr: {src: gravatar, alt: name}" /></div>
+        <div class="profile-info">
+          <div data-bind="if: ! invitee()">
+            <a class="name" data-bind="text: name, attr: { href: link }"></a>
+            <span class="organizer upper" style="display: block;" data-bind="if: isOrganizer">Organizer</span>
+            <div  data-bind="if: ! isOrganizer()">
+              Pledged <span class="contribution" data-bind="text: dollarAmount"></span> on <span data-bind="text: formattedJoinDate()"></span>
+            </div>
+          </div>
+          <div data-bind="if: invitee()">
+            <span class="name" data-bind="if: name"><a class="name" data-bind="text: name, attr: { href: link }"></a></span>
+            <span class="name" data-bind="ifnot: name"><span class="name" data-bind="text: email"></span></span>
+            <div class="invited">Invited to participate</div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <hr />
     </div>
   </div>
   <div class="clearfix"></div>
-  <hr />
-</div>
 </section>
+
+{% if is_organizer %}
+<section id="pool-view-promote" style="display: none;">
+  <div class="promote-body">
+    <div class="content-spacer" style="height: 5px; width: 100%"></div>
+    <div class="promote-bar" data-bind="click: viewPromoteTransition">
+      <i class="icon-chevron-left icon-white pull-left"></i>
+      <span class="h4">Back to {{ campaign.name|safe }}</span>
+    </div>
+    <div class="padded-content">
+      <h4 class="upper" style="text-align: center;">Promote Your Campaign</h4>
+      <hr />
+      <div class="choice link">
+        <span class="share-link title" style="display: block;">Campaign URL</span>
+        <span class="share-link link" data-bind="text: promoteScreen.link"></span>
+      </div>
+      <hr />
+      <div class="choice padded social">
+        <span class="share-social title">Share</span>
+        <img src="/static/img/social/facebook.png" alt="Share on Facebook" class="social right" />
+        <img src="/static/img/social/twitter.png" alt="Share on Twitter" class="social left" />
+      </div>
+      <hr />
+      <div class="choice padded invite" data-bind="click: promoteInviteTransition">
+        <span class="share-invite title">Send Invites</span>
+        <i class="icon-chevron-right icon-white" style="float: right;"></i>
+      </div>
+      <hr />
+      <div class="choice padded update" data-bind="click: promoteUpdateTransition">
+        <span class="share-update title">Send Update</span>
+        <i class="icon-chevron-right icon-white" style="float: right;"></i>
+      </div>
+    </div>
+    <div class="clearfix" style="height: 13px;"></div>
+  </div>
+</section>
+
+<section id="pool-view-invite" style="display: none;">
+  <div class="promote-body">
+    <div class="content-spacer" style="height: 5px; width: 100%"></div>
+    <div class="promote-bar" data-bind="click: promoteInviteTransition">
+      <i class="icon-chevron-left icon-white pull-left"></i> <span class="h4">Promote {{ campaign.name|safe }}</span>
+    </div>
+    <div class="padded-content">
+      <h4 class="upper" style="text-align: center;">Promote Your Campaign</h4>
+      <hr />
+      <div class="choice padded">
+        <span class="title" style="display: block;">Send Invites</span>
+      </div>
+      <hr />
+      <form data-bind="with: inviteScreen">
+        <label>
+          <span style="display: block;">To:</span>
+          <textarea style="width: 100%" data-bind="value: form.toField, valueUpdate: 'afterkeydown'"></textarea>
+        </label>
+        <span class="pinup">Select from your network <i class="icon-chevron-right icon-white"></i></span>
+        <label>
+          <span style="display: block;">Add a Message:</span>
+          <textarea style="width: 100%" data-bind="value: form.message, valueUpdate: 'afterkeydown'"></textarea>
+        </label>
+        <a href="#" class="btn pull-right pinup" data-bind="click: submitInvites">Submit</a>
+        <a href="#" class="btn pull-right pinup" data-bind="click: cancelInvites">Cancel</a>
+      <div class="clearfix" style="height: 13px;"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="pool-view-update" style="display: none;">
+  <div class="promote-body">
+    <div class="content-spacer" style="height: 5px; width: 100%"></div>
+    <div class="promote-bar" data-bind="click: promoteUpdateTransition">
+      <i class="icon-chevron-left icon-white pull-left"></i> <span class="h4">Promote {{ campaign.name|safe }}</span>
+    </div>
+    <div class="padded-content">
+      <h4 class="upper" style="text-align: center;">Promote Your Campaign</h4>
+      <hr />
+      <div class="choice padded">
+        <span class="title" style="display: block;">Send Invites</span>
+      </div>
+      <hr />
+      <form data-bind="with: updateScreen">
+        <span style="display: block;">To:</span>
+        <label>
+          <input type="radio"
+                name="update_to"
+                value="community"
+                data-bind="checked: updateTo"/>
+          <span class="label">Community<i class="icon-chevron-right icon-white pull-right"></i></span>
+        </label>
+        <label>
+          <input type="radio"
+                name="update_to"
+                value="participants"
+                data-bind="checked: updateTo"/>
+          <span class="label">Participants<i class="icon-chevron-right icon-white pull-right"></i></span>
+        </label>
+        <label>
+          <input type="radio"
+                name="update_to"
+                value="invitees"
+                data-bind="checked: updateTo"/>
+          <span class="label">Invitees<i class="icon-chevron-right icon-white pull-right"></i></span>
+        </label>
+        <label>
+          <input type="radio"
+                name="update_to"
+                value="individually"
+                data-bind="checked: updateTo"/>
+          <span class="label">Custom</span>
+        </label>
+        <label class="to-field" data-bind="visible: recipientsEditable">
+          <span style="display: block;">Recipients:</span>
+          <textarea style="width: 100%" data-bind="value: form.toField, valueUpdate: 'afterkeydown', enable: recipientsEditable"></textarea>
+        </label>
+        <label class="message-field">
+          <span style="display: block;">Add a Message:</span>
+          <textarea style="width: 100%" data-bind="value: form.message, valueUpdate: 'afterkeydown'"></textarea>
+        </label>
+        <a href="#" class="btn pull-right pinup" data-bind="click: submitUpdate">Submit</a>
+        <a href="#" class="btn pull-right pinup" data-bind="click: cancelUpdate">Cancel</a>
+      <div class="clearfix" style="height: 13px;"></div>
+      </form>
+    </div>
+  </div>
+</section>
+{% endif %}
 {% endblock %}
+
 
 {% block init %}
 <script type="text/javascript">
   PI.pages.PoolViewPage.init({
     title: {{ title|tojson|safe }},
-    tabs: {"#poold-view-details-tabs": ["#description", "#participants"]},
+    campaignId: {{ campaign.id|tojson }},
+    description: {{ campaign.description['text']|tojson|safe}},
+    updates: {{ campaign.description['updates']|default(None, True)|tojson|safe}},
+    tabs: {"#pool-view-details-tabs": ["#description", "#participants"]},
     amount: {{ campaign.amount }},
     contributionAmount: {{ total_poold }},
-    timestamp: {{ timestamp }},
+    endTimestamp: {{ timestamp }},
     participants: {{ participants|safe }}
   });
 </script>

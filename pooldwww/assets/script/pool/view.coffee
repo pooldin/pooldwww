@@ -1,76 +1,450 @@
-class PI.pages.Tab
+PI.campaign = PI.campaign or {}
+
+
+class PI.forms.EmailFieldValidator extends PI.forms.Validator
+
+  constructor: (config) ->
+    super(config)
+    @emailValidator = new PI.forms.Email(config)
+
+  isValid: (value) ->
+    emails = value.split(',')
+    for email in emails
+      email = email.trim()
+      if not @emailValidator.isValid(email)
+        return false
+    return true
+
+
+class PI.forms.CampaignEmailInviteForm extends PI.forms.Form
+
+  init: (config) ->
+    config ?= {}
+
+    @field
+      name: 'toField',
+      filter: true,
+      validators: [
+        new PI.forms.Required(),
+        new PI.forms.EmailFieldValidator()
+      ]
+
+    @field
+      name: 'to',
+      validators: [
+        new PI.forms.Required()
+      ]
+
+    @field
+      name: 'message',
+      value: '',
+      validators: [
+        new PI.forms.Required()
+      ]
+
+    @id = config.id
+    @pathRoot = config.pathRoot or '/pool'
+    @endpoint = "#{@pathRoot}/#{@id}/send/invite"
+
+
+class PI.forms.CampaignEmailUpdateForm extends PI.forms.Form
+
+  init: (config) ->
+    config ?= {}
+
+    @field
+      name: 'toField',
+      filter: true,
+      validators: [
+        new PI.forms.Required(),
+        new PI.forms.EmailFieldValidator()
+      ]
+
+    @field
+      name: 'to',
+      validators: [
+        new PI.forms.Required()
+      ]
+
+    @field
+      name: 'message',
+      value: '',
+      validators: [
+        new PI.forms.Required()
+      ]
+
+    @field
+      name: 'update_to',
+      value: '',
+      validators: [
+      ]
+
+    @id = config.id
+    @pathRoot = config.pathRoot or '/pool'
+    @endpoint = "#{@pathRoot}/#{@id}/send/update"
+
+
+class PI.pages.CampaignPromoteScreen extends PI.pages.Page
 
   constructor: (config) ->
     config ?= {}
-    @visible = ko.observable(config.visible or false)
-    @link = config.link
-    @activeClass = config.activeClass or 'icon-chevron-down'
-    @inactiveClass = config.activeClass or 'icon-chevron-up'
-    @indicatorEL = $("a[href='" + @link + "'] i")
+    @id = config.id
+    @pathRoot = config.pathRoot or '/pool'
+    @link = "#{window.location.protocol}//#{window.location.host}#{@pathRoot}/#{@id}"
 
-  show: ->
-    @visible(true)
-    @indicatorEL.removeClass(@inactiveClass)
-    @indicatorEL.addClass(@activeClass)
 
-  hide: ->
-    @visible(false)
-    @indicatorEL.removeClass(@activeClass)
-    @indicatorEL.addClass(@inactiveClass)
+class PI.pages.CampaignInviteScreen extends PI.pages.Page
+
+  constructor: (config) ->
+    config ?= {}
+    @id = config.id
+    @form = new PI.forms.CampaignEmailInviteForm(config)
+
+    @form.saved.add(@onInviteSaved, this)
+    @form.failed.add(@onInviteFailed, this)
+
+  submitInvites: ->
+    trimmedEmails = []
+    emails = @form.toField()
+    for email in emails.split(',')
+      trimmedEmails.push(email.trim())
+    @form.to(trimmedEmails.join(','))
+
+    @form.submit()
+
+  cancelInvites: ->
+    @form.empty()
+    # Hack to get back since we dont' have access to the parent object here...
+    bar = $('.promote-bar:visible')
+    bar.click()
+
+  onInviteSaved: ->
+    # Need to add messaging
+    @cancelInvites()
+
+  onInviteFailed: ->
+    # Need to add messaging
+
+
+class PI.pages.CampaignUpdateScreen extends PI.pages.Page
+
+  constructor: (config) ->
+    config ?= {}
+    @id = config.id
+    @form = new PI.forms.CampaignEmailUpdateForm(config)
+
+    @form.saved.add(@onUpdateSaved, this)
+    @form.failed.add(@onUpdateFailed, this)
+
+    @recipientsEditable = ko.observable(false)
+    @participants = config.community
+
+    @updateTo = ko.observable('community')
+    @updateToUpdated = ko.computed(@_updatedToUpdated)
+    @_updatedToUpdated()
+
+  _updatedToUpdated: () =>
+    value = @updateTo()
+    emails = []
+    updateAddresses = false
+    if value == 'community'
+      @recipientsEditable(false)
+      updateAddresses = true
+      filter = (member) ->
+        emails.push(member.email())
+    if value == 'participants'
+      @recipientsEditable(false)
+      updateAddresses = true
+      filter = (member) ->
+        if not member.invitee()
+          emails.push(member.email())
+    if value == 'invitees'
+      @recipientsEditable(false)
+      updateAddresses = true
+      filter = (member) ->
+        if member.invitee()
+          emails.push(member.email())
+    if value == 'individually'
+      @recipientsEditable(true)
+
+    if updateAddresses
+      @participants().forEach(filter)
+      @form.toField(emails.join(', '))
+
+  submitUpdate: ->
+    trimmedEmails = []
+    emails = @form.toField()
+    for email in emails.split(',')
+      trimmedEmails.push(email.trim())
+    @form.to(trimmedEmails.join(','))
+
+    @form.submit()
+
+
+  cancelUpdate: ->
+    @form.empty()
+    # Hack to get back since we dont' have access to the parent object here...
+    bar = $('.promote-bar:visible')
+    bar.click()
+
+  onUpdateSaved: ->
+    # Need to add messaging
+    @cancelUpdate()
+
+  onUpdateFailed: ->
+    # Need to add messaging
+
+
+class PI.forms.CampaignUpdateForm extends PI.forms.Form
+
+  init: (config) ->
+    @field
+      name: 'text',
+      value: '',
+      validators: [
+        new PI.forms.Required(),
+        new PI.forms.MaximumLength({'length': 500})
+      ]
+    @field
+      name: 'timestamp',
+      validators: [
+        new PI.forms.Required(),
+      ]
+
+    @pathRoot = config.pathRoot or '/pool'
+    @id = config.id
+    @endpoint = "#{@pathRoot}/#{@id}/update"
+
+  submit: ->
+    now = new Date()
+    @timestamp(now.getTime())
+    super()
+
+
+participant = new PI.Schema()
+participant.mapMoment('joinedDate')
+
+class PI.campaign.Participant extends PI.Model
+
+  @schema: participant
+
+  constructor: (data) ->
+    super(data)
+    @pathRoot = data.profileRoot or '/profile'
+    @link = "#{window.location.protocol}//#{window.location.host}#{@pathRoot}/#{@username()}"
+    @dollarAmount = ko.computed(@formatDollarAmount)
+
+    @year = ko.observable()
+    @month = ko.observable()
+    @day = ko.observable()
+    @setDate()
+
+  formattedJoinDate: ->
+    return "#{@month()}.#{@day()}.#{@year()}"
+
+  setDate: ->
+    return unless @joinedDate
+    @year(@joinedDate().year())
+    @month(@joinedDate().month() + 1)
+    @day(@joinedDate().date())
+
+  formatDollarAmount: =>
+    return 0 if @invitee()
+    amount = @amount.extend(money: precision: 2)
+    return amount()
+
+campaignUpdate = new PI.Schema()
+campaignUpdate.mapMoment('timestamp')
+
+class PI.campaign.CampaignUpdate extends PI.Model
+  @schema: campaignUpdate
+
+  constructor: (data) ->
+    super(data)
+
+    @year = ko.observable()
+    @month = ko.observable()
+    @day = ko.observable()
+    @setDate()
+    @dateString = ko.computed(@computeDateString)
+
+  computeDateString: =>
+    now = new Date()
+    return "#{@month()}.#{@day()}.#{@year()}"
+
+  setDate: ->
+    return unless @timestamp
+    @year(@timestamp().year())
+    @month(@timestamp().month() + 1)
+    @day(@timestamp().date())
+
+
+campaign = new PI.Schema()
+campaign.mapMoment('end')
+
+class PI.campaign.Campaign extends PI.Model
+
+  constructor: (data) ->
+    updates = data.updates or []
+    delete data.updates if updates
+
+    participants = data.participants or []
+    delete data.participants if participants
+
+    super(data)
+
+    @participants = ko.observableArray()
+    for participant in participants
+      @participants.push(new PI.campaign.Participant(participant))
+    @participantCount = ko.computed(@countParticipants)
+
+    @updates = ko.observableArray()
+    for update in updates
+      @updates.push(new PI.campaign.CampaignUpdate(update))
+
+    @amount = @amount.extend(money: precision: 2)
+    @_contributionAmount = ko.observable(0).extend(money: precision: 2)
+    @contributionAmount = ko.computed(@calculateContributionAmount)
+
+    @days = ko.computed(@calculateDaysRemaining)
+    @hours = ko.computed(@calculateHoursRemaining)
+    @minutes = ko.computed(@calculateMinutesRemaining)
+
+  addUpdate: (data) ->
+    update = new PI.campaign.CampaignUpdate(data)
+    @updates.push(update)
+
+  countParticipants: =>
+    return @participants().length
+
+  calculateContributionAmount: =>
+    total = 0
+    sum = (p) ->
+      return if p.invitee()
+      total += p.amount()
+    @participants().forEach(sum)
+    @_contributionAmount(total)
+    return @_contributionAmount()
+
+  calculateDaysRemaining: =>
+    now = new Date()
+    return parseInt((@end() - now) / (3600000 * 24))
+
+  calculateHoursRemaining: =>
+    now = new Date()
+    return parseInt(((@end() - now) - @calculateDaysRemaining()*(3600000 * 24)) / 3600000)
+
+  calculateMinutesRemaining: =>
+    now = new Date()
+    return parseInt(((@end() - now) - @calculateDaysRemaining()*(3600000 * 24) - (@calculateHoursRemaining()*3600000)) / 60000)
+
 
 class PI.pages.PoolViewPage extends PI.pages.Page
 
   constructor: (config) ->
     config ?= {}
-    @tabs = {}
     @title = config.title or "Pool"
-    @amount = ko.observable(config.amount or 0).extend(money: precision: 2)
-    @contributionAmount = ko.observable(config.contributionAmount or 0).extend(money: precision: 2)
-    @participants = ko.observableArray()
-    _participants = config.participants or []
-    for participant in _participants
-      @participants.push(participant)
-    @participantCount = ko.computed(@countParticipants)
 
-    @date = new Date()
-    @date.setTime(config.timestamp * 1000)
-    @daysRemaining = ko.computed(@calculateDaysRemaining)
-    @hoursRemaining = ko.computed(@calculateHoursRemaining)
-    @minutesRemaining = ko.computed(@calculateMinutesRemaining)
+    campaignConfig =
+      id: config.campaignId,
+      participants: config.participants,
+      description: config.description,
+      updates: config.updates,
+      amount: config.amount,
+      end: config.endTimestamp
+    @campaign = new PI.campaign.Campaign(campaignConfig)
 
-    tabs = config.tabs or {}
-    for tab_id, tab of tabs
-      $(tab_id + ' a').click(@onTabClick)
-      $(tab_id + ' a[data-toggle="tab"]').on('shown', @onShow)
-      visible = true
-      for t in tab
-        @tabs[t] = new PI.pages.Tab({
-          visible: visible, # there has to be a better way...
-          link: t
-        })
-        visible = false # there has to be a better way...
-        $(tab_id + ' a:first').tab('show')
+    @promoteScreen = new PI.pages.CampaignPromoteScreen(id: config.campaignId)
+    @inviteScreen = new PI.pages.CampaignInviteScreen(id: config.campaignId)
+    @updateScreen = new PI.pages.CampaignUpdateScreen(id: config.campaignId, community: @campaign.participants)
 
-  onTabClick: (e) ->
-    e.preventDefault()
-    $(this).tab('show')
+    @viewScreenVisibile = ko.observable(true)
+    @promoteScreenVisible = ko.observable(false)
+    @inviteScreenVisibile = ko.observable(false)
+    @updateScreenVisibile = ko.observable(false)
 
-  onShow: (e) =>
-    @tabs[e.target.hash].show()
-    @tabs[e.relatedTarget.hash].hide() if e.relatedTarget
+    @tabbedContent = new PI.pages.TabbedContent(config.tabs or {})
 
-  countParticipants: =>
-    return @participants().length
+    stickyBarConfig =
+      selector: '.promote-bar:visible',
+      minYPosition: 40
+      yOffset: 5
+    @stickyPromoteBar = new PI.pages.StickyBar(stickyBarConfig)
 
-  calculateDaysRemaining: =>
-    now = new Date()
-    return parseInt((@date - now) / (3600000 * 24))
+    @updatingDescription = false
+    @updateForm = new PI.forms.CampaignUpdateForm({id: config.campaignId})
+    @updateForm.saved.add(@onUpdateSaved, this)
+    @updateForm.failed.add(@onUpdateFailed, this)
 
-  calculateHoursRemaining: =>
-    now = new Date()
-    return parseInt(((@date - now) - @calculateDaysRemaining()*(3600000 * 24)) / 3600000)
+    @updateEL = jQuery('<form><textarea class="pool-description-update" data-bind="value: updateForm.text, valueUpdate: \'afterkeydown\'"></textarea><a href="#" class="btn pull-right" data-bind="click: submitDescriptionUdate">Submit</a></form><div class="clearfix"></div>')
+    @clickEL = undefined
 
-  calculateMinutesRemaining: =>
-    now = new Date()
-    return parseInt(((@date - now) - @calculateDaysRemaining()*(3600000 * 24) - (@calculateHoursRemaining()*3600000)) / 60000)
+  tabs: (tab) ->
+    return @tabbedContent.tab(tab)
 
+  onUpdateSaved: (form, xhr) ->
+    @removeDescriptionUpdate()
+    data = JSON.parse(xhr.responseText)
+    newUpdate = data['updates'].pop()
+    @campaign.addUpdate(newUpdate)
+
+  onUpdateFailed: ->
+
+  removeDescriptionUpdate: =>
+    parent = jQuery('#pool-view-description')
+
+    form = parent.children('form')
+    form.css({display: 'none'})
+
+    @updateForm.empty()
+
+    @clickEL.addClass('clickable')
+    @clickEL = undefined
+
+    @updatingDescription = false
+
+  addDescriptionUpdate: =>
+    return if @updatingDescription
+
+    @updatingDescription = true
+    parent = jQuery('#pool-view-description')
+    @clickEL = parent.children('.clickable')
+    @clickEL.removeClass('clickable')
+
+    #parent.append(@updateEL)
+    form = parent.children('form')
+    form.css({display: ''})
+
+  submitDescriptionUdate: ->
+    parent = jQuery('#pool-view-description')
+    @updateForm.submit()
+
+  viewPromoteTransition: ->
+    @promoteScreenVisible(not @promoteScreenVisible())
+    @viewScreenVisibile(not @viewScreenVisibile())
+    if @promoteScreenVisible()
+      jQuery('#pool-view-promote').show()
+      jQuery('#pool-view-overview').hide()
+    if not @promoteScreenVisible()
+      jQuery('#pool-view-promote').hide()
+      jQuery('#pool-view-overview').show()
+
+  promoteInviteTransition: ->
+    @promoteScreenVisible(not @promoteScreenVisible())
+    @inviteScreenVisibile(not @inviteScreenVisibile())
+    if @promoteScreenVisible()
+      jQuery('#pool-view-promote').show()
+      jQuery('#pool-view-invite').hide()
+    else
+      jQuery('#pool-view-promote').hide()
+      jQuery('#pool-view-invite').show()
+
+  promoteUpdateTransition: ->
+    @promoteScreenVisible(not @promoteScreenVisible())
+    @updateScreenVisibile(not @updateScreenVisibile())
+    if @promoteScreenVisible()
+      jQuery('#pool-view-promote').show()
+      jQuery('#pool-view-update').hide()
+    else
+      jQuery('#pool-view-promote').hide()
+      jQuery('#pool-view-update').show()

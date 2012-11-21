@@ -1,0 +1,18 @@
+{{ organizer_name }} wants to update you about their campaign:  {{ campaign_name }} at {{ campaign_url }}
+
+----
+
+{{ message }}
+
+----
+
+As a reminder, the details of the campaign are:
+
+    Campaign Name: {{ campaign_name }}
+    Capaign Organizer: {{ organizer_name }}
+    Campaign Organizer's Email Address: {{ organizer_email }}
+
+Hope to see you soon at Poold.in!
+{{ poold_url }}
+
+- The Poold.in Team

@@ -1,0 +1,23 @@
+You have been invited by {{ organizer_name }} to participate in a campaign at {{ poold_url }}! If you would like to participate, please follow this link:
+
+{{ campaign_url }}
+
+Details:
+
+Campaign Name: {{ campaign_name }}
+Capaign Organizer: {{ organizer_name }}
+Campaign Organizer's Email Address: {{ organizer_email }}
+
+{% if message %}
+Here is a note from the campaign's organizer
+----
+
+{{ message }}
+
+----
+
+{% endif %}
+Hope to see you soon at Poold.in!
+{{ poold_url }}
+
+- The Poold.in Team
