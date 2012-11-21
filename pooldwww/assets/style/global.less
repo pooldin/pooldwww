@@ -6,7 +6,7 @@ html {
   height: 100%;
   font-family: Arial, sans-serif;
 
-  background: #E8EBEF;
+  background: #101714;
   background-repeat: no-repeat;
   background-image: -webkit-gradient(linear,
                                      left top,
@@ -142,18 +142,21 @@ header h2 a:hover {
 }
 
 footer {
+  position: relative;
   font-size: 12px;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
   text-align: left;
+  padding-bottom: 40px;
 }
 
 footer a {
-  color: #999;
+  color: #7C878E;
+  font-weight: bold;
   text-decoration: none;
 }
 
 footer a:hover {
-  color: #222;
+  color: #D9D5D0;
   text-decoration: under;
 }
 
@@ -166,6 +169,12 @@ footer ul li {
   list-style: none;
   display: inline;
   padding-left: 10px;
+  color: #D9D5D0;
+}
+
+footer li > a {
+  color: #D9D5D0;
+  font-weight: normal;
 }
 
 footer ul li:first-child {
@@ -229,6 +238,7 @@ footer .content {
     padding-left: 0px;
     padding-right: 0px;
   }
+
   .media-list.avatars {
     .popover.top {
       margin-left: 57px;
@@ -268,6 +278,18 @@ footer .content {
 
 .black {
   color: #2F333A;
+}
+
+.teal {
+  color: #52AD9D;
+}
+
+.capitalized {
+  text-transform: capitalize;
+}
+
+.clickable {
+  cursor: pointer;
 }
 
 .help-screen {
