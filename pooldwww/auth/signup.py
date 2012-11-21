@@ -7,6 +7,7 @@ from pooldwww.auth import plan
 from pooldwww.auth.validate import (validate_email,
                                     validate_username,
                                     validate_password)
+from pooldwww.app.negotiate import accepts
 
 
 @plan.route('/signup', methods=['GET'], endpoint='signup')
@@ -25,9 +26,10 @@ def signup_get():
 
 
 @plan.route('/signup', methods=['POST'])
+@accepts('application/json')
 def signup_post():
     try:
-        signup(request.form)
+        signup(request.json)
     except ValidationError, e:
         return e.message, 403
 

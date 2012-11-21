@@ -4,6 +4,7 @@ from pooldlib.api import user
 from pooldwww.auth import plan
 from pooldwww.auth.validate import parse_boolean
 from pooldwww.exceptions import ValidationError
+from pooldwww.app.negotiate import accepts
 
 
 @plan.route('/login', methods=['GET'], endpoint='login')
@@ -30,9 +31,10 @@ def login_get(form=None):
 
 
 @plan.route('/login', methods=['POST'])
+@accepts('application/json')
 def login_post():
     try:
-        login(request.form)
+        login(request.json)
     except ValidationError, e:
         return e.message, 403
 
