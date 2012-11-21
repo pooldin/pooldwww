@@ -143,13 +143,29 @@ class PI.forms.MonthInteger extends PI.forms.PositiveInteger
 
 class PI.forms.DayInteger extends PI.forms.PositiveInteger
 
+  constructor: (config) ->
+    @refMonthField = config.monthField
+    delete config.monthField
+    @refYearField = config.yearField
+    delete config.yearField
+    super(config)
+
+
   isValid: (value) ->
     return false if not @pattern.test(value)
     date = new Date()
-    month = PI.page.form.date_month()
-    year = PI.page.form.date_year() ? date.getFullYear()
+    month = @refMonthField()
+    year = @refYearField() or date.getFullYear()
     date = new Date(year, month, 0)
     return 0 < @value(value) <= date.getDate()
+
+
+class PI.forms.FutureTimestamp extends PI.forms.PositiveInteger
+
+  isValid: (value) ->
+    date = new Date()
+    date = new Date(date.getFullYear(), date.getMonth(), date.getDate())
+    return @value(value) > date.getTime()
 
 
 class PI.forms.YearInteger extends PI.forms.PositiveInteger
