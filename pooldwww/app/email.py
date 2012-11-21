@@ -104,13 +104,13 @@ class Message(object):
         try:
             email.send()
         except (smtplib.SMTPHeloError,
-                smtplib.SMTPRecipientRefused,
+                smtplib.SMTPRecipientsRefused,
                 smtplib.SMTPSenderRefused,
                 smtplib.SMTPDataError,
                 exc.SMTPConnectionNotInitilizedError,
                 exc.NoContentEmailError,
                 exc.NoEmailRecipientsError,
-                exc.GoWorkForBalmerError):
+                exc.GoWorkForBallmerError):
             return False
         finally:
             email.disconnect()
