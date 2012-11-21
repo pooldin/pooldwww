@@ -29,16 +29,16 @@ class Emailer(object):
                        sender=app.config.get('EMAIL_SENDER'),
                        **kw)
 
-    def send_text(self, subject, text, recipients):
+    def send_text(self, subject, text, recipients, disclose_recipients=True):
         return self.message(subject=subject,
                             text=text,
-                            recipients=recipients).send()
+                            recipients=recipients).send(disclose_recipients=disclose_recipients)
 
-    def send_html(self, subject, html, text, recipients):
+    def send_html(self, subject, html, text, recipients, disclose_recipients=True):
         return self.message(subject=subject,
                             html=html,
                             text=text,
-                            recipients=recipients).send()
+                            recipients=recipients).send(disclose_recipients=disclose_recipients)
 
 
 class Message(object):
@@ -77,12 +77,12 @@ class Message(object):
         if recipients:
             self.recipients = recipients
 
-    def send(self):
+    def send(self, disclose_recipients=True):
         if self.html:
-            email = HTMLEmail(self.host, self.port, sender=self.sender)
+            email = HTMLEmail(self.host, self.port, sender=self.sender, disclose_recipients=disclose_recipients)
             email.set_content(self.html, self.text)
         else:
-            email = Email(self.host, self.port, sender=self.sender)
+            email = Email(self.host, self.port, sender=self.sender, disclose_recipients=disclose_recipients)
             email.set_content(self.text)
 
         email.set_subject(self.subject)
