@@ -2,7 +2,7 @@
 
 {% block content %}
 <section class="auth login">
-  <form class="boxy focal content" action="{{ url_for('auth.login') }}" method="POST" data-bind="submit: form.submit">
+  <form class="boxy focal content padded-content" action="{{ url_for('auth.login') }}" method="POST" data-bind="submit: form.submit">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
     <div class="pending-overlay" style="display: none" data-bind="visible: form.processing"></div>
     {% if error %}
