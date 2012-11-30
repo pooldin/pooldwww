@@ -25,22 +25,23 @@
                   data-bind="value: form.description, valueUpdate: 'afterkeydown', css: { error: form.isInvalid('description') }">
         </textarea>
       </label>
-      <label>
-        <span class="label">End Date</span>
         <div class="five columns">
-          <div class="column">
-            <input type="text"
-                   name="date_month"
-                   placeholder="MM"
-                   data-bind="value: form.date_month, css: { error: form.isInvalid('date_month') }" />
-          </div>
-          <div class="column">
+          <label>
+            <span class="label">End Date</span>
+            <div class="column first">
+              <input type="text"
+                    name="date_month"
+                    placeholder="MM"
+                    data-bind="value: form.date_month, css: { error: form.isInvalid('date_month') }" />
+            </div>
+          </label>
+          <div class="column pinup">
             <input type="text"
                    name="date_day"
                    placeholder="DD"
                    data-bind="value: form.date_day, css: { error: form.isInvalid('date_day') }" />
           </div>
-          <div class="column">
+          <div class="column pinup">
             <input type="text"
                    name="date_year"
                    placeholder="YYYY"
@@ -49,7 +50,6 @@
         </div>
         <input type="hidden" data-bind="value: form.date">
         <div class="clearfix"></div>
-      </label>
     </div>
     <div id="pool-create-funds" class="padded-content inactive-screen">
       <label>
@@ -76,6 +76,10 @@
                data-bind="checked: form.required_contribution" />
         <span class="label">Set this as required amount</span>
       </label>
+      {# The following are fixed options during initial beta
+         Default values:
+            fund_collection = 'continue'
+            dusburse_funds = 'immediately'
       <hr />
       <label class="label">
         If your pool successfully hits your goal, then:
@@ -123,7 +127,16 @@
           </label>
         </div>
       </div>
-    <hr />
+      <hr />
+      #}
+      <div class="no-goals" style="margin-top: 25px;">
+        <span class="h3 block">Make it happen!</span>
+      </div>
+      <div class="text-center">
+        <input type="submit"
+              class="btn btn-danger"
+              value="Make pool active" />
+      </div>
     </div>
     <div id="pool-create-goals" class="inactive-screen">
       <div  class="padded-content">
@@ -151,8 +164,8 @@
   </form>
   <div class="clearfix"></div>
   <div id="screeninator">
-    <div class="previous" data-bind="click: screens.previousScreen"><i class="icon-chevron-left icon-white"></i> Back</div>
-    <div class="next" data-bind="click: screens.nextScreen">Next <i class="icon-chevron-right icon-white"></i></div>
+    <div class="previous clickable" data-bind="click: screens.previousScreen"><i class="icon-chevron-left icon-white"></i> Back</div>
+    <div class="next clickable" data-bind="click: screens.nextScreen">Next <i class="icon-chevron-right icon-white"></i></div>
     <div class="indicators"></div>
   </div>
 </section>
@@ -175,7 +188,10 @@
   PI.pages.PoolCreatePage.init({
     title: {{ title|tojson|safe }},
     error: {{ error|default('')|tojson|safe }},
-    screens: ['#pool-create-describe', '#pool-create-funds', '#pool-create-goals']
+    screens: ['#pool-create-describe', '#pool-create-funds']
   });
+{#
+    screens: ['#pool-create-describe', '#pool-create-funds', '#pool-create-goals']
+#}
 </script>
 {% endblock %}

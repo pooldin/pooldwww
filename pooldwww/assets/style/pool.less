@@ -12,6 +12,13 @@
     .border-radius(10px);
   }
 
+  .pinup {
+    margin-top: -26px;
+  }
+
+  .column.first {
+    margin-left: 0px;
+  }
 
   .ribbon {
     margin: 15px 1.5%;
@@ -329,5 +336,132 @@
   label {
     font-weight: bold;
     text-transform: uppercase;
+  }
+}
+
+#pool-join-auth {
+
+  form {
+    margin-bottom: 90px;
+  }
+
+  form > input {
+    margin: 5px 0px;
+  }
+
+  .pinup {
+    margin-top: -25px;
+    margin-bottom: 25px;
+  }
+
+  .pad-left {
+    margin-left: 20px;
+  }
+
+  .inactive {
+    pointer-events: none;
+    cursor: default;
+  }
+}
+
+#pool-join-contribute {
+
+  form > * > select {
+    width: 75px;
+    margin-left: 10px;
+  }
+
+  label, .label {
+    line-height: 36px;
+    display: inline;
+  }
+
+  .amount,
+  .ccv,
+  .cc {
+    display: block;
+    .label {
+      margin-right: 10px;
+    }
+  }
+
+  .ccv {
+
+    input {
+      width: 70px;
+    }
+  }
+
+  .cc {
+
+    input {
+      width: 250px;
+    }
+  }
+
+  .cc,
+  .ccv {
+    kargin-bottom: 20px;
+  }
+
+  .expiry {
+    margin-bottom: 20px;
+  }
+
+  .total {
+    height: 35px;
+    margin-top: -35px;
+    margin-left: 165px;
+  }
+}
+
+
+#pool-join-processing {
+
+  .top {
+    margin-top: 30px;
+  }
+
+  .center {
+    width: 305px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .padded-content {
+    width: 100%;
+    height: 320px;
+  }
+
+  .spinner {
+    width: 100%;
+    height: 160px;
+  }
+}
+
+
+#pool-join-complete {
+
+  .h2 {
+    margin: 15px 0px;
+  }
+
+  .back-btn {
+    width: 212px;
+    margin: 20px auto;
+  }
+
+  .details {
+    .text {
+      font-size: 1.2em;
+    }
+
+    .label {
+      margin: 15px auto;
+      font-size: 1.3em;
+      line-height: 1.5em;
+      padding: 15px;
+    }
   }
 }

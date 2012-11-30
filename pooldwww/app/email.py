@@ -29,16 +29,20 @@ class Emailer(object):
                        sender=app.config.get('EMAIL_SENDER'),
                        **kw)
 
-    def send_text(self, subject, text, recipients, disclose_recipients=True):
+    def send_text(self, subject, text, recipients, ccs=None, bccs=None, disclose_recipients=True):
         return self.message(subject=subject,
                             text=text,
-                            recipients=recipients).send(disclose_recipients=disclose_recipients)
+                            recipients=recipients,
+                            cc_recipients=ccs,
+                            bcc_recipients=bccs).send(disclose_recipients=disclose_recipients)
 
-    def send_html(self, subject, html, text, recipients, disclose_recipients=True):
+    def send_html(self, subject, html, text, recipients, ccs=None, bccs=None, disclose_recipients=True):
         return self.message(subject=subject,
                             html=html,
                             text=text,
-                            recipients=recipients).send(disclose_recipients=disclose_recipients)
+                            recipients=recipients,
+                            cc_recipients=ccs,
+                            bcc_recipients=bccs).send(disclose_recipients=disclose_recipients)
 
 
 class Message(object):
@@ -49,7 +53,9 @@ class Message(object):
                                    subject=None,
                                    text=None,
                                    html=None,
-                                   recipients=None):
+                                   recipients=None,
+                                   cc_recipients=None,
+                                   bcc_recipients=None):
         if not host:
             raise ValueError('Invalid email host')
 
@@ -73,9 +79,15 @@ class Message(object):
         self.text = text
         self.html = html
         self.recipients = []
+        self.cc_recipients = []
+        self.bcc_recipients = []
 
         if recipients:
             self.recipients = recipients
+        if cc_recipients:
+            self.cc_recipients = cc_recipients
+        if bcc_recipients:
+            self.bcc_recipients = bcc_recipients
 
     def send(self, disclose_recipients=True):
         if self.html:
@@ -87,6 +99,14 @@ class Message(object):
 
         email.set_subject(self.subject)
         email.add_recipients(self.recipients)
+
+        if self.bcc_recipients:
+            for recipient in self.bcc_recipients:
+                email.add_bcc(recipient)
+
+        if self.cc_recipients:
+            for recipient in self.cc_recipients:
+                email.add_cc(recipient)
 
         try:
             email.connect()

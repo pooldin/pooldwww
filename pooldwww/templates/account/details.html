@@ -1,60 +1,63 @@
 {% extends "document/right_article.html" %}
 
 {% block secondary %}
-{% include 'account/nav.html' %}
 {% endblock %}
 
 {% block article %}
-<form class="profile" action="{{ url_for('account.details') }}" method="PUT" data-bind="submit: form.submit">
-  <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
-  <h1 data-bind="text: title, css: { error: error, success: success }">Account Details</h1>
-  <hr />
-  <label>
-    <span
-      class="label"
-      data-bind="text: form.name.title, css: { error: form.isInvalid('name') }">
-      Name
-    </span>
-    <input type="text"
-           class="large"
-           value="{{ user.name or '' }}" }}
-           data-bind="value: form.name, css: { error: form.isInvalid('name') }"
-           autofocus="autofocus" />
-  </label>
-  <label>
-    <span
-      class="label"
-      data-bind="text: form.username.title, css: { error: form.isInvalid('username') }">
-      Username
-    </span>
-    <input type="text"
-           class="large"
-           value="{{ user.username or '' }}" }}
-           data-bind="value: form.username, css: { error: form.isInvalid('username') }" />
-  </label>
-  <label>
-    <span
-      class="label"
-      data-bind="text: form.email.title, css: { error: form.isInvalid('email') }">
-      Email
-    </span>
-    <input type="text"
-           class="large"
-           value="{{ user.email or '' }}" }}
-           data-bind="value: form.email, css: { error: form.isInvalid('email') }" />
-    <div class="mailcheck" style="display: none" data-bind="with: form, visible: form.email.mailcheck">
-      Did you mean <a tabindex="50000" href="javascript:void(0)" data-bind="text: email.mailcheck, click: email.mailcheck.accept"></a>?
-      <button tabindex="50001" type="button" class="pull-left close" data-bind="click: email.mailcheck.reject">×</button>
-    </div>
-  </label>
-  {% set url = user.email or 'anonymous@poold.in' %}
-  {% set url = url | gravatar(size=32) %}
-  <label class="label gravatar">
-    <img alt="{{ user.name }}" src="{{ url }}" />
-    <a target="_blank" href="http://gravatar.com/">Change your Gravatar</a>
-  </label>
-  <input type="submit" class="btn btn-info" value="Save" />
-</form>
+<section id="account-view">
+  <div class="padded-content">
+    <form class="profile" action="{{ url_for('account.details') }}" method="PUT" data-bind="submit: form.submit">
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
+      <h1 data-bind="text: title, css: { error: error, success: success }">Account Details</h1>
+      <hr />
+      <label>
+        <span
+          class="label"
+          data-bind="text: form.name.title, css: { error: form.isInvalid('name') }">
+          Name
+        </span>
+        <input type="text"
+               class="large"
+               value="{{ user.name or '' }}" }}
+               data-bind="value: form.name, css: { error: form.isInvalid('name') }"
+               autofocus="autofocus" />
+      </label>
+      <label>
+        <span
+          class="label"
+          data-bind="text: form.username.title, css: { error: form.isInvalid('username') }">
+          Username
+        </span>
+        <input type="text"
+               class="large"
+               value="{{ user.username or '' }}" }}
+               data-bind="value: form.username, css: { error: form.isInvalid('username') }" />
+      </label>
+      <label>
+        <span
+          class="label"
+          data-bind="text: form.email.title, css: { error: form.isInvalid('email') }">
+          Email
+        </span>
+        <input type="text"
+               class="large"
+               value="{{ user.email or '' }}" }}
+               data-bind="value: form.email, css: { error: form.isInvalid('email') }" />
+        <div class="mailcheck" style="display: none" data-bind="with: form, visible: form.email.mailcheck">
+          Did you mean <a tabindex="50000" href="javascript:void(0)" data-bind="text: email.mailcheck, click: email.mailcheck.accept"></a>?
+          <button tabindex="50001" type="button" class="pull-left close" data-bind="click: email.mailcheck.reject">×</button>
+        </div>
+      </label>
+      {% set url = user.email or 'anonymous@poold.in' %}
+      {% set url = url | gravatar(size=32) %}
+      <label class="label gravatar">
+        <img alt="{{ user.name }}" src="{{ url }}" />
+        <a target="_blank" href="http://gravatar.com/">Change your Gravatar</a>
+      </label>
+      <input type="submit" class="btn btn-info" value="Save" />
+    </form>
+  </div>
+</section>
 {% endblock %}
 
 {% block init %}

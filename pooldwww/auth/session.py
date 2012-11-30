@@ -13,9 +13,11 @@ def login_get(form=None):
     template = 'auth/login.html'
 
     if form:
-        return render_template(template, title=title, **form)
+        next = request.args.get('next')
+        return render_template(template, title=title, next=next, **form)
 
     form = dict()
+    next = request.args.get('next')
     login = request.args.get('login')
     login = login or request.args.get('email')
     login = login or request.args.get('username')
@@ -27,18 +29,23 @@ def login_get(form=None):
     if remember.lower() in ['true', '1']:
         form['remember'] = True
 
-    return render_template(template, title=title, **form)
+    return render_template(template, title=title, next=next, **form)
 
 
 @plan.route('/login', methods=['POST'])
 @accepts('application/json')
 def login_post():
     try:
-        login(request.json)
+        usr = login(request.json)
     except ValidationError, e:
         return e.message, 403
 
-    url = request.args.get('next')
+    url = None
+    forward = request.args.get('forward')
+    if forward:
+        if forward == 'profile':
+            url = '/profile/%s' % usr.username
+    url = url or request.args.get('next')
     url = url or url_for('marketing.index')
     return make_response(('', 201, [('Location', url)]))
 

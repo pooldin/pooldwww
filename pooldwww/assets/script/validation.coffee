@@ -127,8 +127,18 @@ class PI.forms.Email extends PI.forms.Regex
 class PI.forms.PositiveInteger extends PI.forms.Regex
   pattern: /^[0-9]+$/
 
+  constructor: (config) ->
+    config ?= {}
+    super(config)
+    @maxValue = config?.max
+
   value: (value) ->
     return parseInt(value, 10)
+
+  isValid: (value) ->
+    valid = super(value)
+    return valid if not @maxValue and valid
+    return @value(value) <= @maxValue
 
   defaultMessage: ->
     return "#{@name} is not a positive integer"

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, request, url_for, current_app
+from flask import Blueprint, session, render_template, redirect, request, url_for, current_app
 from flask.ext.login import login_required, current_user
 
 from pooldlib.api import user
@@ -80,10 +80,14 @@ def password_change():
     return '', 201
 
 
-@plan.route('/stripe/test', methods=['GET'])
+@plan.route('/stripe', methods=['GET'], endpoint='stripe')
 @login_required
-def test_connect():
-    return render_template('account/stripe_test.html')
+def stripe():
+    sess = session._get_current_object()
+    url = request.args.get('next', None)
+    if url is not None:
+        sess['next'] = url
+    return render_template('account/stripe_connect.html')
 
 
 @plan.route('/stripe/connect', methods=['GET'])
@@ -110,6 +114,13 @@ def stripe_connect():
             return 'An internal error prevented your request from being completed.', 500
         except (ExternalAPIError, ExternalAPIUnavailableError):
             return 'An error occoured with an external service preventing your request from being completed.', 500
+
+        sess = session._get_current_object()
+        if sess['next']:
+            url = sess['next']
+            del sess['next']
+            return redirect(url)
+
         return redirect(url_for('account.stripe_connect_success'))
     elif 'error' in request.args:
         # Redirect user to account for the connect denial in our analytics

@@ -146,30 +146,33 @@ class PI.pages.CampaignUpdateScreen extends PI.pages.Page
   _updatedToUpdated: () =>
     value = @updateTo()
     emails = []
-    updateAddresses = false
+    addRecipient = (member) ->
+      emails.push(member.email())
+      member.sendUpdate(true)
+    removeRecipient = (member) ->
+      member.sendUpdate(false)
+
     if value == 'community'
       @recipientsEditable(false)
-      updateAddresses = true
       filter = (member) ->
-        emails.push(member.email())
+        #emails.push(member.email()) unless member.isOrganizer()
+        addRecipient(member) unless member.isOrganizer()
+        removeRecipient(member) if member.isOrganizer()
     if value == 'participants'
       @recipientsEditable(false)
-      updateAddresses = true
       filter = (member) ->
-        if not member.invitee()
-          emails.push(member.email())
+        #emails.push(member.email()) unless member.invitee() or member.isOrganizer()
+        addRecipient(member) unless member.invitee() or member.isOrganizer()
+        removeRecipient(member) if member.invitee() or member.isOrganizer()
     if value == 'invitees'
       @recipientsEditable(false)
-      updateAddresses = true
       filter = (member) ->
-        if member.invitee()
-          emails.push(member.email())
-    if value == 'individually'
-      @recipientsEditable(true)
+        #emails.push(member.email()) if member.invitee()
+        addRecipient(member) if member.invitee()
+        removeRecipient(member) unless member.invitee()
 
-    if updateAddresses
-      @participants().forEach(filter)
-      @form.toField(emails.join(', '))
+    @participants().forEach(filter)
+    @form.toField(emails.join(', '))
 
   submitUpdate: ->
     trimmedEmails = []
@@ -233,6 +236,7 @@ class PI.campaign.Participant extends PI.Model
     @pathRoot = data.profileRoot or '/profile'
     @link = "#{window.location.protocol}//#{window.location.host}#{@pathRoot}/#{@username()}"
     @dollarAmount = ko.computed(@formatDollarAmount)
+    @sendUpdate = ko.observable(false)
 
     @year = ko.observable()
     @month = ko.observable()
@@ -306,6 +310,8 @@ class PI.campaign.Campaign extends PI.Model
     @_contributionAmount = ko.observable(0).extend(money: precision: 2)
     @contributionAmount = ko.computed(@calculateContributionAmount)
 
+    @countParticipants = ko.computed(@countParticipants, this)
+
     @days = ko.computed(@calculateDaysRemaining)
     @hours = ko.computed(@calculateHoursRemaining)
     @minutes = ko.computed(@calculateMinutesRemaining)
@@ -315,28 +321,39 @@ class PI.campaign.Campaign extends PI.Model
     @updates.push(update)
 
   countParticipants: =>
-    return @participants().length
+    count = 0
+    sum = (p) ->
+      return if p.invitee()
+      count += 1
+    @participants().forEach(sum)
+    return count
 
   calculateContributionAmount: =>
     total = 0
     sum = (p) ->
       return if p.invitee()
-      total += p.amount()
+      total += parseInt(p.amount()) or 0
     @participants().forEach(sum)
     @_contributionAmount(total)
     return @_contributionAmount()
 
   calculateDaysRemaining: =>
     now = new Date()
-    return parseInt((@end() - now) / (3600000 * 24))
+    left = parseInt((@end() - now) / (3600000 * 24))
+    return left unless left < 0
+    return 0
 
   calculateHoursRemaining: =>
     now = new Date()
-    return parseInt(((@end() - now) - @calculateDaysRemaining()*(3600000 * 24)) / 3600000)
+    left = parseInt(((@end() - now) - @calculateDaysRemaining()*(3600000 * 24)) / 3600000)
+    return left unless left < 0
+    return 0
 
   calculateMinutesRemaining: =>
     now = new Date()
-    return parseInt(((@end() - now) - @calculateDaysRemaining()*(3600000 * 24) - (@calculateHoursRemaining()*3600000)) / 60000)
+    left = parseInt(((@end() - now) - @calculateDaysRemaining()*(3600000 * 24) - (@calculateHoursRemaining()*3600000)) / 60000)
+    return left unless left < 0
+    return 0
 
 
 class PI.pages.PoolViewPage extends PI.pages.Page

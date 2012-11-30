@@ -1,0 +1,190 @@
+{% extends "document/right_article.html" %}
+
+
+{% block article %}
+<section id="pool-join-auth" data-bind="visible: authScreenVisible, with: authScreen">
+  <div class="padded-content">
+    <form class="login" action="{{ url_for('auth.signup') }}" method="POST" data-bind="submit: loginForm.submit, visible: loginFormVisible" style="display: none;">
+      <div class="pending-overlay" style="display: none" data-bind="visible: loginForm.processing"></div>
+      {% if error %}
+      <h1 class="error" data-bind="text: loginFormTitle, css: { error: loginForm.error }">{{ error }}</h1>
+      {% else %}
+      <h1 data-bind="text: loginFormTitle, css: { error: loginForm.error }">{{ title }}</h1>
+      {% endif %}
+      <input name="login"
+             type="text"
+             class="large"
+             value="{{ login or '' }}"
+             data-bind="value: loginForm.login, css: { error: loginForm.isInvalid('login') }"
+             placeholder="Email or Username"
+             autofocus="autofocus" />
+
+      <input name="password"
+             type="password"
+             class="large"
+             data-bind="value: loginForm.password, css: { error: loginForm.isInvalid('password') }"
+             placeholder="Password" />
+
+      <input type="submit"
+             class="btn btn-danger pull-right"
+             value="Suit up!"
+             data-bind="value: submitLoginText, css: { 'btn-danger': !loginForm.saving() }" />
+    </form>
+
+    <form class="sign-up" action="{{ url_for('auth.signup') }}" method="POST" data-bind="submit: signupForm.submit, visible: signupFormVisible" style="display: none;">
+      <div class="pending-overlay" style="display: none" data-bind="visible: signupForm.processing"></div>
+      {% if error %}
+      <h1 class="error" data-bind="text: signupFormTitle, css: { error: signupForm.error }">{{ error }}</h1>
+      {% else %}
+      <h1 data-bind="text: signupFormTitle, css: { error: signupForm.error }">{{ title }}</h1>
+      {% endif %}
+
+      <input name="email"
+             type="text"
+             class="large"
+             value="{{ email }}" }}
+             data-bind="value: signupForm.email, css: { error: signupForm.isInvalid('email') }"
+             placeholder="Email"
+             autofocus="autofocus" />
+
+      <div class="mailcheck" style="display: none" data-bind="with: signupForm, visible: signupForm.email.mailcheck">
+        <button tabindex="50001" type="button" class="pull-left close" data-bind="click: email.mailcheck.reject">×</button>
+        Did you mean <a tabindex="50000" href="javascript:void(0)" data-bind="text: email.mailcheck, click: email.mailcheck.accept"></a>?
+      </div>
+
+      <input name="username"
+             type="text"
+             class="large"
+             value="{{ username }}"
+             data-bind="value: signupForm.username, css: { error: signupForm.isInvalid('username') }"
+             placeholder="Username" />
+
+      <input name="password"
+             type="password"
+             class="large"
+             data-bind="value: signupForm.password, css: { error: signupForm.isInvalid('password') }"
+             placeholder="Password" />
+
+      <input name="password_confirm"
+             type="password"
+             class="large"
+             data-bind="value: signupForm.password_confirm, css: { error: signupForm.isInvalid('password_confirm') }"
+             placeholder="Confirm Password" />
+
+      <input type="submit"
+             class="btn btn-danger pull-right"
+             value="Dive In!"
+             data-bind="value: submitSignupText, css: { 'btn-danger': !signupForm.saving() }" />
+    </form>
+    <a id="pool-join-login-btn" href="#" class="btn pull-left pinup inactive" data-bind="click: showLogin">Log In</a>
+    <a id="pool-join-signup-btn" href="#" class="btn pull-left pinup pad-left" data-bind="click: showSignup">Signup</a>
+  </div>
+  <div class="clearfix"></div>
+</section>
+
+<section id="pool-join-contribute" data-bind="visible: contributeScreenVisible, with: contributeScreen" style="display: none;">
+  <div class="padded-content">
+    <form class="join" action="{{ url_for('pool.join', id=campaign['id']) }}" method="POST" data-bind="submit: form.submit">
+      <div class="pending-overlay" style="display: none" data-bind="visible: form.processing"></div>
+      {% if error %}
+      <h1 class="error" data-bind="text: formTitle, css: { error: form.error }">{{ error }}</h1>
+      {% else %}
+      <h1 data-bind="text: formTitle, css: { error: form.error }">{{ title }}</h1>
+      {% endif %}
+      <label class="amount">
+        <span class="label">I want to contribute</span>
+        <span class="input-prepend">
+          <span class="add-on">$</span>
+          <input type="number"
+                 min="1"
+                 value="0"
+                 data-bind="value: form.amount, valueUpdate: 'afterkeydown', css: { error: form.isInvalid('amount') }" />
+        </span>
+      </label>
+      <div class="total">
+        <div>
+          <span class="label">Your total is <span data-bind="text: afterFees"></span></span>
+        </div>
+      </div>
+
+      <label class="cc">
+        <span class="label">Credit Card: </span>
+        <input name="cc"
+               type="text"
+               class="large"
+               data-bind="value: form.cc, css: { error: form.isInvalid('cc') }"
+               placeholder="Credit Card Number" />
+       </label>
+
+       <div class="expiry">
+        <label class="label">
+          <span data-bind="text: form.expiryLabel, css: { error: form.expiry.error }">Expiration</span>: 
+        </label>
+        <select name="exp_month"
+                class="large"
+                data-bind="options: form.months, value: form.expMonth">
+        </select>
+        <select name="exp_year"
+                class="large"
+                data-bind="options: form.years, value: form.expYear">
+        </select>
+      </div>
+
+      <label class="ccv">
+        <span class="label">CCV: </span>
+        <input name="ccv"
+               type="text"
+               class="large"
+               data-bind="value: form.ccv, css: { error: form.isInvalid('ccv') }"
+               placeholder="CCV" />
+      </label>
+
+      <input type="submit"
+             class="btn btn-danger pull-right"
+             value="Submit Payment!"
+             data-bind="value: submitText, css: { 'btn-danger': !form.saving() }" />
+    </form>
+    <div class="clearfix"></div>
+  </div>
+</section>
+
+<section id="pool-join-processing" data-bind="visible: processingScreenVisible" style="display: none;">
+  <div class="padded-content">
+    <div class="center top"><span class="h3">Your payment is being processed...</span></div>
+    <div class='spinner'></div>
+    <div class="center"><span class="h3">This may take a minute, please don't close your browser...</span></div>
+    <div class="clearfix"></div>
+  </div>
+</section>
+
+<section id="pool-join-complete" data-bind="visible: completeScreenVisible, with: completeScreen" style="display: none;">
+  <div class="padded-content">
+    <span class="print pull-right clickable" data-bind="click: function () { window.print(); }"><i class="icon-print"></i> Print</span>
+    <span class="h2 block"> Contribution Received!</span>
+    <div class="details">
+      <span class="text">You have successfully authorized a payment to this campaign!</span>
+      <div class="label block">
+        <span class="block" style="text-align: left">Campaign Name: <span class="data" data-bind="text: payment.name"></span></span>
+        <span class="block" style="text-align: left">Authorized Amount: <span class="data" data-bind="text: payment.charge.final"></span></span>
+        <span class="block" style="text-align: left">Authorized Date: <span class="data" data-bind="text: payment.formattedDate"></span></span>
+      </div>
+      <span class="text">An email copy of this receipt will be sent to you for your records.</span>
+      <div class="back-btn">
+        <a href="/pool/{{ campaign.id }}" class="btn btn-danger">Go back to {{ campaign.name }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block init %}
+<script type="text/javascript">
+  PI.pages.CampaignJoinPage.init({
+    title: {{ title|default(None, true)|tojson|safe }},
+    login: {{ user.username|default(None, true)|tojson|safe }},
+    campaign: {{ campaign|tojson|safe }},
+    publishable_key: {{ stripe_publishable_key|tojson|safe }},
+    successResponse: {{ success_response|safe }}
+  });
+</script>
+{% endblock %}

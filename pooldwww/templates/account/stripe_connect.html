@@ -1,0 +1,13 @@
+{% extends "document/full_article.html" %}
+
+
+{% block article %}
+<div id="stripe-connect" class="padded-content">
+  <div class="vertically-center">
+    <span text="text">Before you can create a camaign we first need you to connect your Poold.In account with an account at Stripe</span>
+    <div class="block-center" style="width: 190px;margin-top: 20px;margin-bottom: 20px;">
+      <a href="https://connect.stripe.com/oauth/authorize?state={{ csrf_token() }}&response_type=code&scope=read_write&client_id={{ config.STRIPE_APP_CID }}"><img src='/static/img/stripe/connect-blue.png' alt="Connect With Stripe"/></a>
+    </div>
+  </div>
+</div>
+{% endblock %}

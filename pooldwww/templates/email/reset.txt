@@ -4,6 +4,4 @@ Somebody (hopefully you) requested a new password for the Pooldin account for {{
 
 If you didn't request this email, you can safely ignore it.
 
-Thanks,
-
-The Pooldin team
+~ The Poold.in Team

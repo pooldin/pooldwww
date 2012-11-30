@@ -12,7 +12,8 @@ from pooldwww.app.negotiate import accepts
 
 @plan.route('/signup', methods=['GET'], endpoint='signup')
 def signup_get():
-    context = dict(title='Create your Pooldin account.')
+    context = dict(title='Create your Pooldin account.',
+                   next=request.args.get('next'))
     email = request.args.get('email')
     username = request.args.get('username')
 
@@ -29,11 +30,16 @@ def signup_get():
 @accepts('application/json')
 def signup_post():
     try:
-        signup(request.json)
+        usr = signup(request.json)
     except ValidationError, e:
         return e.message, 403
 
-    url = request.args.get('next')
+    url = None
+    forward = request.args.get('forward')
+    if forward:
+        if forward == 'profile':
+            url = '/profile/%s' % usr.username
+    url = url or request.args.get('next')
     url = url or url_for('marketing.index')
     return make_response(('', 201, [('Location', url)]))
 

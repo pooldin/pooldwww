@@ -6,7 +6,7 @@
 
 {% block article %}
 <section id="pool-view-overview" class="pool overview">
-  {% if is_organizer %}
+  {% if is_organizer and is_active %}
   <div class="content-spacer" style="height: 5px; width: 100%"></div>
   <div class="promote-bar" data-bind="click: viewPromoteTransition">
     <span class="h4">Promote Your Campaign!</span>
@@ -22,7 +22,21 @@
   <div class="details">
     <h3 class="text-center pinup"><span class="upper">Goal:</span> <span class="grey" data-bind="text: campaign.amount">0</span></h3>
     <div class="text-center">
-      <a href="#" class="btn btn-danger upper" data-bind="click: function (e) { alert('Currently not supported'); }">Pool In</a>
+      {% if not is_participant %}
+        {% if is_active %}
+      <a href="/pool/{{ campaign.id }}/join" class="btn btn-danger upper" data-role="button" data-transition="slidefade" data-inline="true">Pool In</a>
+        {% else %}
+      <a href="#" class="btn btn-inverse upper" data-bind="click: function (c, e) { e.preventDefault() }">Closed</a>
+        {% endif %}
+      {% elif campaign_association.pledge <= 0 %}
+        {% if is_active %}
+      <a href="/pool/{{ campaign.id }}/join" class="btn btn-danger upper" data-role="button" data-transition="slidefade" data-inline="true">Pool In</a>
+        {% else %}
+      <a href="#" class="btn btn-inverse upper" data-bind="click: function (c, e) { e.preventDefault() }">Closed</a>
+        {% endif %}
+      {% else %}
+      <span class="contributed">You've contributed <span class="dollar-amount">${{ campaign_association.pledge }}</span> to this campaign!</span>
+      {% endif %}
     </div>
     <hr />
     <div class="text-center lower">
@@ -110,12 +124,12 @@
         <img src="/static/img/social/twitter.png" alt="Share on Twitter" class="social left" />
       </div>
       <hr />
-      <div class="choice padded invite" data-bind="click: promoteInviteTransition">
+      <div class="choice padded invite clickable" data-bind="click: promoteInviteTransition">
         <span class="share-invite title">Send Invites</span>
         <i class="icon-chevron-right icon-white" style="float: right;"></i>
       </div>
       <hr />
-      <div class="choice padded update" data-bind="click: promoteUpdateTransition">
+      <div class="choice padded update clickable" data-bind="click: promoteUpdateTransition">
         <span class="share-update title">Send Update</span>
         <i class="icon-chevron-right icon-white" style="float: right;"></i>
       </div>
@@ -191,14 +205,7 @@
                 data-bind="checked: updateTo"/>
           <span class="label">Invitees<i class="icon-chevron-right icon-white pull-right"></i></span>
         </label>
-        <label>
-          <input type="radio"
-                name="update_to"
-                value="individually"
-                data-bind="checked: updateTo"/>
-          <span class="label">Custom</span>
-        </label>
-        <label class="to-field" data-bind="visible: recipientsEditable">
+        <label class="to-field" data-bind="visible: recipientsEditable" style="display: none;">
           <span style="display: block;">Recipients:</span>
           <textarea style="width: 100%" data-bind="value: form.toField, valueUpdate: 'afterkeydown', enable: recipientsEditable"></textarea>
         </label>
@@ -226,7 +233,6 @@
     updates: {{ campaign.description['updates']|default(None, True)|tojson|safe}},
     tabs: {"#pool-view-details-tabs": ["#description", "#participants"]},
     amount: {{ campaign.amount }},
-    contributionAmount: {{ total_poold }},
     endTimestamp: {{ timestamp }},
     participants: {{ participants|safe }}
   });

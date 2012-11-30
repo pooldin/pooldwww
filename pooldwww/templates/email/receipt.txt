@@ -1,0 +1,15 @@
+As promised, here's your receipt for your contribute to {{ campaign_name }}:
+
+    Campaign Name: {{ campaign_name }}
+    Campaign Organizer: {{ organizer_name }}
+    Campaign Organizer's Email Address: {{ organizer_email }}
+    Campaign URL: {{ campaign_url }}
+    Authorized Charge: ${{ charge }}
+    Payment Processing Fee: ${{ payment_fee }}
+    Poold.in Payment Fee: ${{ poold_fee }}
+    Campaign Contribution: ${{ contribution }}
+
+Hope to see you again soon at Poold.in!
+{{ poold_url }}
+
+~ The Poold.in Team

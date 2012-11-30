@@ -52,7 +52,7 @@
   </form>
   <div class="two focal columns">
     <div class="column">
-      <a class="rounded login" href="{{ url_for('auth.login') }}">Login</a>
+      <a class="rounded login" href="{{ url_for('auth.login') }}{% if next %}?next={{ next }}{% endif %}">Login</a>
     </div>
     <div class="column">
       <a class="rounded reset" href="{{ url_for('auth.reset') }}">Reset Password</a>

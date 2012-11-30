@@ -67,6 +67,7 @@ class PI.forms.PoolCreateForm extends PI.forms.Form
     @field
       name: 'fund_collection',
       label: 'fund_collection',
+      value: 'continue',
       validators: [
         new PI.forms.Required(),
       ]
@@ -74,6 +75,7 @@ class PI.forms.PoolCreateForm extends PI.forms.Form
     @field
       name: 'disburse_funds',
       label: 'disburse_funds',
+      value: 'immediately',
       validators: [
         new PI.forms.Required(),
       ]

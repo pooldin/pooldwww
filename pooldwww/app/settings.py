@@ -4,10 +4,14 @@ import uuid
 database = os.environ.get('DATABASE_URL')
 database = os.environ.get('POOLDWWW_DATABASE_URL', database)
 database = database or 'postgresql://localhost/pooldin'
+
 whitelist = os.environ.get('POOLDWWW_WHITELIST', '')
 whitelist = filter(lambda ip: ip, whitelist.split('|'))
 blacklist = os.environ.get('POOLDWWW_BLACKLIST', '')
 blacklist = filter(lambda ip: ip, blacklist.split('|'))
+
+user_whitelist = os.environ.get('POOLDWWW_WHITELISTED_USERS', '')
+user_whitelist = filter(lambda email: email, user_whitelist.split('|'))
 
 
 def init_app(app):
@@ -29,8 +33,11 @@ class base(object):
     EMAIL_USERNAME = os.environ.get('POOLDWWW_EMAIL_USERNAME')
     EMAIL_PASSWORD = os.environ.get('POOLDWWW_EMAIL_PASSWORD')
     EMAIL_SENDER = os.environ.get('POOLDWWW_EMAIL_SENDER')
+    BCC_RECEIPT_ADDRESS = os.environ.get('POOLDWWW_RECEIPT_ADDRESS')
+    BCC_CAMPAIGN_ADDRESS = os.environ.get('POOLDWWW_CAMPAIGN_ADDRESS')
     WHITELIST = whitelist
     BLACKLIST = blacklist
+    USER_WHITELIST = user_whitelist
     SESSION_COOKIE_NAME = 'poold_session'
     CSRF_COOKIE_NAME = 'poold_csrf'
     CSRF_DISABLE = False

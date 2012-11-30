@@ -17,6 +17,7 @@ app-js:
         - ../assets/script/account/password.coffee
         - ../assets/script/pool/create.coffee
         - ../assets/script/pool/view.coffee
+        - ../assets/script/pool/join.coffee
         - ../assets/script/profile/view.coffee
 
 app-js-min:
@@ -75,6 +76,7 @@ lib-js:
         - ../static/script/accounting-0.3.2.js
         - ../static/script/spin-1.2.6.js
         - ../static/script/mailcheck-1.1.js
+        - ../static/script/stripe-1.2.0.js
 
 lib-js-min:
     output: ../static/script/lib.min.js
