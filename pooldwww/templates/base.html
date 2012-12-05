@@ -52,25 +52,6 @@
     </header>
     {% endblock -%}
 
-    {% block flash -%}
-    {% if get_flashed_messages() -%}
-    <section id="flash-message">
-      <div class="container">
-        <div class="row">
-          {% for message in get_flashed_messages() %}
-          <div class="span4">
-            <div class="alert alert-error">
-              <button type="button" class="close" data-dismiss="alert">×</button>
-              {{ message }}
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-    </section>
-    {% endif -%}
-    {% endblock -%}
-
     {% block body -%}
     {% endblock -%}
 
