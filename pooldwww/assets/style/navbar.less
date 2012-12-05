@@ -42,6 +42,7 @@
     position: fixed;
     border: 0;
     top: 0px;
+    margin-bottom: 0px;
 
     .nav {
       font-size: 0.9em;
@@ -73,20 +74,28 @@
   }
 }
 
+.navbar.fixed-top {
+  margin-bottom: 0px;
+}
+
 @media (min-width: 768px) and (max-width: 979px) {
+
   .navbar {
     margin-bottom: 7px;
   }
 }
 
 @media (max-width: 979px) {
+
   .navbar {
     margin-bottom: 7px;
   }
+
   .navbar-fixed-top {
     margin-bottom: 0px;
     .nav.pull-right {
       margin-right: 10px;
     }
   }
+
 }
