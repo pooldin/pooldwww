@@ -9,7 +9,7 @@
   <form action="{{ url_for('pool.create') }}" method="POST" data-bind="submit: form.submit">
     <div id="pool-create-describe" class="padded-content inactive-screen">
       <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
-      <div class="h1">Create Pool</div>
+      <h1>Create Pool</h1>
       <label class="full">
         <span class="label">Pool Name <i class="icon-question-sign pull-right" data-bind="click: function () { $('#pool-create-name-help').show(); }"></i></span>
         <input name="name"
