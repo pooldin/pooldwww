@@ -11,11 +11,6 @@
           <img src="/static/img/menubar-create.png" alt="Create Campaign" class="menu-icon" />
         </a>
       </li>
-      <li>
-        <a href="/account">
-          <img src="/static/img/menubar-account.png" alt="Account" class="menu-icon" />
-        </a>
-      </li>
       {% if user.is_anonymous() %}
       <li>
         <a href="/login?forward=profile">
@@ -23,8 +18,8 @@
         </a>
       </li>
       {% else %}
-      <li>
-        <a href="/profile/{{ user.username }}">
+      <li class="last-tab">
+        <a href="/account">
           <img src="/static/img/menubar-profile.png" alt="Profile" class="menu-icon" />
         </a>
       </li>
