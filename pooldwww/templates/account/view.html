@@ -1,0 +1,42 @@
+{% extends "document/right_article.html" %}
+
+{% block secondary %}
+{% endblock %}
+
+{% block article %}
+<ul id="account-tabs" class="nav nav-tabs two">
+  <li><a href="#profile" data-toggle="tab">Profile <i class="icon-chevron-down icon-white" style="float: right;"></i></a></li>
+  <li><a href="#account" data-toggle="tab">Account <i class="icon-chevron-up icon-white" style="float: right;"></i></a></li>
+</ul>
+<section id="profile-view" style="display: none;" data-bind="visible: tabs('#profile').visible">
+    {% include "account/profile.html" %}
+</section>
+<section id="account-view" style="display: none;" data-bind="visible: tabs('#account').visible">
+    {% include "account/details.html" %}
+</section>
+{% endblock %}
+
+
+{% block init %}
+<!--
+<script type="text/javascript">
+  PI.pages.ProfileViewPage.init({
+    title: {{ title|default(None, True)|tojson|safe }},
+    username: {{ user.username|default(None, True)|tojson|safe }},
+    about: {{ about|default(None, True)|tojson|safe }},
+    campaigns: {{ campaigns|default(None, True)|tojson|safe }},
+    isUser: {{ is_user|default(None, True)|tojson }}
+  });
+</script>
+-->
+  <script type="text/javascript">
+    PI.pages.AccountDetailsPage.init({
+      name: {{ user.name|tojson|safe }},
+      username: {{ user.username|tojson|safe }},
+      email: {{ user.email|tojson|safe }},
+      about: {{ user.about|default(None, True)|tojson|safe }},
+      tabs: {"#account-tabs": ["#profile", "#account"]},
+      campaigns: {{ campaigns|default(None, True)|tojson|safe }},
+    });
+  </script>
+{% endblock %}

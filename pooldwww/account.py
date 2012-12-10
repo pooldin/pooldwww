@@ -1,3 +1,5 @@
+import calendar
+
 from flask import Blueprint, session, render_template, redirect, request, url_for, current_app
 from flask.ext.login import login_required, current_user
 
@@ -23,7 +25,18 @@ def index():
 @plan.route('/details', methods=['GET'])
 @login_required
 def details():
-    return render_template('account/details.html')
+    usr = current_user._get_current_object()
+    campaigns = list()
+    for ca in sorted(usr.campaigns, key=lambda x: x.campaign.name):
+        c = ca.campaign
+        end_time = calendar.timegm(c.end.timetuple()) * 1000
+        # TODO :: This shoudl be comming from c.to_dict() <brian@poold.in>
+        campaign = dict(id=c.id,
+                        name=c.name,
+                        end=end_time,
+                        role=ca.role)
+        campaigns.append(campaign)
+    return render_template('account/view.html', campaigns=campaigns)
 
 
 @plan.route('/details', methods=['POST'])

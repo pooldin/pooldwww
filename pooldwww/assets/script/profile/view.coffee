@@ -38,7 +38,6 @@ class PI.user.Campaign extends PI.Model
 class PI.user.ProfileForm extends PI.forms.Form
 
   init: (config) ->
-
     @field
       name: 'username'
       value: config.username,
@@ -66,8 +65,7 @@ class PI.pages.ProfileViewPage extends PI.pages.Page
     @success = ko.observable(false)
 
     @isEditing = ko.observable(false)
-    @placeholderEditText = 'Enter your complete bio, from the time you slew the last dragon to when you piloted that Firefly for Mal here...'
-    @displayAboutTextPlaceholder = ko.computed(@doDisplayAboutTextPlaceholder)
+    @displayTextPlaceholder = ko.computed(@displayTextPlaceholder, this)
 
     @title = ko.computed(@title, this)
 
@@ -102,16 +100,14 @@ class PI.pages.ProfileViewPage extends PI.pages.Page
 
   toggleEdit: ->
     @isEditing(not @isEditing())
-    if not @form.about() and @isEditing()
-      jQuery('.about-text').text(@placeholderEditText)
     jQuery('.about-text').focus() if @isEditing
 
   saveEdit: ->
     text = jQuery.trim(jQuery('.about-text').text())
-    if text == @placeholderEditText
-      text = ''
-    @form.about(text)
-    @form.submit()
+    changed = @form.about() != text
+    if changed
+      @form.about(text)
+      @form.submit()
     jQuery('.about-text').text(text)
     @toggleEdit()
 
@@ -122,5 +118,5 @@ class PI.pages.ProfileViewPage extends PI.pages.Page
     jQuery('.about-text').text(text)
     @toggleEdit()
 
-  doDisplayAboutTextPlaceholder: =>
+  displayTextPlaceholder: =>
     return not @isEditing() and not @form.about()

@@ -1,0 +1,53 @@
+<div class="profile">
+  <div class="padded-content">
+    <div class="basics">
+      {% set url = user.email or 'anonymous@poold.in' %}
+      {% set url = url | gravatar(size=80) %}
+      {% set country = user.country or 'U.S.A.' %}
+      <img src="{{ url }}" />
+      <div class="info grey">
+        <span class="h2 black">{{ user.username }}</span>
+        <div class="general">
+          {% if user.name %}
+          <span class="block capitolized bold">{{ user.name }}</span>
+          {% endif %}
+          <span class="block">Member since {{ user.created.year }}</span>
+          <span class="block">{{ country }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="change-gravatar"><a class="grey small" href="http://www.gravatar.com" target="_blank">Change Gravatar</a> <i class="icon-question-sign"></i></div>
+  </div>
+  <div class="details">
+    <span class="bold block h3" style="margin-bottom: 10px;" data-bind="text: profileFormTitle, css: { error: profileError, success: profileSuccess }"></span>
+    <a href="#" class="btn pull-right edit" data-bind="click: toggleProfileEdit, visible: ! isEditing()">Edit</a>
+    <a href="#" class="btn pull-right edit cancel" style="display: none;" data-bind="click: cancelProfileEdit, visible: isEditing()">Cancel</a>
+    <a href="#" class="btn pull-right edit save" style="display: none;" data-bind="click: saveProfileEdit, visible: isEditing()">Save</a>
+    <span class="content-editable about-text" style="display: block;" data-bind="text: profileForm.about, attr: { contentEditable: isEditing }">
+    </span>
+    <span class="about-text-placeholder" data-bind="visible: displayTextPlaceholder" style="display: none;">
+      Tell us more about yourself!
+    </span>
+  </div>
+  <div class="clearfix"></div>
+  <div class="padded-content">
+    <span class="bold black">Where I'm poold in.</span>
+    <hr />
+
+    <span class="bold black" data-bind="ifnot: campaigns().length"><span class="capitolized">{{ user.display_name }}</span> hasn't poold in with anyone yet!</span>
+
+    <div class="campaigns" data-bind="foreach: campaigns">
+      <div class="campaign">
+        <div class="dot"></div>
+        <div class="campaign-name">
+          <a class="name bold capitolized" data-bind="text: name, attr: { href: link }"></a> | <span class="role lower" data-bind="text: role"></span>
+        </div>
+        <div class="campaign-status">
+          <span style="line-height: 15px;" class="status" data-bind="text: activeString()"></span>
+          <span style="line-height: 15px;" class="end-date" data-bind="if: endString(), text: endString()"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</div>

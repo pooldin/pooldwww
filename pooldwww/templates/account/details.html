@@ -1,52 +1,55 @@
-{% extends "document/right_article.html" %}
-
-{% block secondary %}
-{% endblock %}
-
-{% block article %}
-<section id="account-view">
-  <div class="padded-content">
-    <form class="profile" action="{{ url_for('account.details') }}" method="PUT" data-bind="submit: form.submit">
-      <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
-      <h1 data-bind="text: title, css: { error: error, success: success }">Account Details</h1>
+<div class="padded-content">
+  <form class="account" action="{{ url_for('account.details') }}" method="PUT" data-bind="submit: accountForm.submit">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
+    <h1 class="clickable" data-bind="click: toggleDetailsForm, text: accountFormTitle, css: { error: accountError, success: accountSuccess }">Account Details</h1>
+    <div style="display: none" data-bind="visible: accountFormVisible">
       <hr />
       <label>
         <span
           class="label"
-          data-bind="text: form.name.title, css: { error: form.isInvalid('name') }">
+          data-bind="text: accountForm.name.title, css: { error: accountForm.isInvalid('name') }">
           Name
         </span>
         <input type="text"
                class="large"
                value="{{ user.name or '' }}" }}
-               data-bind="value: form.name, css: { error: form.isInvalid('name') }"
-               autofocus="autofocus" />
+               data-bind="value: accountForm.name, css: { error: accountForm.isInvalid('name') }" />
       </label>
       <label>
         <span
           class="label"
-          data-bind="text: form.username.title, css: { error: form.isInvalid('username') }">
+          data-bind="text: accountForm.username.title, css: { error: accountForm.isInvalid('username') }">
           Username
         </span>
         <input type="text"
                class="large"
                value="{{ user.username or '' }}" }}
-               data-bind="value: form.username, css: { error: form.isInvalid('username') }" />
+               data-bind="value: accountForm.username, css: { error: accountForm.isInvalid('username') }" />
       </label>
       <label>
         <span
           class="label"
-          data-bind="text: form.email.title, css: { error: form.isInvalid('email') }">
+          data-bind="text: accountForm.email.title, css: { error: accountForm.isInvalid('email') }">
           Email
         </span>
         <input type="text"
                class="large"
                value="{{ user.email or '' }}" }}
-               data-bind="value: form.email, css: { error: form.isInvalid('email') }" />
-        <div class="mailcheck" style="display: none" data-bind="with: form, visible: form.email.mailcheck">
+               data-bind="value: accountForm.email, css: { error: accountForm.isInvalid('email') }" />
+        <div class="mailcheck" style="display: none" data-bind="with: accountForm, visible: accountForm.email.mailcheck">
           Did you mean <a tabindex="50000" href="javascript:void(0)" data-bind="text: email.mailcheck, click: email.mailcheck.accept"></a>?
           <button tabindex="50001" type="button" class="pull-left close" data-bind="click: email.mailcheck.reject">×</button>
         </div>
+      </label>
+      <label>
+        <span
+          class="label"
+          data-bind="text: accountForm.password.title, css: { error: accountForm.isInvalid('password') }">
+          Password
+        </span>
+        <input type="password"
+               class="large"
+               data-bind="value: accountForm.password, css: { error: accountForm.isInvalid('password') }" />
       </label>
       {% set url = user.email or 'anonymous@poold.in' %}
       {% set url = url | gravatar(size=32) %}
@@ -55,17 +58,44 @@
         <a target="_blank" href="http://gravatar.com/">Change your Gravatar</a>
       </label>
       <input type="submit" class="btn btn-info" value="Save" />
-    </form>
-  </div>
-</section>
-{% endblock %}
-
-{% block init %}
-<script type="text/javascript">
-  PI.pages.AccountDetailsPage.init({
-    name: {{ user.name|tojson|safe }},
-    username: {{ user.username|tojson|safe }},
-    email: {{ user.email|tojson|safe }}
-  });
-</script>
-{% endblock %}
+    </div>
+  </form>
+  <form class="password" action="{{ url_for('account.password') }}" method="POST" data-bind="submit: passwordForm.submit">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
+    <h1 class="clickable" data-bind="click: toggleDetailsForm, text: passwordFormTitle, css: { error: passwordError, success: passwordSuccess }">Change Password</h1>
+    <div style="display: none" data-bind="visible: passwordFormVisible">
+      <hr />
+      <label>
+        <span
+          class="label"
+          data-bind="text: passwordForm.oldPassword.title, css: { error: passwordForm.isInvalid('oldPassword') }">
+          Old Password
+        </span>
+        <input type="password"
+               class="large"
+               data-bind="value: passwordForm.oldPassword, css: { error: passwordForm.isInvalid('oldPassword') }" />
+      </label>
+      <label>
+        <span
+          class="label"
+          data-bind="text: passwordForm.newPassword.title, css: { error: passwordForm.isInvalid('newPassword') }">
+          New Password
+        </span>
+        <input type="password"
+               class="large"
+               data-bind="value: passwordForm.newPassword, css: { error: passwordForm.isInvalid('newPassword') }" />
+      </label>
+      <label>
+        <span
+          class="label"
+          data-bind="text: passwordForm.newPasswordConfirm.title, css: { error: passwordForm.isInvalid('newPasswordConfirm') }">
+          Confirm New Password
+        </span>
+        <input type="password"
+               class="large"
+               data-bind="value: passwordForm.newPasswordConfirm, css: { error: passwordForm.isInvalid('newPasswordConfirm') }" />
+      </label>
+      <input type="submit" class="btn btn-info" value="Save" />
+    </div>
+  </form>
+</div>
