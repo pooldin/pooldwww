@@ -1,6 +1,7 @@
 <div class="profile">
   <div class="padded-content">
     <div class="basics">
+      <a class="pull-right" href="{{ url_for( 'auth.logout' )}}">logout</a>
       {% set url = user.email or 'anonymous@poold.in' %}
       {% set url = url | gravatar(size=80) %}
       {% set country = user.country or 'U.S.A.' %}
