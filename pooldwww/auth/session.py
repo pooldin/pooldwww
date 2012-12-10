@@ -45,6 +45,8 @@ def login_post():
     if forward:
         if forward == 'profile':
             url = '/profile/%s' % usr.username
+        elif forward == 'account':
+            url = '/account'
     url = url or request.args.get('next')
     url = url or url_for('marketing.index')
     return make_response(('', 201, [('Location', url)]))
