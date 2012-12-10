@@ -2,8 +2,8 @@
   <form class="account" action="{{ url_for('account.details') }}" method="PUT" data-bind="submit: accountForm.submit">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
     <h1 class="clickable" data-bind="click: toggleDetailsForm, text: accountFormTitle, css: { error: accountError, success: accountSuccess }">Account Details</h1>
+    <hr />
     <div style="display: none" data-bind="visible: accountFormVisible">
-      <hr />
       <label>
         <span
           class="label"
@@ -63,8 +63,8 @@
   <form class="password" action="{{ url_for('account.password') }}" method="POST" data-bind="submit: passwordForm.submit">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
     <h1 class="clickable" data-bind="click: toggleDetailsForm, text: passwordFormTitle, css: { error: passwordError, success: passwordSuccess }">Change Password</h1>
+    <hr />
     <div style="display: none" data-bind="visible: passwordFormVisible">
-      <hr />
       <label>
         <span
           class="label"
