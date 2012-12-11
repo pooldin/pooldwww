@@ -7,7 +7,7 @@ import json
 
 from flask import request, Blueprint, render_template, make_response, url_for, redirect
 from flask import current_app as app
-from flask.ext.login import login_required, current_user
+from flask.ext.login import login_required, current_user, login_fresh
 
 from pooldlib.api import campaign, fee, user, currency
 from pooldlib.exceptions import (PreviousStripeAssociationError,
@@ -158,12 +158,13 @@ def join_get(id=None):
                      amount=c.amount,
                      end=timestamp_ms,
                      name=c.name,
-                     contribution=c.suggested_contribution,
-                     contribution_required=c.suggested_contribution_required)
+                     suggestedContribution=c.suggested_contribution,
+                     contributionRequired=c.suggested_contribution_required)
     context = dict(campaign=_campaign,
                    stripe_publishable_key=app.config.get('STRIPE_PUBLIC_KEY'),
                    loggedIn=not current_user.is_anonymous(),
                    success_response="""{"name": "%s", "date": 0, "charge": {"initial": "0", "final": "0"}, "fees": []}""" % c.name)
+    context['require_login'] = not login_fresh()
     return render_template('pool/join.html', **context)
 
 

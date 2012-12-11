@@ -92,23 +92,29 @@
       <h1 data-bind="text: formTitle, css: { error: form.error }">{{ title }}</h1>
       {% endif %}
       <label class="amount">
-        <span class="label">I want to contribute</span>
+        <span class="label">I want to contribute:</span><br />
         <span class="input-prepend">
           <span class="add-on">$</span>
           <input type="number"
                  min="1"
                  value="0"
-                 data-bind="value: form.amount, valueUpdate: 'afterkeydown', css: { error: form.isInvalid('amount') }" />
+                 data-bind="value: form.amount, valueUpdate: 'afterkeydown', disable: form.campaign.contributionRequired, css: { error: form.isInvalid('amount') }" />
         </span>
       </label>
       <div class="total">
         <div>
-          <span class="label">Your total is <span data-bind="text: afterFees"></span></span>
+          <span class="label">Total after fees: <span data-bind="text: afterFees"></span></span> 
+          <i class="icon-question-sign clickable"
+             data-bind="visible: ( form.campaign.suggestedContribution() ) && ( ! form.campaign.contributionRequired() ), click: function () { $('#pool-join-suggested-help').show(); }">
+          </i>
+          <i class="icon-question-sign clickable"
+             data-bind="visible: form.campaign.contributionRequired, click: function () { $('#pool-join-required-help').show(); }">
+          </i>
         </div>
       </div>
 
       <label class="cc">
-        <span class="label">Credit Card: </span>
+        <span class="label">Credit Card: </span><br />
         <input name="cc"
                type="text"
                class="large"
@@ -175,16 +181,35 @@
     </div>
   </div>
 </section>
+
+<div id="pool-join-suggested-help" class="help-screen" style="display: none;">
+  <a href="#" class="btn pull-right" data-bind="click: function () { $('#pool-join-suggested-help').hide(); }">Done</a>
+  <div class="title"><span class="bold red">Help Tip:</span> Suggested Contribution</div>
+  <div class="body">
+    The organizer of '{{ campaign['name'] }}' has suggested that participants contribute an amount of
+    <span data-bind="text: campaign.suggestedContributionDollars"></span>, but this amount is entirely up to you.
+  </div>
+</div>
+
+<div id="pool-join-required-help" class="help-screen" style="display: none;">
+  <a href="#" class="btn pull-right" data-bind="click: function () { $('#pool-join-required-help').hide(); }">Done</a>
+  <div class="title"><span class="bold red">Help Tip:</span> Required Contribution</div>
+  <div class="body">
+    The organizer of '{{ campaign['name'] }}' has required that participants contribute an amount of
+    <span data-bind="text: campaign.suggestedContributionDollars"></span> in order to participate in their campaign.
+  </div>
+</div>
 {% endblock %}
 
 {% block init %}
 <script type="text/javascript">
   PI.pages.CampaignJoinPage.init({
-    title: {{ title|default(None, true)|tojson|safe }},
-    login: {{ user.username|default(None, true)|tojson|safe }},
+    title: {{ title|default(None, True)|tojson|safe }},
+    login: {{ user.username|default(None, True)|tojson|safe }},
     campaign: {{ campaign|tojson|safe }},
     publishable_key: {{ stripe_publishable_key|tojson|safe }},
-    successResponse: {{ success_response|safe }}
+    successResponse: {{ success_response|safe }},
+    requireLogin: {{ require_login|tojson|safe }}
   });
 </script>
 {% endblock %}

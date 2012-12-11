@@ -310,6 +310,10 @@ class PI.campaign.Campaign extends PI.Model
     @_contributionAmount = ko.observable(0).extend(money: precision: 2)
     @contributionAmount = ko.computed(@calculateContributionAmount)
 
+    @suggestedContributionDollars = ko.observable().extend(money: precision: 2)
+    sContrib = @suggestedContribution or ko.observable(0)
+    @suggestedContributionDollars(sContrib())
+
     @countParticipants = ko.computed(@countParticipants, this)
 
     @days = ko.computed(@calculateDaysRemaining)

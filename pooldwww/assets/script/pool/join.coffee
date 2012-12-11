@@ -101,9 +101,8 @@ class PI.pages.CampaignJoinContributeScreen extends PI.pages.Page
 
   constructor: (config) ->
     @campaign = config.campaign
-    @id = @campaign.id
     @form = new PI.forms.CampaignJoinForm({
-      campaignId: @id,
+      campaign: @campaign,
       submitPayment: config.submitPayment
     })
 
@@ -128,7 +127,7 @@ class PI.pages.CampaignJoinContributeScreen extends PI.pages.Page
   totalAfterFees: ->
     @updateFeeAmount(charge: final: 0) if @form.amount.error() or @form.amount() == '0'
     return if @form.amount.error() or @form.amount() == '0'
-    endpoint = "/pool/#{@id()}/fees?amount=#{@form.amount()}"
+    endpoint = "/pool/#{@campaign.id()}/fees?amount=#{@form.amount()}"
     jQuery.ajax({
       context: this,
       mimeType: 'application/json',
@@ -146,15 +145,15 @@ class PI.pages.CampaignJoinContributeScreen extends PI.pages.Page
 class PI.forms.CampaignJoinForm extends PI.forms.Form
 
   init: (config) ->
-    @id = config.campaignId
-    @endpoint = "/pool/#{@id()}/join"
+    @campaign = config.campaign
+    @endpoint = "/pool/#{@campaign.id()}/join"
     @submitCallback = config.submitPayment
     now = new Date()
 
     @field
       name: 'amount',
       label: 'amount',
-      value: config.amount or '0'
+      value: @campaign.suggestedContribution() or '0'
       validators: [
         new PI.forms.Required(),
         new PI.forms.PositiveInteger({
@@ -294,7 +293,7 @@ class PI.pages.CampaignJoinPage extends PI.pages.Page
       login: config.login or undefined,
       authSuccessCallback: @userAuthed
     })
-    showAuthScreen = not config.login
+    showAuthScreen = config.requireLogin
     @authScreenVisible = ko.observable(showAuthScreen)
 
     @contributeScreen = new PI.pages.CampaignJoinContributeScreen({

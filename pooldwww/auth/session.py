@@ -1,5 +1,5 @@
 from flask import make_response, redirect, render_template, request, url_for
-from flask.ext.login import login_user, logout_user
+from flask.ext.login import login_user, confirm_login, logout_user
 from pooldlib.api import user
 from pooldwww.auth import plan
 from pooldwww.auth.validate import parse_boolean
@@ -79,4 +79,5 @@ def login(data):
 
     remember = parse_boolean(data.get('remember'))
     login_user(usr, remember=remember)
+    confirm_login()
     return usr
