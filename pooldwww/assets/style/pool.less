@@ -366,6 +366,12 @@
 
 #pool-join-contribute {
 
+  .join {
+    width: 285px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   form > * > select {
     width: 75px;
     margin-left: 10px;
@@ -392,6 +398,7 @@
     }
   }
 
+  .amount,
   .cc {
 
     input {
@@ -411,7 +418,21 @@
   .total {
     height: 35px;
     margin-top: -35px;
-    margin-left: 165px;
+    margin-left: 20px;
+
+    .label {
+        font-size: 1.15em;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+
+  #pool-join-contribute {
+
+    .join {
+      width: 285px;
+    }
   }
 }
 
