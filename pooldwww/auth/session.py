@@ -9,12 +9,14 @@ from pooldwww.app.negotiate import accepts
 
 @plan.route('/login', methods=['GET'], endpoint='login')
 def login_get(form=None):
-    title = 'Welcome Back!'
-    template = 'auth/login.html'
+    signup_title = 'Create your Pooldin account.'
+    login_title = 'Welcome Back!'
+    template = 'auth/main.html'
 
     if form:
         next = request.args.get('next')
-        return render_template(template, title=title, next=next, **form)
+        return render_template(template, signup_title=signup_title,
+                               login_title=login_title, next=next, **form)
 
     form = dict()
     next = request.args.get('next')
@@ -29,7 +31,8 @@ def login_get(form=None):
     if remember.lower() in ['true', '1']:
         form['remember'] = True
 
-    return render_template(template, title=title, next=next, **form)
+    return render_template(template, show_signup=False, signup_title=signup_title,
+                           login_title=login_title, next=next, **form)
 
 
 @plan.route('/login', methods=['POST'])

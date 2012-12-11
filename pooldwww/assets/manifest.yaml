@@ -10,6 +10,7 @@ app-js:
         - ../assets/script/validation.coffee
         - ../assets/script/page.coffee
         - ../assets/script/user.coffee
+        - ../assets/script/auth/main.coffee
         - ../assets/script/auth/signup.coffee
         - ../assets/script/auth/login.coffee
         - ../assets/script/auth/reset.coffee

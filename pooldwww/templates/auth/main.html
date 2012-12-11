@@ -1,0 +1,33 @@
+{% extends "document/right_article.html" %}
+
+{% block secondary %}
+{% endblock %}
+
+{% block article %}
+{% include "snippets/flash.html" %}
+<ul id="auth-tabs" class="nav nav-tabs two">
+  <li><a href="#login" data-toggle="tab">Login <i class="icon-chevron-down icon-white" style="float: right;"></i></a></li>
+  <li><a href="#signup" data-toggle="tab">Signup <i class="icon-chevron-up icon-white" style="float: right;"></i></a></li>
+</ul>
+<section id="login-view"  class="auth login" style="display: none;" data-bind="visible: tabs('#login').visible">
+    {% include "auth/login.html" %}
+</section>
+<section id="signup-view" class="auth signup" style="display: none;" data-bind="visible: tabs('#signup').visible">
+    {% include "auth/signup.html" %}
+</section>
+{% endblock %}
+
+
+{% block init %}
+  <script type="text/javascript">
+    PI.pages.MainAuthPage.init({
+      loginTitle: {{ login_title|tojson|safe }},
+      signupTitle: {{ signup_title|tojson|safe }},
+      username: {{ login|default('')|tojson|safe }},
+      email: {{ email|default('')|tojson|safe }},
+      error: {{ error|default('')|tojson|safe }},
+      tabs: {"#auth-tabs": ["#login", "#signup"]},
+      showSignup: {{ show_signup|default(False, True)|tojson|safe }}
+    });
+  </script>
+{% endblock %}

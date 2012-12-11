@@ -12,8 +12,10 @@ from pooldwww.app.negotiate import accepts
 
 @plan.route('/signup', methods=['GET'], endpoint='signup')
 def signup_get():
-    context = dict(title='Create your Pooldin account.',
-                   next=request.args.get('next'))
+    context = dict(signup_title='Create your Pooldin account.',
+                   login_title='Welcome Back!',
+                   next=request.args.get('next'),
+                   show_signup=True)
     email = request.args.get('email')
     username = request.args.get('username')
 
@@ -23,7 +25,7 @@ def signup_get():
     if username:
         context['username'] = username
 
-    return render_template('auth/signup.html', **context)
+    return render_template('auth/main.html', **context)
 
 
 @plan.route('/signup', methods=['POST'])

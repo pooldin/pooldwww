@@ -29,11 +29,10 @@ class PI.forms.AccountDetailsForm extends PI.forms.Form
         new PI.forms.Remote(url: '/verify/email', field: 'email')
       ]
 
-
     @field
       name: 'password',
+      label: 'Verify Password',
       remote: 'password',
-      label: 'Password',
       filter: true,
       validators: [
         new PI.forms.Required(),

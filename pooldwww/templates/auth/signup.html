@@ -1,14 +1,10 @@
-{% extends "auth/base.html" %}
-
-{% block content %}
-<section class="auth signup">
-  <form class="boxy focal content padded-content" action="{{ url_for('auth.signup') }}" method="POST" data-bind="submit: form.submit">
+  <form class="boxy focal padded-content" action="{{ url_for('auth.signup') }}" method="POST" data-bind="submit: signupForm.submit">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
-    <div class="pending-overlay" style="display: none" data-bind="visible: form.processing"></div>
+    <div class="pending-overlay" style="display: none" data-bind="visible: signupForm.processing"></div>
     {% if error %}
-    <h1 class="error" data-bind="text: title, css: { error: form.error }">{{ error }}</h1>
+    <h1 class="error" data-bind="text: signupTitle, css: { error: signupForm.error }">{{ error }}</h1>
     {% else %}
-    <h1 data-bind="text: title, css: { error: form.error }">{{ title }}</h1>
+    <h1 data-bind="text: signupTitle, css: { error: signupForm.error }">{{ signup_title }}</h1>
     {% endif %}
 
     <hr />
@@ -17,11 +13,10 @@
            type="text"
            class="large"
            value="{{ email }}" }}
-           data-bind="value: form.email, css: { error: form.isInvalid('email') }"
-           placeholder="Email"
-           autofocus="autofocus" />
+           data-bind="value: signupForm.email, css: { error: signupForm.isInvalid('email') }"
+           placeholder="Email" />
 
-    <div class="mailcheck" style="display: none" data-bind="with: form, visible: form.email.mailcheck">
+    <div class="mailcheck" style="display: none" data-bind="with: signupForm, visible: signupForm.email.mailcheck">
       <button tabindex="50001" type="button" class="pull-left close" data-bind="click: email.mailcheck.reject">×</button>
       Did you mean <a tabindex="50000" href="javascript:void(0)" data-bind="text: email.mailcheck, click: email.mailcheck.accept"></a>?
     </div>
@@ -30,52 +25,23 @@
            type="text"
            class="large"
            value="{{ username }}"
-           data-bind="value: form.username, css: { error: form.isInvalid('username') }"
+           data-bind="value: signupForm.username, css: { error: signupForm.isInvalid('username') }"
            placeholder="Username" />
 
     <input name="password"
            type="password"
            class="large"
-           data-bind="value: form.password, css: { error: form.isInvalid('password') }"
+           data-bind="value: signupForm.password, css: { error: signupForm.isInvalid('password') }"
            placeholder="Password" />
 
     <input name="password_confirm"
            type="password"
            class="large"
-           data-bind="value: form.password_confirm, css: { error: form.isInvalid('password_confirm') }"
+           data-bind="value: signupForm.password_confirm, css: { error: signupForm.isInvalid('password_confirm') }"
            placeholder="Confirm Password" />
 
     <input type="submit"
            class="btn btn-danger btn-large"
            value="Dive In!"
-           data-bind="value: submitText, css: { 'btn-danger': !form.saving() }" />
+           data-bind="value: signupSubmitText, css: { 'btn-danger': !signupForm.saving() }" />
   </form>
-  <div class="two focal columns">
-    <div class="column">
-      <a class="rounded login" href="{{ url_for('auth.login') }}{% if next %}?next={{ next }}{% endif %}">Login</a>
-    </div>
-    <div class="column">
-      <a class="rounded reset" href="{{ url_for('auth.reset') }}">Reset Password</a>
-    </div>
-    <div class="clearfix"></div>
-  </div>
-</section>
-</div>
-{% endblock %}
-
-{% block footer %}
-<footer class="auth signup">
-  {% include "auth/footer.html" %}
-</footer>
-{% endblock %}
-
-{% block init %}
-<script type="text/javascript">
-  PI.pages.SignupPage.init({
-    title: {{ title|tojson|safe }},
-    error: {{ error|default('')|tojson|safe }},
-    email: {{ email|default('')|tojson|safe }},
-    username: {{ username|default('')|tojson|safe }}
-  });
-</script>
-{% endblock %}
