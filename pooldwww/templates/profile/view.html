@@ -82,7 +82,7 @@
     title: {{ title|tojson|safe }},
     username: {{ user.username|default(None, True)|tojson|safe }},
     about: {{ about|tojson|safe }},
-    campaigns: {{ campaigns|tojson|safe }},
+    campaigns: {{ campaigns|default([], True)|tojson|safe }},
     isUser: {{ is_user|tojson }}
   });
 </script>
