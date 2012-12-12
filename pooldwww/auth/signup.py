@@ -32,16 +32,11 @@ def signup_get():
 @accepts('application/json')
 def signup_post():
     try:
-        usr = signup(request.json)
+        signup(request.json)
     except ValidationError, e:
         return e.message, 403
 
-    url = None
-    forward = request.args.get('forward')
-    if forward:
-        if forward == 'profile':
-            url = '/profile/%s' % usr.username
-    url = url or request.args.get('next')
+    url = request.args.get('next')
     url = url or url_for('marketing.index')
     return make_response(('', 201, [('Location', url)]))
 

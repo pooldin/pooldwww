@@ -1,4 +1,4 @@
-  <form class="boxy focal padded-content" action="{{ url_for('auth.signup') }}" method="POST" data-bind="submit: signupForm.submit">
+  <form class="boxy focal padded-content" action="{{ url_for('auth.signup', next=next or '/') }}" method="POST" data-bind="submit: signupForm.submit">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
     <div class="pending-overlay" style="display: none" data-bind="visible: signupForm.processing"></div>
     {% if error %}

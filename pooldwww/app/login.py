@@ -5,7 +5,7 @@ from pooldlib.api import user
 def init_app(app):
     login = LoginManager()
     login.init_app(app)
-    login.login_view = "auth.login"
+    login.login_view = "auth.signup"
     login.user_loader(load_user)
     app.context_processor(user_context)
     return app

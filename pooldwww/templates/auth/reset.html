@@ -1,6 +1,9 @@
-{% extends "auth/base.html" %}
+{% extends "document/right_article.html" %}
 
-{% block content %}
+{% block secondary %}
+{% endblock %}
+
+{% block article %}
 <section class="auth reset" data-bind="css: { sent: sent }">
   <form class="boxy focal content padded-content" action="{{ url_for('auth.reset') }}" method="POST" data-bind="submit: form.submit">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
@@ -41,12 +44,6 @@
   </div>
 </section>
 </div>
-{% endblock %}
-
-{% block footer %}
-<footer class="auth reset">
-  {% include "auth/footer.html" %}
-</footer>
 {% endblock %}
 
 {% block init %}

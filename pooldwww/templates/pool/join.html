@@ -143,6 +143,9 @@
                class="large"
                data-bind="value: form.ccv, css: { error: form.isInvalid('ccv') }"
                placeholder="CCV" />
+        <i class="icon-question-sign clickable"
+           data-bind="click: function () { $('#pool-join-ccv-help').show(); }">
+        </i>
       </label>
 
       <input type="submit"
@@ -197,6 +200,14 @@
   <div class="body">
     The organizer of '{{ campaign['name'] }}' has required that participants contribute an amount of
     <span data-bind="text: campaign.suggestedContributionDollars"></span> in order to participate in their campaign.
+  </div>
+</div>
+
+<div id="pool-join-ccv-help" class="help-screen" style="display: none;">
+  <a href="#" class="btn pull-right" data-bind="click: function () { $('#pool-join-ccv-help').hide(); }">Done</a>
+  <div class="title"><span class="bold red">Help Tip:</span> Credit Card Verification Number</div>
+  <div class="body">
+    This is the three to four digit number printed on your credit card which verifies you are actually in possesion of your card.
   </div>
 </div>
 {% endblock %}
