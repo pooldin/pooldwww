@@ -16,7 +16,8 @@ from pooldlib.exceptions import (PreviousStripeAssociationError,
                                  ExternalAPIUnavailableError,
                                  StripeCustomerAccountError,
                                  StripeUserAccountError,
-                                 CampaignConfigurationError)
+                                 CampaignConfigurationError,
+                                 DuplicateCampaignUserAssociationError)
 
 from pooldwww.exceptions import ValidationError
 from pooldwww.app.negotiate import accepts
@@ -198,7 +199,10 @@ def join_post(id=None):
         success = charge_user(usr, c, amount, curr, fees)
         if not success:
             return make_response(('We boned it, please try again later.', 500))
-    campaign.associate_user(c, usr, 'participant', 'participating', pledge=amount)
+    try:
+        campaign.associate_user(c, usr, 'participant', 'participating', pledge=amount)
+    except DuplicateCampaignUserAssociationError:
+        campaign.update_user_association(c, usr, role=None, pledge=amount)
 
     ledger = fee.calculate(fees, amount)
     ledger['date'] = datetime.utcnow().strftime('%m/%d/%Y')
