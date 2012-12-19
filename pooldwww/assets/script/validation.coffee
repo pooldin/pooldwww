@@ -177,6 +177,9 @@ class PI.forms.FutureTimestamp extends PI.forms.PositiveInteger
     date = new Date(date.getFullYear(), date.getMonth(), date.getDate())
     return @value(value) > date.getTime()
 
+  defaultMessage: ->
+    return "#{@name} must be a date in the future."
+
 
 class PI.forms.YearInteger extends PI.forms.PositiveInteger
 

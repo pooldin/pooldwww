@@ -12,6 +12,7 @@ class PI.forms.PoolCreateForm extends PI.forms.Form
 
     @field
       name: 'description',
+      label: 'Pool Description',
       validators: [
         new PI.forms.Required(),
       ]
@@ -45,7 +46,7 @@ class PI.forms.PoolCreateForm extends PI.forms.Form
 
     @field
       name: 'amount',
-      label: 'amount',
+      label: 'Amount',
       validators: [
         new PI.forms.Required(),
         new PI.forms.PositiveInteger()
@@ -53,7 +54,7 @@ class PI.forms.PoolCreateForm extends PI.forms.Form
 
     @field
       name: 'contribution',
-      label: 'contribution',
+      label: 'Contribution Amount',
       validators: [
         new PI.forms.Required(),
         new PI.forms.PositiveInteger()
@@ -61,12 +62,12 @@ class PI.forms.PoolCreateForm extends PI.forms.Form
 
     @field
       name: 'required_contribution',
-      label: 'required_contribution',
+      label: 'Required Contribution',
       value: false
 
     @field
       name: 'fund_collection',
-      label: 'fund_collection',
+      label: 'Fund Collection',
       value: 'continue',
       validators: [
         new PI.forms.Required(),
@@ -74,7 +75,7 @@ class PI.forms.PoolCreateForm extends PI.forms.Form
 
     @field
       name: 'disburse_funds',
-      label: 'disburse_funds',
+      label: 'Disburse Funds',
       value: 'immediately',
       validators: [
         new PI.forms.Required(),
@@ -82,7 +83,7 @@ class PI.forms.PoolCreateForm extends PI.forms.Form
 
     @field
       name: 'date'
-      label: 'date',
+      label: 'End Date',
       value: ko.computed(@dateValue, this)
       validators: [
         new PI.forms.Required(),
@@ -91,7 +92,7 @@ class PI.forms.PoolCreateForm extends PI.forms.Form
 
     @field
       name: 'milestones'
-      label: 'milestones',
+      label: 'Milestones',
       value: ko.observable([])
 
   dateValue: ->
@@ -123,6 +124,7 @@ class PI.pages.PoolCreatePage extends PI.pages.Page
     return @form.error() or @config.title
 
   submitText: ->
+    return 'Form contains errors' if @form.error()
     return 'Creating Pool...' if @form.saving()
     return 'Make Pool Active'
 
