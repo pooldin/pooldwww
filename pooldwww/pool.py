@@ -179,6 +179,7 @@ def join_post(id=None):
         return "Unknown campaign.", 404
     usr = current_user._get_current_object()
     token = data['stripeToken']
+    full_name = data['fullName']
     stripe_private_key = app.config.get('STRIPE_SECRET_KEY')
     try:
         user.associate_stripe_token(usr, token, stripe_private_key, True)
@@ -196,7 +197,7 @@ def join_post(id=None):
     fees = fee.get(None, fee_names=['stripe-transaction', 'poold-transaction'])
 
     if charge:
-        success = charge_user(usr, c, amount, curr, fees)
+        success = charge_user(usr, c, amount, curr, fees, full_name=full_name)
         if not success:
             return make_response(('We boned it, please try again later.', 500))
     try:
@@ -214,9 +215,9 @@ def join_post(id=None):
     return make_response((json.dumps(ledger), 201, [('Content-Type', 'application/json')]))
 
 
-def charge_user(usr, cpgn, amount, curr, fees):
+def charge_user(usr, cpgn, amount, curr, fees, full_name=None):
     try:
-        user.payment_to_campaign(usr, cpgn, amount, curr, fees)
+        user.payment_to_campaign(usr, cpgn, amount, curr, fees, full_name=full_name)
     except (StripeCustomerAccountError,
             StripeUserAccountError,
             CampaignConfigurationError):

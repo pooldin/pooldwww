@@ -151,6 +151,13 @@ class PI.forms.CampaignJoinForm extends PI.forms.Form
     now = new Date()
 
     @field
+      name: 'fullName',
+      label: 'Full Name',
+      validators: [
+        new PI.forms.Required(),
+      ]
+
+    @field
       name: 'amount',
       label: 'amount',
       value: @campaign.suggestedContribution() or '0'
@@ -328,7 +335,8 @@ class PI.pages.CampaignJoinPage extends PI.pages.Page
       number: data.cc(),
       cvc: data.ccv(),
       exp_month: data.expMonth(),
-      exp_year: data.expYear()
+      exp_year: data.expYear(),
+      name: data.fullName()
     Stripe.createToken(data, @stripeResponseHandler)
 
   stripeResponseHandler: (status, response) =>

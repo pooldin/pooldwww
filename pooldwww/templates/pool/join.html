@@ -91,6 +91,16 @@
       {% else %}
       <h1 data-bind="text: formTitle, css: { error: form.error }">{{ title }}</h1>
       {% endif %}
+
+      <label class="name">
+        <span class="label">Full Name: </span><br />
+        <input name="name"
+               type="text"
+               class="large"
+               data-bind="value: form.fullName, css: { error: form.isInvalid('fullName') }"
+               placeholder="Name on the credit card" />
+       </label>
+
       <label class="amount">
         <span class="label">I want to contribute:</span><br />
         <span class="input-prepend">
