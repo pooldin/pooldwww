@@ -19,6 +19,7 @@ from pooldlib.exceptions import (PreviousStripeAssociationError,
                                  CampaignConfigurationError,
                                  DuplicateCampaignUserAssociationError)
 
+from pooldwww.convert import string_to_bool
 from pooldwww.exceptions import ValidationError
 from pooldwww.app.negotiate import accepts
 
@@ -160,7 +161,7 @@ def join_get(id=None):
                      end=timestamp_ms,
                      name=c.name,
                      suggestedContribution=c.suggested_contribution,
-                     contributionRequired=c.suggested_contribution_required)
+                     contributionRequired=string_to_bool(c.suggested_contribution_required))
     context = dict(campaign=_campaign,
                    stripe_publishable_key=app.config.get('STRIPE_PUBLIC_KEY'),
                    loggedIn=not current_user.is_anonymous(),

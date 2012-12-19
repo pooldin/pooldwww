@@ -108,14 +108,14 @@
           <input type="number"
                  min="1"
                  value="0"
-                 data-bind="value: form.amount, valueUpdate: 'afterkeydown', disable: form.campaign.contributionRequired, css: { error: form.isInvalid('amount') }" />
+                 data-bind="value: form.amount, valueUpdate: 'afterkeydown', disable: form.campaign.contributionRequired(), css: { error: form.isInvalid('amount') }" />
         </span>
       </label>
       <div class="total">
         <div>
           <span class="label">Total after fees: <span data-bind="text: afterFees"></span></span> 
           <i class="icon-question-sign clickable"
-             data-bind="visible: ( form.campaign.suggestedContribution() ) && ( ! form.campaign.contributionRequired() ), click: function () { $('#pool-join-suggested-help').show(); }">
+             data-bind="visible: ( form.campaign.suggestedContribution() != 0 ) && ( ! form.campaign.contributionRequired() ), click: function () { $('#pool-join-suggested-help').show(); }">
           </i>
           <i class="icon-question-sign clickable"
              data-bind="visible: form.campaign.contributionRequired, click: function () { $('#pool-join-required-help').show(); }">
